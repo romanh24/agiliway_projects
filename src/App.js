@@ -10,11 +10,13 @@ import { Task8 } from "./tasks/Task8/Task8";
 import { Task9 } from "./tasks/Task9/Task9";
 import { Task10 } from "./tasks/Task10/Task10";
 import { Task11 } from "./tasks/Task11/Task11";
+import ToDoList from "./components/ToDoList";
 
 function App() {
   return (
     <div className="App">
-      <Task1 />
+      <ToDoList />
+      {/* <Task1 />
       <Task2 />
       <Task3 />
       <Task4 name="Sara" />
@@ -24,7 +26,7 @@ function App() {
       <Task8 />
       <Task9 />
       <Task10 />
-      <Task11 />
+      <Task11 /> */}
     </div>
   );
 }
