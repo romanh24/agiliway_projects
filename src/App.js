@@ -12,12 +12,14 @@ import { Task10 } from "./tasks/Task10/Task10";
 import { Task11 } from "./tasks/Task11/Task11";
 import ToDoList from "./components/ToDoList";
 import FormValidation from "./components/FormValidation";
+import FinalForm from "./components/FinalForm";
 
 function App() {
   return (
     <div className="App">
       {/* <ToDoList /> */}
-      <FormValidation />
+      {/* <FormValidation /> */}
+      <FinalForm />
       {/* <Task1 />
       <Task2 />
       <Task3 />
