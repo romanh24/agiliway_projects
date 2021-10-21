@@ -1,56 +1,24 @@
 export const Field = (props) => {
-  //VERSION 1
+  const { name, value, type, label, error, onChange } = props;
   return (
     <div>
       <div className="input-group">
-        <label htmlFor={props.fieldProps.name}>{props.fieldProps.label}</label>
+        <label htmlFor={name}>{label}</label>
         <input
-          type={
-            props.fieldProps.name === "password" ||
-            props.fieldProps.name === "confirmPassword"
-              ? "password"
-              : "text"
-          }
-          onChange={props.onChange}
-          value={props.fieldProps.value}
-          name={props.fieldProps.name}
-          id={props.fieldProps.name}
+          type={type}
+          onChange={onChange}
+          value={value}
+          name={name}
+          id={name}
           className="login-input"
-          placeholder={props.fieldProps.label}
+          placeholder={label}
+          autoComplete="new-password"
           autoComplete="off"
         />
       </div>
       <div className="error">
-        <span>
-          {props.fieldProps.error.length > 0 && props.fieldProps.error}
-        </span>
+        <span>{error.length > 0 && error}</span>
       </div>
     </div>
   );
-
-  //VERSION 2
-  // return (
-  //   <div>
-  //     <div className="input-group">
-  //       <label htmlFor={props.name}>{props.label}</label>
-  //       <input
-  //         type={
-  //           props.name === "password" || props.name === "confirmPassword"
-  //             ? "password"
-  //             : "text"
-  //         }
-  //         onChange={props.onChange}
-  //         value={props.value}
-  //         name={props.name}
-  //         id={props.name}
-  //         className="login-input"
-  //         placeholder={props.label}
-  //         autoComplete="off"
-  //       />
-  //     </div>
-  //     <div className="error">
-  //       <span>{props.error.length > 0 && props.error}</span>
-  //     </div>
-  //   </div>
-  // );
 };

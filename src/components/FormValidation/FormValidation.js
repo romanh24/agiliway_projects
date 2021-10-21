@@ -8,6 +8,7 @@ class FormValidation extends React.Component {
       name: {
         name: "name",
         value: "",
+        type: "text",
         label: "Name",
         error: "",
         validator: (value = "") => {
@@ -25,6 +26,7 @@ class FormValidation extends React.Component {
       email: {
         name: "email",
         value: "",
+        type: "email",
         label: "Email",
         error: "",
         validator: (value = "") => {
@@ -43,6 +45,7 @@ class FormValidation extends React.Component {
       password: {
         name: "password",
         value: "",
+        type: "password",
         label: "Password",
         error: "",
         validator: (value = "", allValues = {}) => {
@@ -60,6 +63,7 @@ class FormValidation extends React.Component {
       confirmPassword: {
         name: "confirmPassword",
         value: "",
+        type: "password",
         label: "Confirm Password",
         error: "",
         validator: (value = "", allValues = {}) => {
@@ -201,35 +205,21 @@ class FormValidation extends React.Component {
     return (
       <div className="form">
         <h1>Form</h1>
-        <form onSubmit={this.handleSubmit}>
-          {Object.entries(this.state.fields).map(([fieldName, fieldsState]) => {
-            // UNCOMMENT FOR VERSION 2
-            {
-              /* const { name, value, label, error } = fieldsState; */
-            }
+        <form onSubmit={this.handleSubmit} autoComplete="off">
+          {Object.entries(this.state.fields).map(([_, fieldsState]) => {
+            const { name, value, type, label, error } = fieldsState;
 
-            // VERSION 1
             return (
-              <Field
-                key={fieldsState.name}
-                fieldProps={fieldsState}
-                onChange={this.handleOnChange}
-              />
-            );
-
-            //VERSION 2
-            {
-              /* return (
               <Field
                 key={name}
                 name={name}
-                label={label}
                 value={value}
+                type={type}
+                label={label}
                 error={error}
                 onChange={this.handleOnChange}
               />
-            ); */
-            }
+            );
           })}
 
           <input
