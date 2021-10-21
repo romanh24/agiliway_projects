@@ -1,6 +1,6 @@
 import React from "react";
 import "./FormValidation.scss";
-import { Input } from "./Input";
+import { Field } from "./Field";
 
 class FormValidation extends React.Component {
   state = {
@@ -46,13 +46,6 @@ class FormValidation extends React.Component {
         label: "Password",
         error: "",
         validator: (value = "", allValues = {}) => {
-          // if (allValues) {
-          //   return value === allValues.confirmPassword
-          //     ? ""
-          //     : "Passwords doesn't  match";
-          // }
-          // console.log(allValues);
-
           let error = "";
           if (!value.length) {
             return (error = "Cannot be empty");
@@ -90,41 +83,101 @@ class FormValidation extends React.Component {
         },
       },
     },
-    isError: null,
+    isError: "",
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
 
+    const { isError } = this.state;
     let updatedFields = {};
-    Object.entries(this.state.fields).map(([fieldName, fieldState]) => {
-      const error = fieldState.validator(fieldState.value);
+    let updatedIsError = this.state.isError;
 
-      const updatedField = {
-        ...fieldState,
-        error,
-      };
-      updatedFields[fieldName] = updatedField;
+    Object.entries(this.state.fields).map(([fieldName, fieldState]) => {
+      const error = fieldState.validator(fieldState.value, {
+        password: this.state.fields.password.value,
+        confirmPassword: this.state.fields.confirmPassword.value,
+      });
+
+      updatedFields[fieldName] = { ...fieldState, error };
+      updatedIsError = error;
     });
-    this.setState({ fields: updatedFields });
+
+    this.setState(
+      {
+        fields: updatedFields,
+        isError: updatedIsError,
+      },
+      () => {
+        if (!this.state.isError) {
+          const showState = JSON.stringify(this.state.fields);
+          console.log(showState);
+        }
+      }
+    );
   };
 
   handleOnChange = (event) => {
     const { value, name } = event.target;
-    const currentField = this.state.fields[name];
-    const allValues = Object.entries(this.state.fields).reduce(
-      (accum, [fieldName, fieldState]) => {
-        return { ...accum, [fieldName]: fieldState.value };
-      }
-    );
-    const error = currentField.validator(value, allValues);
-    // const password = this.state.fields.password.value;
-    // const confirmPassword = this.state.fields.confirmPassword.value;
+    const { password, confirmPassword } = this.state.fields;
+
+    const currentField = { ...this.state.fields[name] };
+
+    if (name === "password") {
+      const passwordError = currentField.validator(value, {
+        confirmPassword: confirmPassword.value,
+      });
+
+      const confirmPasswordError = confirmPassword.validator(
+        confirmPassword.value,
+        { password: value }
+      );
+
+      this.setState({
+        fields: {
+          ...this.state.fields,
+          password: { ...currentField, error: passwordError, value },
+          confirmPassword: {
+            ...confirmPassword,
+            error: confirmPasswordError,
+          },
+        },
+      });
+      return;
+    }
+
+    if (name === "confirmPassword") {
+      const passwordError = password.validator(password.value, {
+        confirmPassword: value,
+      });
+
+      const confirmPasswordError = currentField.validator(value, {
+        password: password.value,
+      });
+
+      this.setState({
+        fields: {
+          ...this.state.fields,
+          password: { ...password, error: passwordError },
+          confirmPassword: {
+            ...currentField,
+            error: confirmPasswordError,
+            value,
+          },
+        },
+      });
+      return;
+    }
+
+    const error = currentField.validator(value, {
+      password,
+      confirmPassword,
+    });
 
     this.setState({
       fields: {
         ...this.state.fields,
-        [name]: { ...currentField, value, error },
+        [name]: { ...currentField, error, value },
       },
     });
   };
@@ -140,23 +193,44 @@ class FormValidation extends React.Component {
         error: "",
       };
       updatedFields[fieldName] = updatedField;
-      this.setState({ fields: updatedFields });
+      this.setState({ fields: updatedFields, isError: null });
     });
   };
 
   render() {
-    const { name, email, password, confirmPassword } = this.state.fields;
     return (
       <div className="form">
         <h1>Form</h1>
         <form onSubmit={this.handleSubmit}>
-          <Input fieldProps={name} onChange={this.handleOnChange} />
+          {Object.entries(this.state.fields).map(([fieldName, fieldsState]) => {
+            // UNCOMMENT FOR VERSION 2
+            {
+              /* const { name, value, label, error } = fieldsState; */
+            }
 
-          <Input fieldProps={email} onChange={this.handleOnChange} />
+            // VERSION 1
+            return (
+              <Field
+                key={fieldsState.name}
+                fieldProps={fieldsState}
+                onChange={this.handleOnChange}
+              />
+            );
 
-          <Input fieldProps={password} onChange={this.handleOnChange} />
-
-          <Input fieldProps={confirmPassword} onChange={this.handleOnChange} />
+            //VERSION 2
+            {
+              /* return (
+              <Field
+                key={name}
+                name={name}
+                label={label}
+                value={value}
+                error={error}
+                onChange={this.handleOnChange}
+              />
+            ); */
+            }
+          })}
 
           <input
             type="button"

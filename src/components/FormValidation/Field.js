@@ -1,4 +1,5 @@
-export const Input = (props) => {
+export const Field = (props) => {
+  //VERSION 1
   return (
     <div>
       <div className="input-group">
@@ -26,4 +27,30 @@ export const Input = (props) => {
       </div>
     </div>
   );
+
+  //VERSION 2
+  // return (
+  //   <div>
+  //     <div className="input-group">
+  //       <label htmlFor={props.name}>{props.label}</label>
+  //       <input
+  //         type={
+  //           props.name === "password" || props.name === "confirmPassword"
+  //             ? "password"
+  //             : "text"
+  //         }
+  //         onChange={props.onChange}
+  //         value={props.value}
+  //         name={props.name}
+  //         id={props.name}
+  //         className="login-input"
+  //         placeholder={props.label}
+  //         autoComplete="off"
+  //       />
+  //     </div>
+  //     <div className="error">
+  //       <span>{props.error.length > 0 && props.error}</span>
+  //     </div>
+  //   </div>
+  // );
 };
