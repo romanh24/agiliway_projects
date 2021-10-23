@@ -228,7 +228,7 @@ class FormValidation extends React.Component {
             onClick={this.resetInput}
             className="button"
           />
-          <input type="submit" value="Submit" className="button" />
+          <input type="submit" value="Submit" className="button colorGreen" />
         </form>
       </div>
     );

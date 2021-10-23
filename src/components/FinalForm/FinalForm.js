@@ -130,7 +130,7 @@ class FinalForm extends React.Component {
               <input
                 type="submit"
                 value="Submit"
-                className="button"
+                className="button colorGreen"
                 disabled={submitting}
               />
               {/* <pre>{JSON.stringify(values, undefined, 2)}</pre> */}

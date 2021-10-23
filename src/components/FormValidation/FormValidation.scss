@@ -24,6 +24,11 @@
     cursor: pointer;
   }
 
+  .button.colorGreen:hover:not(:disabled) {
+    background: #34a853;
+    cursor: pointer;
+  }
+
   .input-group {
     display: flex;
     flex-direction: column;
