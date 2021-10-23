@@ -3,6 +3,69 @@ import "./FinalForm.scss";
 import { Field, Form } from "react-final-form";
 import { myField } from "./myField";
 
+const composeValidators = (validators) => (value, allValues) => {
+  let error = undefined;
+  for (let i = 0; i < validators.length; i++) {
+    error = validators[i](value, allValues);
+    if (error) {
+      return error;
+    }
+  }
+  return error;
+};
+
+const commonValidators = {
+  required: (value = "") => {
+    return value.length > 0 ? undefined : "Cannot be empty";
+  },
+
+  onlyLetters: (value = "") => {
+    if (!value.match(/^[a-zA-Z]+$/)) {
+      return "Only letters";
+    }
+  },
+
+  sixSymbols: (value, allValues) => {
+    return value.length > 5 ? undefined : "Too short";
+  },
+
+  validEmail: (value = "") => {
+    if (!value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
+      return "Email is not valid";
+    }
+  },
+
+  comparePasswords: (value = "", allValues) => {
+    if (allValues.password !== allValues.confirmPassword) {
+      return "The password does not match";
+    }
+
+    if (allValues.confirmPassword !== allValues.password) {
+      return "The password does not match";
+    }
+  },
+};
+
+const validators = {
+  name: composeValidators([
+    commonValidators.required,
+    commonValidators.onlyLetters,
+    commonValidators.sixSymbols,
+  ]),
+  email: composeValidators([
+    commonValidators.required,
+    commonValidators.validEmail,
+  ]),
+  password: composeValidators([
+    commonValidators.required,
+    commonValidators.comparePasswords,
+  ]),
+  confirmPassword: composeValidators([
+    commonValidators.required,
+    commonValidators.comparePasswords,
+  ]),
+};
+
 class FinalForm extends React.Component {
   state = {
     fields: {
@@ -38,67 +101,41 @@ class FinalForm extends React.Component {
   }
 
   render() {
-    const required = (value) => (value ? undefined : "Require");
     return (
       <div className="form">
         <h1>Form</h1>
         <Form onSubmit={this.onSubmit}>
-          {({ handleSubmit, values, submitting }) => (
+          {({ handleSubmit, values, submitting, form }) => (
             <form onSubmit={handleSubmit}>
-              {Object.entries(this.state.fields).map(([_, fieldsState]) => {
-                const { name, type, label } = fieldsState;
+              {Object.entries(this.state.fields).map(([_, fieldState]) => {
+                const { name, type, label } = fieldState;
                 return (
                   <Field
+                    key={name}
                     name={name}
                     type={type}
                     label={label}
                     component={myField}
-                    validate={required}
+                    validate={validators[fieldState.name]}
                   />
                 );
               })}
 
-              {/* <Field
-                name={email.name}
-                placeholder={email.label}
-                validate={required}
-              >
-                {({ input, meta, placeholder }) => (
-                  <div className="input-group">
-                    <label>{email.label}</label>
-                    <input
-                      {...input}
-                      placeholder={placeholder}
-                      autoComplete="off"
-                    />
-                    <div className="error">
-                      {meta.error && meta.touched && <span>{meta.error}</span>}
-                    </div>
-                  </div>
-                )}
-              </Field> */}
               <input
                 type="button"
                 value="Reset"
-                onClick={this.resetInput}
+                onClick={form.reset}
                 className="button"
               />
-              <input type="submit" value="Submit" className="button" />
-              <pre>{JSON.stringify(values, undefined, 2)}</pre>
+              <input
+                type="submit"
+                value="Submit"
+                className="button"
+                disabled={submitting}
+              />
+              {/* <pre>{JSON.stringify(values, undefined, 2)}</pre> */}
             </form>
           )}
-          {/* {(this.state.fields) => (
-          <form >
-            <Field name="myField">
-              {(props.fields) => (
-                <div>
-                  <input {...props.name} />
-                </div>
-              )}
-            </Field>
-            <button type="submit">Submit</button>
-          </form>
-        )} */}
         </Form>
       </div>
     );
