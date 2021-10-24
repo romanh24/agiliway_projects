@@ -1,4 +1,5 @@
 import "./App.css";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Task1 } from "./tasks/Task1";
 import { Task2 } from "./tasks/Task2";
 import { Task3 } from "./tasks/Task3";
@@ -13,13 +14,28 @@ import { Task11 } from "./tasks/Task11/Task11";
 import ToDoList from "./components/ToDoList";
 import FormValidation from "./components/FormValidation";
 import FinalForm from "./components/FinalForm";
+import NavBar from "./components/NavBar";
 
 function App() {
   return (
     <div className="App">
-      {/* <ToDoList /> */}
-      {/* <FormValidation /> */}
-      <FinalForm />
+      <Router>
+        <NavBar />
+        <Switch>
+          <Route exact path="/">
+            <FinalForm />
+          </Route>
+          <Route path="/finalform">
+            <FinalForm />
+          </Route>
+          <Route path="/formvalidation">
+            <FormValidation />
+          </Route>
+          <Route path="/todolist">
+            <ToDoList />
+          </Route>
+        </Switch>
+      </Router>
       {/* <Task1 />
       <Task2 />
       <Task3 />

@@ -93,7 +93,7 @@ class ToDoList extends React.Component {
           {cars.length === 0 && <NoItems />}
         </ul>
 
-        <div class="error">
+        <div className="error">
           <span>{todoText.error.length > 0 && todoText.error}</span>
         </div>
 
