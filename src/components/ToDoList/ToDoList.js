@@ -69,7 +69,6 @@ class ToDoList extends React.Component {
     const { value, name } = event.target;
     const currentField = this.state.fields[name];
     const error = currentField.validator(value);
-    console.log("error:", error);
     this.setState({
       fields: {
         ...this.state.fields,
