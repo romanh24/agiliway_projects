@@ -1,4 +1,4 @@
-export const NavTabMapper = [
+export const NavTabConfig = [
   {
     route: "/finalform",
     title: "Final Form",

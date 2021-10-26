@@ -2,7 +2,11 @@ import FormValidation from "../FormValidation";
 import FinalForm from "../FinalForm";
 import ToDoList from "../ToDoList";
 
-export const RoutesMapper = [
+export const RouterConfig = [
+  {
+    path: "/",
+    component: FinalForm,
+  },
   {
     path: "/finalform",
     component: FinalForm,

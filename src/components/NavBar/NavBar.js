@@ -1,5 +1,5 @@
 import { Navbar, Nav } from "reactstrap";
-import { NavTabMapper } from "./NavTabMapper";
+import { NavTabConfig } from "./NavTabConfig";
 import { NavTab } from "./NavTab";
 
 const NavBar = () => {
@@ -7,7 +7,7 @@ const NavBar = () => {
     <div>
       <Navbar color="light" light expand="md">
         <Nav className="mr-auto" navbar>
-          {NavTabMapper.map(({ route, title }) => {
+          {NavTabConfig.map(({ route, title }) => {
             return <NavTab key={route} route={route} title={title} />;
           })}
         </Nav>
