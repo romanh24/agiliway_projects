@@ -69,7 +69,6 @@ class ToDoList extends React.Component {
     const { value, name } = event.target;
     const currentField = this.state.fields[name];
     const error = currentField.validator(value);
-    console.log("error:", error);
     this.setState({
       fields: {
         ...this.state.fields,
@@ -93,7 +92,7 @@ class ToDoList extends React.Component {
           {cars.length === 0 && <NoItems />}
         </ul>
 
-        <div class="error">
+        <div className="error">
           <span>{todoText.error.length > 0 && todoText.error}</span>
         </div>
 

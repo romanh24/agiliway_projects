@@ -26,7 +26,7 @@ class FormValidation extends React.Component {
       email: {
         name: "email",
         value: "",
-        type: "email",
+        type: "text",
         label: "Email",
         error: "",
         validator: (value = "") => {
@@ -38,7 +38,6 @@ class FormValidation extends React.Component {
           if (!value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
             return (error = "Email is not valid");
           }
-
           return error;
         },
       },
@@ -93,11 +92,10 @@ class FormValidation extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    const { isError } = this.state;
     let updatedFields = {};
     let updatedIsError = this.state.isError;
 
-    Object.entries(this.state.fields).map(([fieldName, fieldState]) => {
+    Object.entries(this.state.fields).forEach(([fieldName, fieldState]) => {
       const error = fieldState.validator(fieldState.value, {
         password: this.state.fields.password.value,
         confirmPassword: this.state.fields.confirmPassword.value,
@@ -114,8 +112,9 @@ class FormValidation extends React.Component {
       },
       () => {
         if (!this.state.isError) {
-          const showState = JSON.stringify(this.state.fields);
-          console.log(showState);
+          Object.entries(this.state.fields).forEach(([_, fieldState]) => {
+            console.log(fieldState.value);
+          });
         }
       }
     );
@@ -190,7 +189,7 @@ class FormValidation extends React.Component {
     event.preventDefault();
 
     let updatedFields = {};
-    Object.entries(this.state.fields).map(([fieldName, fieldState]) => {
+    Object.entries(this.state.fields).forEach(([fieldName, fieldState]) => {
       const updatedField = {
         ...fieldState,
         value: "",

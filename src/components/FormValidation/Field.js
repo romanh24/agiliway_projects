@@ -12,7 +12,6 @@ export const Field = (props) => {
           id={name}
           className="login-input"
           placeholder={label}
-          autoComplete="new-password"
           autoComplete="off"
         />
       </div>
