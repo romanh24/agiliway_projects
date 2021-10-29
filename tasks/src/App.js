@@ -12,7 +12,7 @@ import { Task9 } from "./tasks/Task9/Task9";
 import { Task10 } from "./tasks/Task10/Task10";
 import { Task11 } from "./tasks/Task11/Task11";
 import NavBar from "./components/NavBar";
-import { AppRouter } from "./components/Routes/AppRouter";
+import AppRouter from "./components/Routes/AppRouter";
 
 function App() {
   return (

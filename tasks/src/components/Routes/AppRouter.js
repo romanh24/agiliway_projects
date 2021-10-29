@@ -1,7 +1,7 @@
 import { RouterConfig } from "./RouterConfig";
 import { Route, Switch } from "react-router-dom";
 
-export const AppRouter = () => {
+const AppRouter = () => {
   return (
     <Switch>
       {RouterConfig.map(({ path, component }) => {
@@ -12,3 +12,5 @@ export const AppRouter = () => {
     </Switch>
   );
 };
+
+export default AppRouter;

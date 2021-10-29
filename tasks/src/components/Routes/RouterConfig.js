@@ -1,6 +1,7 @@
 import FormValidation from "../FormValidation";
 import FinalForm from "../FinalForm";
 import ToDoList from "../ToDoList";
+import NotFoundPage from "./NotFoundPage";
 
 export const RouterConfig = [
   {
@@ -18,5 +19,9 @@ export const RouterConfig = [
   {
     path: "/todolist",
     component: ToDoList,
+  },
+  {
+    path: "",
+    component: NotFoundPage,
   },
 ];
