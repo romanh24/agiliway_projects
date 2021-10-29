@@ -1,49 +1,44 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./BookList.scss";
 import { getBooks } from "../../../../api/books";
 import { BookItem } from "../BookItem/BookItem";
 import { Spinner } from "reactstrap";
 
-export default class BookList extends React.Component {
-  state = {
-    bookList: [],
-    loading: true,
-    error: false,
-  };
+const BookList = () => {
+  const [list, setList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-  componentDidMount() {
+  useEffect(() => {
     getBooks()
-      .then((response) => {
-        this.setState({ loading: false, bookList: response.data });
+      .then(({ data }) => {
+        setList(data);
+        setLoading(false);
       })
-      .catch((error) => {
-        console.log("Error: ", error.message);
-      });
-  }
+      .catch(() => setError(true));
+  }, []);
 
-  render() {
-    return (
-      <div>
-        <h1>Books</h1>
-        <div className="book-list-container">
-          {!this.state.loading &&
-            this.state.bookList.map((book) => {
-              return (
-                <BookItem
-                  key={book.id}
-                  id={book.id}
-                  title={book.title}
-                  description={book.description}
-                  publishDate={book.publishDate}
-                />
-              );
-            })}
+  return (
+    <div>
+      <h1>Books</h1>
+      <div className="book-list-container">
+        {!loading &&
+          list.map((book) => {
+            return (
+              <BookItem
+                key={book.id}
+                id={book.id}
+                title={book.title}
+                description={book.description}
+                publishDate={book.publishDate}
+              />
+            );
+          })}
 
-          {this.state.loading && (
-            <Spinner color="warning" size="lg" children="" />
-          )}
-        </div>
+        {loading && <Spinner color="warning" size="lg" children="" />}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+export default BookList;

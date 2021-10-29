@@ -1,43 +1,46 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./BookDetails.scss";
 import { getBookById } from "../../../../api/books";
-import { Link } from "react-router-dom";
-import { Button } from "reactstrap";
+import { Link, useParams } from "react-router-dom";
+import { Button, Spinner } from "reactstrap";
 
-export default class BookDetails extends React.Component {
-  state = {
-    bookList: [],
-    loading: true,
-    error: false,
-  };
+const BookDetails = () => {
+  const [book, setBook] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const { id } = useParams();
 
-  componentDidMount() {
-    const { id } = this.props.match.params;
+  useEffect(() => {
     getBookById(id)
-      .then((response) => {
-        this.setState({ loading: false, bookList: response.data });
+      .then(({ data }) => {
+        setBook(data);
+        setLoading(false);
       })
-      .catch((error) => {
-        console.log("Error: ", error.message);
-      });
-  }
+      .catch(() => setError(true));
+  }, []);
 
-  render() {
-    const { title, description, excerpt, publishDate } = this.state.bookList;
-    return (
-      <div className="book-details">
-        <h3>{title}</h3>
-        <p>{publishDate}</p>
-        <p>
-          <b>Description:</b> {description}
-        </p>
-        <p>
-          <b>Excerpt:</b> {excerpt}
-        </p>
-        <Link to="/books">
-          <Button color="secondary">Back</Button>
-        </Link>
-      </div>
-    );
-  }
-}
+  const date = new Date(book.publishDate).toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
+  return (
+    <div className="book-details">
+      <h3>{book.title}</h3>
+      <p>{date}</p>
+      <p>
+        <b>Description:</b> {book.description}
+      </p>
+      <p>
+        <b>Excerpt:</b> {book.excerpt}
+      </p>
+      <div>{loading && <Spinner color="warning" size="lg" children="" />}</div>
+      <Link to="/books">
+        <Button color="secondary">Back</Button>
+      </Link>
+    </div>
+  );
+};
+
+export default BookDetails;
