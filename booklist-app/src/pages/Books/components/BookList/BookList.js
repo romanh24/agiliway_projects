@@ -2,28 +2,47 @@ import React, { useState, useEffect } from "react";
 import "./BookList.scss";
 import { getBooks } from "../../../../api/books";
 import { BookItem } from "../BookItem/BookItem";
+import Pagination from "../../../../components/Pagination/";
 import { Spinner } from "reactstrap";
 
 const BookList = () => {
-  const [list, setList] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [bookList, setBookList] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [booksPerPage] = useState(9);
 
   useEffect(() => {
     getBooks()
       .then(({ data }) => {
-        setList(data);
-        setLoading(false);
+        setLoading(true);
+        setBookList(data);
+        // setLoading(false);
       })
-      .catch(() => setError(true));
+      .catch((error) => {
+        setError(true);
+        console.log("Error: ", error.message);
+      });
   }, []);
+
+  const lastBookIndex = currentPage * booksPerPage;
+  const firstCountryIndex = lastBookIndex - booksPerPage;
+  const currentBook = bookList.slice(firstCountryIndex, lastBookIndex);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const nextPage = () => setCurrentPage((prev) => prev + 1);
+
+  const previousPage = () => setCurrentPage((prev) => prev - 1);
 
   return (
     <div>
       <h1>Books</h1>
       <div className="book-list-container">
-        {!loading &&
-          list.map((book) => {
+        {loading &&
+          currentBook.map((book) => {
             return (
               <BookItem
                 key={book.id}
@@ -35,7 +54,16 @@ const BookList = () => {
             );
           })}
 
-        {loading && <Spinner color="warning" size="lg" children="" />}
+        {!loading && <Spinner color="warning" size="lg" children="" />}
+        <div>
+          <Pagination
+            booksPerPage={booksPerPage}
+            totalBooks={bookList.length}
+            paginate={paginate}
+            nextPage={nextPage}
+            previousPage={previousPage}
+          />
+        </div>
       </div>
     </div>
   );
