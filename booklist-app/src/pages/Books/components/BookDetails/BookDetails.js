@@ -6,7 +6,7 @@ import { Button, Spinner } from "reactstrap";
 
 const BookDetails = () => {
   const [book, setBook] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const { id } = useParams();
 
@@ -14,9 +14,12 @@ const BookDetails = () => {
     getBookById(id)
       .then(({ data }) => {
         setBook(data);
-        setLoading(false);
+        setLoading(true);
       })
-      .catch(() => setError(true));
+      .catch((error) => {
+        setError(true);
+        console.log("Error: ", error.message);
+      });
   }, []);
 
   const date = new Date(book.publishDate).toLocaleDateString("en-US", {
@@ -35,7 +38,7 @@ const BookDetails = () => {
       <p>
         <b>Excerpt:</b> {book.excerpt}
       </p>
-      <div>{loading && <Spinner color="warning" size="lg" children="" />}</div>
+      <div>{!loading && <Spinner color="warning" size="lg" children="" />}</div>
       <Link to="/books">
         <Button color="secondary">Back</Button>
       </Link>
