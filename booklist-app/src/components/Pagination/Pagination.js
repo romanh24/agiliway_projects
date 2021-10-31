@@ -3,6 +3,7 @@ import {
   PaginationItem,
   PaginationLink,
 } from "reactstrap";
+import "./Pagination.scss";
 
 const Pagination = ({
   booksPerPage,
@@ -10,6 +11,7 @@ const Pagination = ({
   paginate,
   nextPage,
   previousPage,
+  currentPage,
 }) => {
   const pageNumbers = [];
 
@@ -17,14 +19,15 @@ const Pagination = ({
     pageNumbers.push(i);
   }
 
-  console.log(pageNumbers);
-
   return (
-    <div>
+    <div className="pagination-container">
       <PaginationStrap size="sm">
-        <PaginationItem>
-          <PaginationLink href="#" previous onClick={previousPage} />
-        </PaginationItem>
+        {currentPage > 1 && pageNumbers.length && (
+          <PaginationItem>
+            <PaginationLink href="#" previous onClick={previousPage} />
+          </PaginationItem>
+        )}
+
         {pageNumbers.map((number) => {
           return (
             <PaginationItem key={number}>
@@ -39,9 +42,11 @@ const Pagination = ({
           );
         })}
 
-        <PaginationItem>
-          <PaginationLink href="#" next onClick={nextPage} />
-        </PaginationItem>
+        {currentPage < pageNumbers.length && (
+          <PaginationItem>
+            <PaginationLink href="#" next onClick={nextPage} />
+          </PaginationItem>
+        )}
       </PaginationStrap>
     </div>
   );

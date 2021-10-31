@@ -26,8 +26,8 @@ const BookList = () => {
   }, []);
 
   const lastBookIndex = currentPage * booksPerPage;
-  const firstCountryIndex = lastBookIndex - booksPerPage;
-  const currentBook = bookList.slice(firstCountryIndex, lastBookIndex);
+  const firstBookIndex = lastBookIndex - booksPerPage;
+  const currentBook = bookList.slice(firstBookIndex, lastBookIndex);
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -55,15 +55,16 @@ const BookList = () => {
           })}
 
         {!loading && <Spinner color="warning" size="lg" children="" />}
-        <div>
-          <Pagination
-            booksPerPage={booksPerPage}
-            totalBooks={bookList.length}
-            paginate={paginate}
-            nextPage={nextPage}
-            previousPage={previousPage}
-          />
-        </div>
+      </div>
+      <div>
+        <Pagination
+          booksPerPage={booksPerPage}
+          totalBooks={bookList.length}
+          paginate={paginate}
+          nextPage={nextPage}
+          previousPage={previousPage}
+          currentPage={currentPage}
+        />
       </div>
     </div>
   );
