@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
 import { onOpenModal, onCloseModal } from "../../redux/actions";
 
-function ReduxModalClass(props) {
+function ReduxModal(props) {
   console.log("render:", props);
   return (
     <div className="btn-blue">
@@ -10,7 +10,7 @@ function ReduxModalClass(props) {
         I'm Redux, Click Me!
       </Button>
       <Modal isOpen={props.openModal} toggle={props.onCloseModal}>
-        <ModalHeader>Modal title</ModalHeader>
+        <ModalHeader>Redux</ModalHeader>
         <ModalBody>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
@@ -39,11 +39,9 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    onOpenModal: () => dispatch(onOpenModal()),
-    onCloseModal: () => dispatch(onCloseModal()),
-  };
-}
+const mapDispatchToProps = {
+  onOpenModal: () => onOpenModal(true),
+  onCloseModal: () => onCloseModal(false),
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReduxModalClass);
+export default connect(mapStateToProps, mapDispatchToProps)(ReduxModal);

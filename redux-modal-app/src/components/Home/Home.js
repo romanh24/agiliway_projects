@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./Home.scss";
 import ModalClassBased from "../ModalClassBased";
-import ReduxModalClass from "../ReduxModalClass";
+import ReduxModalClass from "../ReduxModal";
 
 class Home extends Component {
   render() {

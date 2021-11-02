@@ -10,12 +10,12 @@ export const modalReducer = (state = initialState, action) => {
     case MODAL_OPEN:
       return {
         ...state,
-        openModal: true,
+        openModal: action.payload,
       };
     case MODAL_CLOSE:
       return {
         ...state,
-        openModal: false,
+        openModal: action.payload,
       };
     default:
       return state;

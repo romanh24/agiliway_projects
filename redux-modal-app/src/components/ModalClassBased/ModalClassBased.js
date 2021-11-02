@@ -22,7 +22,7 @@ class ModalClassBased extends Component {
           I'm normal State, Click Me!
         </Button>
         <Modal isOpen={this.state.openModal} toggle={this.onCloseModal}>
-          <ModalHeader>Modal title</ModalHeader>
+          <ModalHeader>Class Based</ModalHeader>
           <ModalBody>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
@@ -33,7 +33,7 @@ class ModalClassBased extends Component {
             culpa qui officia deserunt mollit anim id est laborum.
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.onCloseModal}>
+            <Button color="danger" onClick={this.onCloseModal}>
               Do Something
             </Button>
             <Button onClick={this.onCloseModal}>Cancel</Button>
