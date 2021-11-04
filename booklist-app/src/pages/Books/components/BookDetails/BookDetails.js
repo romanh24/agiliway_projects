@@ -11,7 +11,7 @@ const BookDetails = ({ bookData, fetchBookById }) => {
 
   useEffect(() => {
     fetchBookById(id);
-  });
+  }, []);
 
   const date = new Date(bookData.book.publishDate).toLocaleDateString("en-US", {
     day: "numeric",

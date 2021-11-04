@@ -13,7 +13,7 @@ const BookList = ({ bookData, fetchBooks }) => {
 
   useEffect(() => {
     fetchBooks();
-  });
+  }, []);
 
   const lastBookIndex = currentPage * booksPerPage;
   const firstBookIndex = lastBookIndex - booksPerPage;
@@ -31,19 +31,7 @@ const BookList = ({ bookData, fetchBooks }) => {
     <div>
       <h1>Books</h1>
       <div className="book-list-container">
-        {currentBook.map((book) => {
-          return (
-            <BookItem
-              key={book.id}
-              id={book.id}
-              title={book.title}
-              description={book.description}
-              publishDate={book.publishDate}
-            />
-          );
-        })}
-
-        {bookData.loading &&
+        {!bookData.loading &&
           currentBook.map((book) => {
             return (
               <BookItem
