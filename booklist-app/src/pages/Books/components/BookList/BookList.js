@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { Component } from "react";
 import "./BookList.scss";
 import { BookItem } from "../BookItem/BookItem";
 import { connect } from "react-redux";
@@ -6,74 +6,76 @@ import { fetchBooksAction } from "../../../../redux/actions";
 import Pagination from "../../../../components/Pagination/";
 import { Spinner } from "reactstrap";
 
-const BookList = ({ bookData, fetchBooks }) => {
-  console.log("bookData: ", bookData);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [booksPerPage] = useState(9);
+const BOOKS_PER_PAGE = 9;
 
-  useEffect(() => {
-    fetchBooks();
-  });
-
-  const lastBookIndex = currentPage * booksPerPage;
-  const firstBookIndex = lastBookIndex - booksPerPage;
-  const currentBook = bookData.books.slice(firstBookIndex, lastBookIndex);
-
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
+class BookList extends Component {
+  state = {
+    currentPage: 1,
   };
 
-  const nextPage = () => setCurrentPage((prev) => prev + 1);
+  componentDidMount() {
+    this.props.fetchBooks();
+  }
 
-  const previousPage = () => setCurrentPage((prev) => prev - 1);
+  paginate = (number) => {
+    this.setState({
+      currentPage: number,
+    });
+  };
 
-  return (
-    <div>
-      <h1>Books</h1>
-      <div className="book-list-container">
-        {currentBook.map((book) => {
-          return (
-            <BookItem
-              key={book.id}
-              id={book.id}
-              title={book.title}
-              description={book.description}
-              publishDate={book.publishDate}
-            />
-          );
-        })}
+  nextPage() {
+    this.setState((prev) => prev + 1);
+  }
 
-        {bookData.loading &&
-          currentBook.map((book) => {
-            return (
-              <BookItem
-                key={book.id}
-                id={book.id}
-                title={book.title}
-                description={book.description}
-                publishDate={book.publishDate}
-              />
-            );
-          })}
+  previousPage() {
+    this.setState((prev) => prev - 1);
+  }
 
-        {bookData.loading && <Spinner color="warning" size="lg" children="" />}
-      </div>
+  render() {
+    const { bookData } = this.props;
+    console.log(bookData);
+
+    const lastBookIndex = this.state.currentPage * BOOKS_PER_PAGE;
+    const firstBookIndex = lastBookIndex - BOOKS_PER_PAGE;
+    const currentBook = bookData.books.slice(firstBookIndex, lastBookIndex);
+
+    return (
       <div>
-        <Pagination
-          booksPerPage={booksPerPage}
-          totalBooks={bookData.books.length}
-          paginate={paginate}
-          nextPage={nextPage}
-          previousPage={previousPage}
-          currentPage={currentPage}
-        />
+        <h1>Books</h1>
+        <div className="book-list-container">
+          {!bookData.loading &&
+            currentBook.map((book) => {
+              return (
+                <BookItem
+                  key={book.id}
+                  id={book.id}
+                  title={book.title}
+                  description={book.description}
+                  publishDate={book.publishDate}
+                />
+              );
+            })}
+
+          {bookData.loading && (
+            <Spinner color="warning" size="lg" children="" />
+          )}
+        </div>
+        <div>
+          <Pagination
+            booksPerPage={BOOKS_PER_PAGE}
+            totalBooks={bookData.books.length}
+            paginate={this.paginate}
+            nextPage={this.nextPage}
+            previousPage={this.previousPage}
+            currentPage={this.state.currentPage}
+          />
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     bookData: state.bookReducer,
   };
