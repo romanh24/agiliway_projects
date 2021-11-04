@@ -1,28 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "./BookDetails.scss";
-import { getBookById } from "../../../../api/books";
 import { Link, useParams } from "react-router-dom";
 import { Button, Spinner } from "reactstrap";
+import { connect } from "react-redux";
+import { fetchBookByIdAction } from "../../../../redux/actions";
 
-const BookDetails = () => {
-  const [book, setBook] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+const BookDetails = ({ bookData, fetchBookById }) => {
+  console.log(bookData);
   const { id } = useParams();
 
   useEffect(() => {
-    getBookById(id)
-      .then(({ data }) => {
-        setBook(data);
-        setLoading(true);
-      })
-      .catch((error) => {
-        setError(true);
-        console.log("Error: ", error.message);
-      });
-  }, []);
+    fetchBookById(id);
+  });
 
-  const date = new Date(book.publishDate).toLocaleDateString("en-US", {
+  const date = new Date(bookData.book.publishDate).toLocaleDateString("en-US", {
     day: "numeric",
     month: "long",
     year: "numeric",
@@ -30,15 +21,17 @@ const BookDetails = () => {
 
   return (
     <div className="book-details">
-      <h3>{book.title}</h3>
+      <h3>{bookData.book.title}</h3>
       <p>{date}</p>
       <p>
-        <b>Description:</b> {book.description}
+        <b>Description:</b> {bookData.book.description}
       </p>
       <p>
-        <b>Excerpt:</b> {book.excerpt}
+        <b>Excerpt:</b> {bookData.book.excerpt}
       </p>
-      <div>{!loading && <Spinner color="warning" size="lg" children="" />}</div>
+      <div>
+        {bookData.loading && <Spinner color="warning" size="lg" children="" />}
+      </div>
       <Link to="/books">
         <Button color="secondary">Back</Button>
       </Link>
@@ -46,4 +39,16 @@ const BookDetails = () => {
   );
 };
 
-export default BookDetails;
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    bookData: state.bookDetailsReducer,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchBookById: (id) => dispatch(fetchBookByIdAction(id)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(BookDetails);
