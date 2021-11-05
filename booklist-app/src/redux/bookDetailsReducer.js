@@ -1,4 +1,8 @@
-import { FETCH_BOOK_BY_ID_SUCCESS, FETCH_BOOK_BY_ID_FAILURE } from "./types";
+import {
+  FETCH_BOOK_BY_ID_SUCCESS,
+  FETCH_BOOK_BY_ID_FAILURE,
+  RESET_BOOK,
+} from "./types";
 
 const initialState = {
   loading: true,
@@ -21,6 +25,11 @@ export const bookDetailsReducer = (state = initialState, action) => {
         loading: false,
         book: [],
         error: action.payload,
+      };
+    }
+    case RESET_BOOK: {
+      return {
+        ...initialState,
       };
     }
     default:

@@ -1,8 +1,4 @@
-import {
-  FETCH_BOOKS_REQUEST,
-  FETCH_BOOKS_SUCCESS,
-  FETCH_BOOKS_FAILURE,
-} from "./types";
+import { FETCH_BOOKS_SUCCESS, FETCH_BOOKS_FAILURE } from "./types";
 
 const initialState = {
   loading: true,
@@ -13,12 +9,6 @@ const initialState = {
 export const bookReducer = (state = initialState, action) => {
   console.log("bookReducer:", action);
   switch (action.type) {
-    case FETCH_BOOKS_REQUEST: {
-      return {
-        ...state,
-        loading: true,
-      };
-    }
     case FETCH_BOOKS_SUCCESS: {
       return {
         loading: false,
