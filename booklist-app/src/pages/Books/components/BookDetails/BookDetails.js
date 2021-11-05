@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { Component } from "react";
 import "./BookDetails.scss";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button, Spinner } from "reactstrap";
 import { fetchBookByIdAction } from "../../../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";

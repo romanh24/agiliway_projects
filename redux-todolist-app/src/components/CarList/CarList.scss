@@ -1,0 +1,56 @@
+.wrapper {
+  text-align: center;
+  border: 7px solid #cfdcec;
+  width: 400px;
+  margin: 0 auto;
+
+  h1 {
+    width: 300px;
+    margin: 0 auto;
+  }
+
+  ul {
+    padding: 10px;
+    width: 285px;
+    height: 365px;
+    margin: 0 auto;
+  }
+
+  li {
+    margin: 7px;
+    list-style-type: none;
+    font-size: 20px;
+    background-color: #fed8b1;
+    border-radius: 70px;
+  }
+
+  .error {
+    height: 20px;
+
+    span {
+      background-color: yellow;
+    }
+  }
+
+  button {
+    background-color: #ffffff;
+    height: 70px;
+    width: 130px;
+    margin: 3px 10px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 70px;
+    border: 7px solid #cfdcec;
+  }
+
+  button:hover:not(:disabled) {
+    background: #30588e;
+    cursor: pointer;
+  }
+
+  .noItems {
+    background-color: #ff0000;
+    border-radius: 70px;
+    font-size: 18px;
+  }
+}

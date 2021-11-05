@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { Component } from "react";
 import "./BookList.scss";
 import { BookItem } from "../BookItem/BookItem";
 import Pagination from "../../../../components/Pagination/";
@@ -19,14 +19,6 @@ const BookList = () => {
   const lastBookIndex = currentPage * booksPerPage;
   const firstBookIndex = lastBookIndex - booksPerPage;
   const currentBook = books.slice(firstBookIndex, lastBookIndex);
-
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  const nextPage = () => setCurrentPage((prev) => prev + 1);
-
-  const previousPage = () => setCurrentPage((prev) => prev - 1);
 
   return (
     <div>
@@ -57,8 +49,8 @@ const BookList = () => {
           currentPage={currentPage}
         />
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default BookList;
