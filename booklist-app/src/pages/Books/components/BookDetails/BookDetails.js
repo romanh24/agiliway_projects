@@ -2,59 +2,40 @@ import React, { Component } from "react";
 import "./BookDetails.scss";
 import { Link } from "react-router-dom";
 import { Button, Spinner } from "reactstrap";
-import { connect } from "react-redux";
 import { fetchBookByIdAction } from "../../../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
 
-class BookDetails extends Component {
-  componentDidMount() {
-    const { id } = this.props.match.params;
-    this.props.fetchBookById(id);
-  }
+const BookDetails = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const { book, loading } = useSelector((state) => state.bookDetailsReducer);
 
-  render() {
-    const { bookData } = this.props;
+  useEffect(() => {
+    dispatch(fetchBookByIdAction(id));
+  }, [id, dispatch]);
 
-    const date = new Date(bookData.book.publishDate).toLocaleDateString(
-      "en-US",
-      {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      }
-    );
-    return (
-      <div className="book-details">
-        <h3>{bookData.book.title}</h3>
-        <p>{date}</p>
-        <p>
-          <b>Description:</b> {bookData.book.description}
-        </p>
-        <p>
-          <b>Excerpt:</b> {bookData.book.excerpt}
-        </p>
-        <div>
-          {bookData.loading && (
-            <Spinner color="warning" size="lg" children="" />
-          )}
-        </div>
-        <Link to="/books">
-          <Button color="secondary">Back</Button>
-        </Link>
-      </div>
-    );
-  }
-}
+  const date = new Date(book.publishDate).toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 
-const mapStateToProps = (state) => {
-  console.log(state);
-  return {
-    bookData: state.bookDetailsReducer,
-  };
+  return (
+    <div className="book-details">
+      <h3>{book.title}</h3>
+      <p>{date}</p>
+      <p>
+        <b>Description:</b> {book.description}
+      </p>
+      <p>
+        <b>Excerpt:</b> {book.excerpt}
+      </p>
+      <div>{loading && <Spinner color="warning" size="lg" children="" />}</div>
+      <Link to="/books">
+        <Button color="secondary">Back</Button>
+      </Link>
+    </div>
+  );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchBookById: (id) => dispatch(fetchBookByIdAction(id)),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(BookDetails);
+export default BookDetails;
