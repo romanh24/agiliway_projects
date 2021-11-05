@@ -1,47 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { Component } from "react";
 import "./BookList.scss";
-import { getBooks } from "../../../../api/books";
 import { BookItem } from "../BookItem/BookItem";
 import Pagination from "../../../../components/Pagination/";
 import { Spinner } from "reactstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchBooksAction } from "../../../../redux/actions";
 
 const BookList = () => {
-  const [bookList, setBookList] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [booksPerPage] = useState(9);
+  const { books, loading } = useSelector((state) => state.bookReducer);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getBooks()
-      .then(({ data }) => {
-        setLoading(true);
-        setBookList(data);
-        // setLoading(false);
-      })
-      .catch((error) => {
-        setError(true);
-        console.log("Error: ", error.message);
-      });
-  }, []);
+    dispatch(fetchBooksAction());
+  }, [dispatch]);
 
   const lastBookIndex = currentPage * booksPerPage;
   const firstBookIndex = lastBookIndex - booksPerPage;
-  const currentBook = bookList.slice(firstBookIndex, lastBookIndex);
-
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  const nextPage = () => setCurrentPage((prev) => prev + 1);
-
-  const previousPage = () => setCurrentPage((prev) => prev - 1);
+  const currentBook = books.slice(firstBookIndex, lastBookIndex);
 
   return (
     <div>
       <h1>Books</h1>
       <div className="book-list-container">
-        {loading &&
+        {!loading &&
           currentBook.map((book) => {
             return (
               <BookItem
@@ -54,20 +37,20 @@ const BookList = () => {
             );
           })}
 
-        {!loading && <Spinner color="warning" size="lg" children="" />}
+        {loading && <Spinner color="warning" size="lg" children="" />}
       </div>
       <div>
         <Pagination
           booksPerPage={booksPerPage}
-          totalBooks={bookList.length}
+          totalBooks={books.length}
           paginate={paginate}
           nextPage={nextPage}
           previousPage={previousPage}
           currentPage={currentPage}
         />
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default BookList;

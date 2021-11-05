@@ -1,26 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { Component } from "react";
 import "./BookDetails.scss";
-import { getBookById } from "../../../../api/books";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button, Spinner } from "reactstrap";
+import { fetchBookByIdAction } from "../../../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 const BookDetails = () => {
-  const [book, setBook] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const { book, loading } = useSelector((state) => state.bookDetailsReducer);
 
   useEffect(() => {
-    getBookById(id)
-      .then(({ data }) => {
-        setBook(data);
-        setLoading(true);
-      })
-      .catch((error) => {
-        setError(true);
-        console.log("Error: ", error.message);
-      });
-  }, []);
+    dispatch(fetchBookByIdAction(id));
+  }, [id, dispatch]);
 
   const date = new Date(book.publishDate).toLocaleDateString("en-US", {
     day: "numeric",
@@ -38,7 +30,7 @@ const BookDetails = () => {
       <p>
         <b>Excerpt:</b> {book.excerpt}
       </p>
-      <div>{!loading && <Spinner color="warning" size="lg" children="" />}</div>
+      <div>{loading && <Spinner color="warning" size="lg" children="" />}</div>
       <Link to="/books">
         <Button color="secondary">Back</Button>
       </Link>
