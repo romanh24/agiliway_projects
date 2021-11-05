@@ -20,6 +20,14 @@ const BookList = () => {
   const firstBookIndex = lastBookIndex - booksPerPage;
   const currentBook = books.slice(firstBookIndex, lastBookIndex);
 
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const nextPage = () => setCurrentPage((prev) => prev + 1);
+
+  const previousPage = () => setCurrentPage((prev) => prev - 1);
+
   return (
     <div>
       <h1>Books</h1>
