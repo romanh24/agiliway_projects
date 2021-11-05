@@ -2,18 +2,19 @@ import React, { useEffect } from "react";
 import "./BookDetails.scss";
 import { Link, useParams } from "react-router-dom";
 import { Button, Spinner } from "reactstrap";
-import { connect } from "react-redux";
 import { fetchBookByIdAction } from "../../../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
 
-const BookDetails = ({ bookData, fetchBookById }) => {
-  console.log(bookData);
+const BookDetails = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const { book, loading } = useSelector((state) => state.bookDetailsReducer);
 
   useEffect(() => {
-    fetchBookById(id);
-  }, []);
+    dispatch(fetchBookByIdAction(id));
+  }, [id, dispatch]);
 
-  const date = new Date(bookData.book.publishDate).toLocaleDateString("en-US", {
+  const date = new Date(book.publishDate).toLocaleDateString("en-US", {
     day: "numeric",
     month: "long",
     year: "numeric",
@@ -21,17 +22,15 @@ const BookDetails = ({ bookData, fetchBookById }) => {
 
   return (
     <div className="book-details">
-      <h3>{bookData.book.title}</h3>
+      <h3>{book.title}</h3>
       <p>{date}</p>
       <p>
-        <b>Description:</b> {bookData.book.description}
+        <b>Description:</b> {book.description}
       </p>
       <p>
-        <b>Excerpt:</b> {bookData.book.excerpt}
+        <b>Excerpt:</b> {book.excerpt}
       </p>
-      <div>
-        {bookData.loading && <Spinner color="warning" size="lg" children="" />}
-      </div>
+      <div>{loading && <Spinner color="warning" size="lg" children="" />}</div>
       <Link to="/books">
         <Button color="secondary">Back</Button>
       </Link>
@@ -39,16 +38,4 @@ const BookDetails = ({ bookData, fetchBookById }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  console.log(state);
-  return {
-    bookData: state.bookDetailsReducer,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchBookById: (id) => dispatch(fetchBookByIdAction(id)),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(BookDetails);
+export default BookDetails;

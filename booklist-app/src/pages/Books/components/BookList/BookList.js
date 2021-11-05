@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from "react";
 import "./BookList.scss";
 import { BookItem } from "../BookItem/BookItem";
-import { connect } from "react-redux";
-import { fetchBooksAction } from "../../../../redux/actions";
 import Pagination from "../../../../components/Pagination/";
 import { Spinner } from "reactstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchBooksAction } from "../../../../redux/actions";
 
-const BookList = ({ bookData, fetchBooks }) => {
-  console.log("bookData: ", bookData);
+const BookList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [booksPerPage] = useState(9);
+  const { books, loading } = useSelector((state) => state.bookReducer);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchBooks();
-  }, []);
+    dispatch(fetchBooksAction());
+  }, [dispatch]);
 
   const lastBookIndex = currentPage * booksPerPage;
   const firstBookIndex = lastBookIndex - booksPerPage;
-  const currentBook = bookData.books.slice(firstBookIndex, lastBookIndex);
+  const currentBook = books.slice(firstBookIndex, lastBookIndex);
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -31,7 +32,7 @@ const BookList = ({ bookData, fetchBooks }) => {
     <div>
       <h1>Books</h1>
       <div className="book-list-container">
-        {!bookData.loading &&
+        {!loading &&
           currentBook.map((book) => {
             return (
               <BookItem
@@ -44,12 +45,12 @@ const BookList = ({ bookData, fetchBooks }) => {
             );
           })}
 
-        {bookData.loading && <Spinner color="warning" size="lg" children="" />}
+        {loading && <Spinner color="warning" size="lg" children="" />}
       </div>
       <div>
         <Pagination
           booksPerPage={booksPerPage}
-          totalBooks={bookData.books.length}
+          totalBooks={books.length}
           paginate={paginate}
           nextPage={nextPage}
           previousPage={previousPage}
@@ -60,17 +61,4 @@ const BookList = ({ bookData, fetchBooks }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  console.log(state);
-  return {
-    bookData: state.bookReducer,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchBooks: () => dispatch(fetchBooksAction()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(BookList);
+export default BookList;
