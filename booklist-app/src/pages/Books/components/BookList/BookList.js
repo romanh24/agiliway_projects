@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import "./BookList.scss";
 import { BookItem } from "../BookItem/BookItem";
 import Pagination from "../../../../components/Pagination/";
@@ -49,8 +49,8 @@ const BookList = () => {
           currentPage={currentPage}
         />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default BookList;
