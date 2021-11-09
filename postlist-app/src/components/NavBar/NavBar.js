@@ -6,27 +6,31 @@ import logo from "./logo.png";
 
 const { Header } = Layout;
 
-const LogoContainer = styled.div`
+const LogoWrapper = styled.div`
   position: absolute;
   display: flex;
+`;
+
+const LogoImg = styled.div`
   background-image: url(${logo});
-  /* margin-left: 5%; */
   width: 65px;
   height: 65px;
   background-size: cover;
 `;
-// const NavBarText = styled.div`
-//   ${"" /* position: absolute; */}
-//   display: flex;
-//   background-color: #fff;
-// `;
+
+const LogoText = styled.div`
+  min-width: 100px;
+  color: #fff;
+  margin-left: 3%;
+`;
 
 const NavBar = () => {
   return (
     <Header style={{ position: "fixed", zIndex: 1, width: "100%" }}>
-      <div>
-        <LogoContainer />
-      </div>
+      <LogoWrapper>
+        <LogoImg />
+        <LogoText>DAILY POST</LogoText>
+      </LogoWrapper>
 
       <Menu
         style={{ justifyContent: "flex-end" }}
@@ -39,7 +43,7 @@ const NavBar = () => {
         </Menu.Item>
 
         <Menu.Item key="2">
-          <NavLink to="/post-list">Post List</NavLink>
+          <NavLink to="/posts">Post List</NavLink>
         </Menu.Item>
 
         <Menu.Item key="3">

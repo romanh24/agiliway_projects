@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Empty } from "antd";
 
 export class PostList extends Component {
   state = {};
@@ -9,7 +10,12 @@ export class PostList extends Component {
 
   render() {
     // const { listData } = this.props;
-    return <div>Post List</div>;
+    return (
+      <div>
+        <h1>Post List</h1>
+        <Empty />
+      </div>
+    );
   }
 }
 
