@@ -1,39 +1,25 @@
 import "./NavBar.css";
 import { Layout, Menu } from "antd";
 import { NavLink } from "react-router-dom";
-import styled from "styled-components";
-import logo from "./logo.png";
+import { LogoWrapper, LogoImg, LogoText } from "./styled.js";
 
 const { Header } = Layout;
 
-const LogoWrapper = styled.div`
-  position: absolute;
-  display: flex;
-`;
-
-const LogoImg = styled.div`
-  background-image: url(${logo});
-  width: 65px;
-  height: 65px;
-  background-size: cover;
-`;
-
-const LogoText = styled.div`
-  min-width: 100px;
-  color: #fff;
-  margin-left: 3%;
-`;
-
 const NavBar = () => {
   return (
-    <Header style={{ position: "fixed", zIndex: 1, width: "100%" }}>
-      <LogoWrapper>
-        <LogoImg />
-        <LogoText>DAILY POST</LogoText>
-      </LogoWrapper>
-
+    <Header
+      style={{
+        width: "100%",
+        display: "flex",
+      }}
+    >
+      <LogoImg />
+      <LogoText>DAILY POST</LogoText>
       <Menu
-        style={{ justifyContent: "flex-end" }}
+        style={{
+          justifyContent: "flex-end",
+          marginLeft: "auto",
+        }}
         theme="dark"
         mode="horizontal"
         defaultSelectedKeys={["1"]}
