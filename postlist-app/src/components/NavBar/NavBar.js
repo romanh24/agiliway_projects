@@ -12,8 +12,11 @@ const NavBar = () => {
         display: "flex",
       }}
     >
-      <StyledLogoImg />
+      <NavLink exact to="/">
+        <StyledLogoImg />
+      </NavLink>
       <StyledLogoText>DAILY POST</StyledLogoText>
+
       <Menu
         style={{
           justifyContent: "flex-end",
@@ -21,19 +24,19 @@ const NavBar = () => {
         }}
         theme="dark"
         mode="horizontal"
-        defaultSelectedKeys={["1"]}
+        selectable={false}
       >
-        <Menu.Item key="1">
-          <NavLink to="/">Home</NavLink>
-        </Menu.Item>
+        <NavLink exact to="/" activeClassName="activeLink">
+          <Menu.Item>Home</Menu.Item>
+        </NavLink>
 
-        <Menu.Item key="2">
-          <NavLink to="/posts">Posts</NavLink>
-        </Menu.Item>
+        <NavLink to="/posts" activeClassName="activeLink">
+          <Menu.Item>Posts</Menu.Item>
+        </NavLink>
 
-        <Menu.Item key="3">
-          <NavLink to="/statistic">Statistic</NavLink>
-        </Menu.Item>
+        <NavLink to="/statistic" activeClassName="activeLink">
+          <Menu.Item>Statistic</Menu.Item>
+        </NavLink>
       </Menu>
     </Header>
   );

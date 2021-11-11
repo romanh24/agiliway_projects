@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button } from "antd";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { StyledContainer, StyledImageFloated } from "./styled";
 
 export class Home extends Component {
@@ -38,11 +38,11 @@ export class Home extends Component {
             </p>
           </StyledContainer>
         </div>
-        <Link to="/posts">
+        <NavLink to="/posts">
           <Button style={{ marginTop: "25px" }} size="large">
             Check out the latest posts!
           </Button>
-        </Link>
+        </NavLink>
       </div>
     );
   }
