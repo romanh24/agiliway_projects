@@ -4,7 +4,7 @@ import { thunkPosts } from "../thunks";
 import { Empty } from "antd";
 import PostItem from "./PostItem/PostItem";
 import { StyledPostList } from "./styled";
-import { PostAddModel } from "../PostAddModel";
+import { PostAddModal } from "../PostAddModal";
 
 export class PostList extends Component {
   state = {};
@@ -19,7 +19,7 @@ export class PostList extends Component {
     return (
       <div>
         <h1>Posts</h1>
-        <PostAddModel />
+        <PostAddModal />
         <StyledPostList>
           {!listData.loading &&
             listData.posts.map((post) => {
@@ -35,7 +35,7 @@ export class PostList extends Component {
               );
             })}
         </StyledPostList>
-        {!listData.posts && <Empty />}
+        {!listData.posts.length && <Empty />}
       </div>
     );
   }

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledPostItem = styled.div`
-  max-width: 400px;
+  width: 400px;
   text-align: left;
   margin: 3% 2%;
   padding: 3%;

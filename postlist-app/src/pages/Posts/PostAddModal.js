@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Modal, Button } from "antd";
+import FormCreatePost from "./FormAddPost";
 
-export class PostAddModel extends Component {
+export class PostAddModal extends Component {
   state = {
     isModalVisible: false,
   };
@@ -17,6 +18,7 @@ export class PostAddModel extends Component {
   handleCancel = () => {
     this.setState({ isModalVisible: false });
   };
+
   render() {
     return (
       <>
@@ -24,14 +26,13 @@ export class PostAddModel extends Component {
           Create Post
         </Button>
         <Modal
-          title="Basic Modal"
+          title="Create Post"
           visible={this.state.isModalVisible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
+          centered="true"
         >
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
+          <FormCreatePost />
         </Modal>
       </>
     );
