@@ -1,7 +1,6 @@
-import "./NavBar.css";
 import { Layout, Menu } from "antd";
 import { NavLink } from "react-router-dom";
-import { LogoWrapper, LogoImg, LogoText } from "./styled.js";
+import { StyledLogoImg, StyledLogoText } from "./styled.js";
 
 const { Header } = Layout;
 
@@ -13,8 +12,8 @@ const NavBar = () => {
         display: "flex",
       }}
     >
-      <LogoImg />
-      <LogoText>DAILY POST</LogoText>
+      <StyledLogoImg />
+      <StyledLogoText>DAILY POST</StyledLogoText>
       <Menu
         style={{
           justifyContent: "flex-end",
@@ -29,7 +28,7 @@ const NavBar = () => {
         </Menu.Item>
 
         <Menu.Item key="2">
-          <NavLink to="/posts">Post List</NavLink>
+          <NavLink to="/posts">Posts</NavLink>
         </Menu.Item>
 
         <Menu.Item key="3">

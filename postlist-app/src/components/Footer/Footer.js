@@ -6,7 +6,11 @@ import {
   faInstagram,
   faTwitter,
 } from "@fortawesome/free-brands-svg-icons";
-import { SocialIconsContainer, SocialIcons, SocialIcon } from "./styled.js";
+import {
+  StyledFooterContainer,
+  StyledSocialIcons,
+  StyledSocialIcon,
+} from "./styled.js";
 
 const { Footer: AntFooter } = Layout;
 
@@ -15,20 +19,20 @@ export class Footer extends Component {
     const year = new Date().getFullYear();
     return (
       <AntFooter style={{ textAlign: "center", padding: "14px 50px" }}>
-        <SocialIconsContainer>
+        <StyledFooterContainer>
           <span> Copyright © {year} </span>
-          <SocialIcons>
-            <SocialIcon>
+          <StyledSocialIcons>
+            <StyledSocialIcon>
               <FontAwesomeIcon icon={faFacebook} />
-            </SocialIcon>
-            <SocialIcon>
+            </StyledSocialIcon>
+            <StyledSocialIcon>
               <FontAwesomeIcon icon={faInstagram} />
-            </SocialIcon>
-            <SocialIcon>
+            </StyledSocialIcon>
+            <StyledSocialIcon>
               <FontAwesomeIcon icon={faTwitter} />
-            </SocialIcon>
-          </SocialIcons>
-        </SocialIconsContainer>
+            </StyledSocialIcon>
+          </StyledSocialIcons>
+        </StyledFooterContainer>
       </AntFooter>
     );
   }

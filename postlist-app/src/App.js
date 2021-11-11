@@ -7,7 +7,7 @@ import Posts from "./pages/Posts";
 import Statistic from "./pages/Statistic";
 import { Result, Button } from "antd";
 import { Layout } from "antd";
-import { ContentWrapper } from "./styled";
+import { StyledContentWrapper } from "./styled";
 
 const { Content } = Layout;
 
@@ -18,15 +18,13 @@ function App() {
         <Switch>
           <Layout>
             <NavBar />
-            <ContentWrapper>
+            <StyledContentWrapper>
               <Content
                 className="site-layout"
                 style={{
                   padding: "0 50px",
-                  minHeight: "calc(100vh - 131.6px)",
-                  // marginTop: 64,
-                  // backgroundColor: "#fff",
-                  // minHeight: "80vh",
+                  minHeight: "calc(100vh - 151.6px)",
+                  marginTop: "20px",
                 }}
               >
                 <Route exact path="/">
@@ -40,14 +38,14 @@ function App() {
                 </Route>
                 <Route path="">
                   {/* <Result
-                  status="404"
-                  title="404"
-                  subTitle="Sorry, the page you visited does not exist."
-                  extra={<Button type="primary">Back Home</Button>}
-                /> */}
+                    status="404"
+                    title="404"
+                    subTitle="Sorry, the page you visited does not exist."
+                    extra={<Button type="primary">Back Home</Button>}
+                  /> */}
                 </Route>
               </Content>
-            </ContentWrapper>
+            </StyledContentWrapper>
             <Footer />
           </Layout>
         </Switch>

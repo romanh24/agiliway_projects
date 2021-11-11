@@ -12,7 +12,7 @@ export class PostList extends Component {
     // const { listData } = this.props;
     return (
       <div>
-        <h1>Post List</h1>
+        <h1>Posts</h1>
         <Empty />
       </div>
     );

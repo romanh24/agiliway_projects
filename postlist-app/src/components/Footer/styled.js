@@ -1,18 +1,18 @@
 import styled from "styled-components";
 
-export const SocialIconsContainer = styled.div`
+export const StyledFooterContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-export const SocialIcons = styled.ul`
+export const StyledSocialIcons = styled.ul`
   margin: 0;
   display: flex;
   list-style-type: none;
 `;
 
-export const SocialIcon = styled.li`
+export const StyledSocialIcon = styled.li`
   color: #808080;
   font-size: 1.2rem;
   padding: 5px;
