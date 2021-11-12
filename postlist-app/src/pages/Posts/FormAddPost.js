@@ -1,208 +1,56 @@
+import React, { Component } from "react";
 import { Form, Field } from "react-final-form";
 import { Input, Button } from "antd";
-import axios from "axios";
-
-import React, { Component } from "react";
+import { connect } from "react-redux";
+import { thunkCreatePost } from "./thunks";
 
 class FormAddPost extends Component {
-  state = {
-    fields: {
-      name: {
-        name: "name",
-        value: "",
-        type: "text",
-        label: "Name",
-        error: "",
-        validator: (value = "") => {
-          let error = "";
+  onSubmit = (value) => {
+    console.log("value:", value);
 
-          if (!value.length) {
-            return (error = "Cannot be empty");
-          }
+    // const postData = {
+    //   name: value.name,
+    //   author: value.author,
+    //   description: value.description,
+    // };
 
-          if (!value.match(/^[a-zA-Z]+$/)) {
-            return (error = "Only letters");
-          }
-
-          return error;
-        },
-      },
-      author: {
-        name: "author",
-        value: "",
-        type: "text",
-        label: "Author",
-        error: "",
-        validator: (value = "") => {
-          let error = "";
-
-          if (!value.length) {
-            return (error = "Cannot be empty");
-          }
-
-          if (!value.match(/^[a-zA-Z]+$/)) {
-            return (error = "Only letters");
-          }
-
-          return error;
-        },
-      },
-      description: {
-        name: "description",
-        value: "",
-        type: "text",
-        label: "Description",
-        error: "",
-        validator: (value = "") => {
-          let error = "";
-
-          if (!value.length) {
-            return (error = "Cannot be empty");
-          }
-
-          if (!value.match(/^[a-zA-Z]+$/)) {
-            return (error = "Only letters");
-          }
-
-          return error;
-        },
-      },
-    },
-  };
-
-  handleInputChange = (event) => {
-    const { value, name } = event.target;
-    console.log(value);
-    const currentField = this.state.fields[name];
-    const error = currentField.validator(value);
-    this.setState({
-      fields: {
-        ...this.state.fields,
-        [name]: { ...currentField, value, error },
-      },
-    });
-  };
-
-  onSubmit = (event) => {
-    // event.preventDefault();
-    const { fields } = this.state;
-    console.log(fields);
-
-    // axios({
-    //   method: "post",
-    //   url: "http://localhost:4000/posts",
-    //   data: {
-    //     name: fields.name.value,
-    //     author: fields.author.value,
-    //     description: fields.description.value,
-    //   },
-    // });
-
-    const data = {
-      name: fields.name.value,
-      author: fields.author.value,
-      description: fields.description.value,
-    };
-
-    axios
-      .post("http://localhost:4000/posts", data)
-      .then((response) => console.log(response))
-      .catch((err) => console.log(err));
-
-    this.setState({
-      fields: {
-        name: {
-          ...this.state.fields.name,
-          value: "",
-          error: "",
-        },
-        author: {
-          ...this.state.fields.author,
-          value: "",
-          error: "",
-        },
-        description: {
-          ...this.state.fields.description,
-          value: "",
-          error: "",
-        },
-      },
-    });
+    this.props.createPost(value);
   };
 
   render() {
-    const { name, author, description } = this.state.fields;
     return (
       <Form
         onSubmit={this.onSubmit}
+        // id="form"
         // validate={validate}
         render={({ handleSubmit, values, submitting, form }) => (
-          <form onSubmit={handleSubmit}>
-            <Field>
-              {() => (
-                <Input
-                  name={name.name}
-                  value={name.value}
-                  onChange={this.handleInputChange}
-                  addonAfter={name.name}
-                  allowClear
-                  bordered
-                  size="middle"
-                />
-              )}
+          <form onSubmit={handleSubmit} id="form">
+            <Field name="name" size="middle" placeholder="name">
+              {(props) => {
+                console.log(props);
+                return (
+                  <Input {...props.input} placeholder={props.placeholder} />
+                );
+              }}
             </Field>
 
-            <div>
-              <span>{name.error.length > 0 && name.error}</span>
-            </div>
-            <Field>
-              {() => (
-                <Input
-                  name={author.name}
-                  value={author.value}
-                  onChange={this.handleInputChange}
-                  addonAfter={author.name}
-                  allowClear
-                  bordered
-                  size="middle"
-                />
-              )}
+            <Field name="author" size="middle" placeholder="author">
+              {(props) => {
+                console.log(props);
+                return (
+                  <Input {...props.input} placeholder={props.placeholder} />
+                );
+              }}
             </Field>
 
-            <div>
-              <span>{author.error.length > 0 && author.error}</span>
-            </div>
-
-            <Field>
-              {() => (
-                <Input
-                  name={description.name}
-                  value={description.value}
-                  onChange={this.handleInputChange}
-                  addonAfter={description.name}
-                  allowClear
-                  bordered
-                  size="middle"
-                />
-              )}
+            <Field name="description" size="middle" placeholder="description">
+              {(props) => {
+                console.log(props);
+                return (
+                  <Input {...props.input} placeholder={props.placeholder} />
+                );
+              }}
             </Field>
-
-            <div>
-              <span>{description.error.length > 0 && description.error}</span>
-            </div>
-
-            {/* <input
-              type="button"
-              value="Reset"
-              onClick={form.reset}
-              className="button"
-            /> */}
-            <input
-              type="submit"
-              value="Submit"
-              className="button colorGreen"
-              disabled={submitting}
-            />
           </form>
         )}
       />
@@ -210,4 +58,20 @@ class FormAddPost extends Component {
   }
 }
 
-export default FormAddPost;
+const mapStateToProps = (state) => {
+  return {
+    createPostData: state.createPost,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createPost: (postData) => {
+      dispatch(thunkCreatePost(postData));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormAddPost);
+
+// export default FormAddPost;

@@ -1,5 +1,10 @@
-import { getPosts } from "../../api/posts";
-import { fetchPostsSuccessAction, fetchPostsFailureAction } from "./actions";
+import { getPosts, createPost } from "../../api/posts";
+import {
+  fetchPostsSuccessAction,
+  fetchPostsFailureAction,
+  createPostSuccessAction,
+  createPostInProgressAction,
+} from "./actions";
 
 export const thunkPosts = () => {
   return (dispatch) => {
@@ -14,3 +19,16 @@ export const thunkPosts = () => {
       });
   };
 };
+
+export const thunkCreatePost = (postData) => {
+  return (dispatch) => {
+    dispatch(createPostInProgressAction());
+    createPost(postData).then((response) => {
+      console.log(response);
+      dispatch(createPostSuccessAction());
+      dispatch(thunkPosts());
+    });
+  };
+};
+
+console.log(thunkCreatePost({ name: "test" }));

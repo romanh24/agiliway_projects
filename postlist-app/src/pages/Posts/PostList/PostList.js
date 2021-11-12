@@ -4,7 +4,7 @@ import { thunkPosts } from "../thunks";
 import { Empty } from "antd";
 import PostItem from "./PostItem/PostItem";
 import { StyledPostList } from "./styled";
-import { PostAddModal } from "../PostAddModal";
+import PostAddModal from "../PostAddModal";
 
 export class PostList extends Component {
   state = {};
