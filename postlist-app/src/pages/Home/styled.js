@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import posts from "./posts.png";
+import posts from "../../assets/images/posts.png";
 
 export const StyledContainer = styled.div`
   width: 70%;

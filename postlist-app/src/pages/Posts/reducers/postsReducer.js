@@ -1,7 +1,7 @@
 import {
-  FETCH_POSTS_SUCCESS,
-  FETCH_POSTS_FAILURE,
-} from "./action-types/posts.action-types";
+  POSTS_FETCH_SUCCESS,
+  POSTS_FETCH_FAILURE,
+} from "../action-types/posts.action-types";
 
 const initialState = {
   loading: true,
@@ -12,14 +12,14 @@ const initialState = {
 export const postsReducer = (state = initialState, action) => {
   console.log("postsReducer:", action);
   switch (action.type) {
-    case FETCH_POSTS_SUCCESS: {
+    case POSTS_FETCH_SUCCESS: {
       return {
         loading: false,
         posts: action.payload,
         error: "",
       };
     }
-    case FETCH_POSTS_FAILURE: {
+    case POSTS_FETCH_FAILURE: {
       return {
         loading: false,
         posts: [],

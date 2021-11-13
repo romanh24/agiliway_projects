@@ -14,7 +14,7 @@ import {
 
 const { Footer: AntFooter } = Layout;
 
-export class Footer extends Component {
+class Footer extends Component {
   render() {
     const year = new Date().getFullYear();
     return (

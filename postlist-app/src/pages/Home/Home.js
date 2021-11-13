@@ -3,7 +3,7 @@ import { Button } from "antd";
 import { Link, NavLink } from "react-router-dom";
 import { StyledContainer, StyledImageFloated } from "./styled";
 
-export class Home extends Component {
+class Home extends Component {
   render() {
     return (
       <div>

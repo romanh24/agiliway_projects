@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import PostList from "./PostList/PostList";
+import PostList from "./PostList";
 
-export class Posts extends Component {
+class Posts extends Component {
   render() {
     return <PostList />;
   }

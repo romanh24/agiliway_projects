@@ -1,12 +1,16 @@
-import { getPosts, createPost } from "../../api/posts";
+import { getPosts, addPost } from "../../../api/posts";
 import {
   fetchPostsSuccessAction,
   fetchPostsFailureAction,
   createPostSuccessAction,
-  createPostInProgressAction,
-} from "./actions";
+} from "../actions/posts.actions";
+import {
+  modalShowAction,
+  modalInProgressAction,
+  modalCloseAction,
+} from "../actions/modal.actions";
 
-export const thunkPosts = () => {
+export const getPostsThunk = () => {
   return (dispatch) => {
     getPosts()
       .then((response) => {
@@ -20,15 +24,15 @@ export const thunkPosts = () => {
   };
 };
 
-export const thunkCreatePost = (postData) => {
+export const addPostThunk = (postData) => {
   return (dispatch) => {
-    dispatch(createPostInProgressAction());
-    createPost(postData).then((response) => {
+    dispatch(modalInProgressAction());
+    addPost(postData).then((response) => {
       console.log(response);
       dispatch(createPostSuccessAction());
-      dispatch(thunkPosts());
+      dispatch(getPostsThunk());
     });
   };
 };
 
-console.log(thunkCreatePost({ name: "test" }));
+// console.log(addPostThunk({ name: "test" }));

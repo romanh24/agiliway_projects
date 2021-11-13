@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { thunkPosts } from "../thunks";
+import { getPostsThunk } from "../thunks/thunks";
 import { Empty } from "antd";
-import PostItem from "./PostItem/PostItem";
+import PostItem from "./PostItem";
 import { StyledPostList } from "./styled";
 import PostAddModal from "../PostAddModal";
 
-export class PostList extends Component {
+class PostList extends Component {
   state = {};
 
   componentDidMount() {
@@ -49,7 +49,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchPostList: () => dispatch(thunkPosts()),
+    fetchPostList: () => dispatch(getPostsThunk()),
   };
 };
 

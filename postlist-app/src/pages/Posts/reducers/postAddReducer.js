@@ -1,36 +1,36 @@
+import { POST_ADD_SUCCESS } from "../action-types/posts.action-types";
 import {
-  CREATE_POST_CLOSE,
-  CREATE_POST_IN_PROGRESS,
-  CREATE_POST_SHOW,
-  CREATE_POST_SUCCESS,
-} from "./action-types/posts.action-types";
+  MODAL_SHOW,
+  MODAL_CLOSE,
+  MODAL_IN_PROGRESS,
+} from "../action-types/modal.action-types";
 
 const initialState = {
   loading: false,
   visible: false,
 };
 
-export const createPostReducer = (state = initialState, action) => {
-  console.log("createPostReducer:", action);
+export const postAddReducer = (state = initialState, action) => {
+  console.log("postAddReducer:", action);
   switch (action.type) {
-    case CREATE_POST_SUCCESS: {
+    case POST_ADD_SUCCESS: {
       return {
         loading: false,
         visible: false,
       };
     }
-    case CREATE_POST_SHOW: {
+    case MODAL_SHOW: {
       return {
         loading: false,
         visible: true,
       };
     }
-    case CREATE_POST_IN_PROGRESS: {
+    case MODAL_IN_PROGRESS: {
       return {
         loading: true,
       };
     }
-    case CREATE_POST_CLOSE: {
+    case MODAL_CLOSE: {
       return {
         loading: false,
         visible: false,

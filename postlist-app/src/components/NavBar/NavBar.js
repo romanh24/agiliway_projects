@@ -1,45 +1,48 @@
+import React, { Component } from "react";
 import { Layout, Menu } from "antd";
 import { NavLink } from "react-router-dom";
 import { StyledLogoImg, StyledLogoText } from "./styled.js";
 
 const { Header } = Layout;
 
-const NavBar = () => {
-  return (
-    <Header
-      style={{
-        width: "100%",
-        display: "flex",
-      }}
-    >
-      <NavLink exact to="/">
-        <StyledLogoImg />
-      </NavLink>
-      <StyledLogoText>DAILY POST</StyledLogoText>
-
-      <Menu
+class NavBar extends Component {
+  render() {
+    return (
+      <Header
         style={{
-          justifyContent: "flex-end",
-          marginLeft: "auto",
+          width: "100%",
+          display: "flex",
         }}
-        theme="dark"
-        mode="horizontal"
-        selectable={false}
       >
-        <NavLink exact to="/" activeClassName="activeLink">
-          <Menu.Item>Home</Menu.Item>
+        <NavLink exact to="/">
+          <StyledLogoImg />
         </NavLink>
+        <StyledLogoText>DAILY POST</StyledLogoText>
 
-        <NavLink to="/posts" activeClassName="activeLink">
-          <Menu.Item>Posts</Menu.Item>
-        </NavLink>
+        <Menu
+          style={{
+            justifyContent: "flex-end",
+            marginLeft: "auto",
+          }}
+          theme="dark"
+          mode="horizontal"
+          selectable={false}
+        >
+          <NavLink exact to="/" activeClassName="activeLink">
+            <Menu.Item>Home</Menu.Item>
+          </NavLink>
 
-        <NavLink to="/statistic" activeClassName="activeLink">
-          <Menu.Item>Statistic</Menu.Item>
-        </NavLink>
-      </Menu>
-    </Header>
-  );
-};
+          <NavLink to="/posts" activeClassName="activeLink">
+            <Menu.Item>Posts</Menu.Item>
+          </NavLink>
+
+          <NavLink to="/statistic" activeClassName="activeLink">
+            <Menu.Item>Statistic</Menu.Item>
+          </NavLink>
+        </Menu>
+      </Header>
+    );
+  }
+}
 
 export default NavBar;
