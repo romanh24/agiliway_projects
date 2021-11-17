@@ -1,38 +1,29 @@
 import React, { Component } from "react";
 import { Modal, Button } from "antd";
 import PostAddForm from "./PostAddForm/PostAddForm";
-import { connect } from "react-redux";
-import { modalShowAction, modalCloseAction } from "../actions/modal.actions";
 
 class PostAddModal extends Component {
-  showModal = () => {
-    this.props.open();
+  checkModal = (event) => {
+    // event.preventDefault();
+    // const {
+    //   target: {
+    //     dataset: { modal },
+    //   },
+    // } = event;
+    console.log("111111:");
   };
-
-  // handleOk = () => {
-  //   // this.setState({ isModalVisible: false });
-  //   this.props.close();
-  // };
-
-  closeModal = () => {
-    this.props.close();
-  };
-
   render() {
-    console.log("prooopsss:", this.props);
     return (
       <>
-        <Button type="primary" onClick={this.showModal}>
-          Create Post
-        </Button>
         <Modal
+          // onClick={this.checkModal}
+          data-modal="PostAddModal"
           title="Create Post"
           visible={this.props.visible}
-          // onOk={this.handleOk}
-          onCancel={this.closeModal}
+          onCancel={this.props.closeModal}
           centered="true"
           footer={[
-            <Button key="back" onClick={this.closeModal}>
+            <Button key="back" onClick={this.props.closeModal}>
               Cancel
             </Button>,
             <Button form="form" htmlType="submit" key="submit" type="primary">
@@ -47,22 +38,4 @@ class PostAddModal extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    visible: state.postAddReducer.visible,
-    loading: state.postAddReducer.loading,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    open: () => {
-      dispatch(modalShowAction());
-    },
-    close: () => {
-      dispatch(modalCloseAction());
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(PostAddModal);
+export default PostAddModal;

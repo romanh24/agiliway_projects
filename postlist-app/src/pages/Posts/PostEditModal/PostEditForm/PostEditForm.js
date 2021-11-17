@@ -1,27 +1,38 @@
 import React, { Component } from "react";
 import { Form, Field } from "react-final-form";
-import { Input, Button } from "antd";
-import { connect } from "react-redux";
-import { addPostThunk } from "../../thunks/thunks";
-import { StyledPostAddForm } from "./styled";
+import { Input, Button, Descriptions } from "antd";
+// import { connect } from "react-redux";
+import { StyledPostEditForm } from "./styled";
 
-class PostAddForm extends Component {
-  onSubmit = (formValues, form) => {
-    const { createPost } = this.props;
+class PostEditForm extends Component {
+  onSubmit = (formValue, form) => {
+    const { postEditByIdThunk } = this.props;
 
-    createPost(formValues);
-    form.reset();
+    const id = formValue.uuid;
+    console.log("idddd:", id);
+
+    const data = {
+      name: formValue.name,
+      author: formValue.author,
+      description: formValue.description,
+    };
+
+    postEditByIdThunk(id, data);
+    // form.reset();
   };
 
   render() {
+    const { initialValues } = this.props;
+    console.log(initialValues);
     return (
       <Form
         onSubmit={this.onSubmit}
+        initialValues={initialValues}
         // id="form"
         // validate={validate}
         render={({ handleSubmit, values, submitting, form }) => (
-          <form onSubmit={handleSubmit} id="form">
-            <StyledPostAddForm>
+          <form onSubmit={handleSubmit} id="formEdit">
+            <StyledPostEditForm>
               <label for="name">Name</label>
               <Field
                 name="name"
@@ -42,9 +53,9 @@ class PostAddForm extends Component {
                   );
                 }}
               </Field>
-            </StyledPostAddForm>
+            </StyledPostEditForm>
 
-            <StyledPostAddForm>
+            <StyledPostEditForm>
               <label for="author">Author</label>
               <Field
                 name="author"
@@ -65,9 +76,9 @@ class PostAddForm extends Component {
                   );
                 }}
               </Field>
-            </StyledPostAddForm>
+            </StyledPostEditForm>
 
-            <StyledPostAddForm>
+            <StyledPostEditForm>
               <label for="description">Description</label>
               <Field
                 name="description"
@@ -88,7 +99,7 @@ class PostAddForm extends Component {
                   );
                 }}
               </Field>
-            </StyledPostAddForm>
+            </StyledPostEditForm>
 
             <Button
               type="button"
@@ -105,18 +116,15 @@ class PostAddForm extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    createPostData: state.postsReducer,
-  };
-};
+// const mapStateToProps = (state) => {
+//   return {};
+// };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    createPost: (postData) => {
-      dispatch(addPostThunk(postData));
-    },
-  };
-};
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     editPostById: (id) => dispatch(postEditByIdThunk(id)),
+//   };
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostAddForm);
+// export default connect(mapStateToProps, mapDispatchToProps)(PostEditForm);
+export default PostEditForm;

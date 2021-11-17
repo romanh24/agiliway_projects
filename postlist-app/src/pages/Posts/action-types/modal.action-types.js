@@ -1,3 +1,9 @@
-export const MODAL_SHOW = "MODAL_SHOW";
-export const MODAL_CLOSE = "MODAL_CLOSE";
-export const MODAL_IN_PROGRESS = "MODAL_IN_PROGRESS";
+export const OPEN_MODAL = "OPEN_MODAL";
+
+export const MODAL_ADD_CLOSE = "MODAL_ADD_CLOSE";
+
+export const MODAL_EDIT_SHOW = "MODAL_EDIT_SHOW";
+export const MODAL_EDIT_CLOSE = "MODAL_EDIT_CLOSE";
+
+export const MODAL_ADD_TYPE = "MODAL_ADD_TYPE";
+export const MODAL_EDIT_TYPE = "MODAL_EDIT_TYPE";
