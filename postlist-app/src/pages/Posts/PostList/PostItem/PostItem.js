@@ -13,7 +13,10 @@ import {
   faClock,
   faInfo,
 } from "@fortawesome/free-solid-svg-icons";
-import { MODAL_EDIT_TYPE } from "../../action-types/modal.action-types";
+import {
+  MODAL_EDIT_TYPE,
+  MODAL_DELETE_TYPE,
+} from "../../action-types/modal.action-types";
 
 class PostItem extends Component {
   render() {
@@ -23,7 +26,8 @@ class PostItem extends Component {
       name,
       author,
       description,
-      postEditGetByIdThunk,
+      postEditGetById,
+      postDeleteGetById,
       openModal,
     } = this.props;
 
@@ -33,21 +37,22 @@ class PostItem extends Component {
           key="0"
           onClick={() => {
             openModal(MODAL_EDIT_TYPE);
-            postEditGetByIdThunk(id);
+            postEditGetById(id);
           }}
         >
           Edit
         </Menu.Item>
-        <Menu.Item key="1" onClick={() => console.log("Delete")}>
+        <Menu.Item
+          key="1"
+          onClick={() => {
+            openModal(MODAL_DELETE_TYPE);
+            postDeleteGetById(id);
+          }}
+        >
           Delete
-        </Menu.Item>
-        <Menu.Item key="3" onClick={() => console.log("Open")}>
-          Open
         </Menu.Item>
       </Menu>
     );
-
-    console.log("this.props:", this.props);
 
     const date = new Date(createDate).toLocaleDateString("en-US", {
       day: "numeric",
@@ -65,10 +70,7 @@ class PostItem extends Component {
               overlay={menu}
               trigger={["click"]}
             >
-              <a
-                // className="ant-dropdown-link"
-                onClick={(e) => e.preventDefault()}
-              >
+              <a href="/#" onClick={(e) => e.preventDefault()}>
                 <FontAwesomeIcon icon={faEllipsisV} size="lg" color="black" />
               </a>
             </Dropdown>

@@ -4,8 +4,7 @@ import PostEditForm from "./PostEditForm/PostEditForm";
 
 class PostEditModal extends Component {
   render() {
-    const { initialValues, postEditByIdThunk, visible, closeModal } =
-      this.props;
+    const { postData, postEditById, visible, closeModal } = this.props;
     return (
       <>
         <Modal
@@ -27,10 +26,7 @@ class PostEditModal extends Component {
             </Button>,
           ]}
         >
-          <PostEditForm
-            initialValues={initialValues}
-            postEditByIdThunk={postEditByIdThunk}
-          />
+          <PostEditForm postData={postData} postEditById={postEditById} />
         </Modal>
       </>
     );

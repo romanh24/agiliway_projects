@@ -3,6 +3,7 @@ import {
   getPostDetails,
   addPost,
   editPost,
+  deletePost,
 } from "../../../api/posts";
 import {
   postsFetchSuccessAction,
@@ -12,7 +13,10 @@ import {
   postEditGetDataFailureAction,
   postEditGetDataSuccessAction,
   postEditByIdSuccessAction,
+  postDeleteGetByIdSuccessAction,
+  postDeleteGetByIdFailureAction,
   postEditByIdFailureAction,
+  postDeleteByIdSuccessAction,
 } from "../actions/posts.actions";
 import {
   postFetchByIdSuccessAction,
@@ -38,7 +42,6 @@ export const addPostThunk = (postData) => {
   return (dispatch) => {
     addPost(postData)
       .then((response) => {
-        console.log(response);
         dispatch(postAddSuccessAction());
         dispatch(getPostsThunk());
       })
@@ -55,7 +58,6 @@ export const postFetchByIdThunk = (id) => {
     getPostDetails(id)
       .then((response) => {
         const post = response;
-        console.log("thunk post:", response);
         dispatch(postFetchByIdSuccessAction(post));
       })
       .catch((error) => {
@@ -69,7 +71,6 @@ export const postEditGetByIdThunk = (id) => {
   return (dispatch) => {
     getPostDetails(id)
       .then((response) => {
-        console.log("edit post thunk:", response);
         dispatch(postEditGetDataSuccessAction(response));
       })
       .catch((error) => {
@@ -83,7 +84,6 @@ export const postEditByIdThunk = (id, postData) => {
   return (dispatch) => {
     editPost(id, postData)
       .then((response) => {
-        console.log(response);
         dispatch(postEditByIdSuccessAction());
         dispatch(getPostsThunk());
       })
@@ -91,5 +91,27 @@ export const postEditByIdThunk = (id, postData) => {
         const errorMsg = error.message;
         dispatch(postEditByIdFailureAction(errorMsg));
       });
+  };
+};
+
+export const postDeleteGetByIdThunk = (id) => {
+  return (dispatch) => {
+    getPostDetails(id)
+      .then((response) => {
+        dispatch(postDeleteGetByIdSuccessAction(response));
+      })
+      .catch((error) => {
+        const errorMsg = error.message;
+        dispatch(postDeleteGetByIdFailureAction(errorMsg));
+      });
+  };
+};
+
+export const postDeleteByIdThunk = (id) => {
+  return (dispatch) => {
+    deletePost(id).then((response) => {
+      dispatch(postDeleteByIdSuccessAction());
+      dispatch(getPostsThunk());
+    });
   };
 };

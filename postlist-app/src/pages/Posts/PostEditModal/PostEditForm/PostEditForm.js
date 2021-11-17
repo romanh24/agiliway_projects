@@ -1,36 +1,34 @@
 import React, { Component } from "react";
 import { Form, Field } from "react-final-form";
-import { Input, Button, Descriptions } from "antd";
-// import { connect } from "react-redux";
+import { Input, Button } from "antd";
 import { StyledPostEditForm } from "./styled";
 
 class PostEditForm extends Component {
   onSubmit = (formValue, form) => {
-    const { postEditByIdThunk } = this.props;
+    const { postEditById } = this.props;
 
     const id = formValue.uuid;
-    console.log("idddd:", id);
 
-    const data = {
+    const postNewData = {
       name: formValue.name,
       author: formValue.author,
       description: formValue.description,
     };
 
-    postEditByIdThunk(id, data);
+    postEditById(id, postNewData);
     // form.reset();
   };
 
   render() {
-    const { initialValues } = this.props;
-    console.log(initialValues);
+    const { postData } = this.props;
+    console.log(postData);
     return (
       <Form
         onSubmit={this.onSubmit}
-        initialValues={initialValues}
+        initialValues={postData}
         // id="form"
         // validate={validate}
-        render={({ handleSubmit, values, submitting, form }) => (
+        render={({ handleSubmit, values, form }) => (
           <form onSubmit={handleSubmit} id="formEdit">
             <StyledPostEditForm>
               <label for="name">Name</label>
@@ -42,7 +40,6 @@ class PostEditForm extends Component {
                 allowClear
               >
                 {(props) => {
-                  console.log(props);
                   return (
                     <Input
                       {...props.input}
@@ -65,7 +62,6 @@ class PostEditForm extends Component {
                 allowClear
               >
                 {(props) => {
-                  console.log(props);
                   return (
                     <Input
                       {...props.input}
@@ -88,7 +84,6 @@ class PostEditForm extends Component {
                 allowClear
               >
                 {(props) => {
-                  console.log(props);
                   return (
                     <Input
                       {...props.input}
@@ -116,15 +111,4 @@ class PostEditForm extends Component {
   }
 }
 
-// const mapStateToProps = (state) => {
-//   return {};
-// };
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     editPostById: (id) => dispatch(postEditByIdThunk(id)),
-//   };
-// };
-
-// export default connect(mapStateToProps, mapDispatchToProps)(PostEditForm);
 export default PostEditForm;

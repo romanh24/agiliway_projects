@@ -31,7 +31,6 @@ class PostAddForm extends Component {
                 allowClear
               >
                 {(props) => {
-                  console.log(props);
                   return (
                     <Input
                       {...props.input}
@@ -54,7 +53,6 @@ class PostAddForm extends Component {
                 allowClear
               >
                 {(props) => {
-                  console.log(props);
                   return (
                     <Input
                       {...props.input}
@@ -77,7 +75,6 @@ class PostAddForm extends Component {
                 allowClear
               >
                 {(props) => {
-                  console.log(props);
                   return (
                     <Input
                       {...props.input}

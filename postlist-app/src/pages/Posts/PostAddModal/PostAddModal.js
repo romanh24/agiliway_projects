@@ -3,27 +3,17 @@ import { Modal, Button } from "antd";
 import PostAddForm from "./PostAddForm/PostAddForm";
 
 class PostAddModal extends Component {
-  checkModal = (event) => {
-    // event.preventDefault();
-    // const {
-    //   target: {
-    //     dataset: { modal },
-    //   },
-    // } = event;
-    console.log("111111:");
-  };
   render() {
+    const { visible, closeModal } = this.props;
     return (
       <>
         <Modal
-          // onClick={this.checkModal}
-          data-modal="PostAddModal"
           title="Create Post"
-          visible={this.props.visible}
-          onCancel={this.props.closeModal}
+          visible={visible}
+          onCancel={closeModal}
           centered="true"
           footer={[
-            <Button key="back" onClick={this.props.closeModal}>
+            <Button key="back" onClick={closeModal}>
               Cancel
             </Button>,
             <Button form="form" htmlType="submit" key="submit" type="primary">

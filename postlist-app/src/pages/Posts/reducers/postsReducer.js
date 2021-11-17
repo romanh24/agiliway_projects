@@ -6,6 +6,10 @@ import {
   POST_EDIT_BY_ID_SUCCESS,
   POST_EDIT_BY_ID_FAILURE,
   POST_EDIT_GET_DATA_FAILURE,
+  POST_DELETE_BY_ID_SUCCESS,
+  POST_DELETE_BY_ID_FAILURE,
+  POST_DELETE_GET_DATA_SUCCESS,
+  POST_DELETE_GET_DATA_FAILURE,
 } from "../action-types/posts.action-types";
 
 import {
@@ -22,8 +26,8 @@ const initialState = {
   modalVisible: false,
   posts: [],
   modalType: null,
-  error: "",
   post: {},
+  error: "",
 };
 
 export const postsReducer = (state = initialState, action) => {
@@ -112,6 +116,38 @@ export const postsReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         post: {},
+        error: action.payload,
+      };
+    }
+    case POST_DELETE_GET_DATA_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        post: action.payload,
+      };
+    }
+    case POST_DELETE_GET_DATA_FAILURE: {
+      return {
+        ...state,
+        loading: false,
+        post: {},
+        error: action.payload,
+      };
+    }
+    case POST_DELETE_BY_ID_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        post: {},
+        modalVisible: false,
+        modalType: "",
+      };
+    }
+    case POST_DELETE_BY_ID_FAILURE: {
+      return {
+        ...state,
+        loading: false,
+        // post: {},
         error: action.payload,
       };
     }

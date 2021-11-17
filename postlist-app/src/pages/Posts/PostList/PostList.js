@@ -4,17 +4,21 @@ import {
   getPostsThunk,
   postEditByIdThunk,
   postEditGetByIdThunk,
+  postDeleteGetByIdThunk,
+  postDeleteByIdThunk,
 } from "../thunks/thunks";
 import { Empty } from "antd";
 import PostItem from "./PostItem";
 import { StyledPostList } from "./styled";
 import PostAddModal from "../PostAddModal";
 import PostEditModal from "../PostEditModal";
+import PostDeleteModal from "../PostDeleteModal";
 import { Button, Spin } from "antd";
 import { modalShowAction, modalCloseAction } from "../actions/modal.actions";
 import {
   MODAL_ADD_TYPE,
   MODAL_EDIT_TYPE,
+  MODAL_DELETE_TYPE,
 } from "../action-types/modal.action-types";
 
 class PostList extends Component {
@@ -22,26 +26,19 @@ class PostList extends Component {
     this.props.fetchPostList();
   }
 
-  // showModal = () => {
-  //   this.props.open();
-  // };
-
-  // closeModal = () => {
-  //   this.props.close();
-  // };
-
-  handleOpenModal = () => {};
-
   render() {
     const {
       listData,
+      postData,
       loading,
       visible,
-      postEditGetByIdThunk,
-      postEditByIdThunk,
+      postEditGetById,
+      postEditById,
+      postDeleteGetById,
       openModal,
       closeModal,
       modalType,
+      postDeleteById,
     } = this.props;
 
     return (
@@ -63,7 +60,8 @@ class PostList extends Component {
                   description={post.description}
                   // loading={post.loading}
                   // visible={post.visible}
-                  postEditGetByIdThunk={postEditGetByIdThunk}
+                  postEditGetById={postEditGetById}
+                  postDeleteGetById={postDeleteGetById}
                   // closeModal={closeModal}
                   openModal={openModal}
                 />
@@ -86,8 +84,18 @@ class PostList extends Component {
             loading={loading}
             visible={visible}
             closeModal={closeModal}
-            initialValues={this.props.listData.post}
-            postEditByIdThunk={postEditByIdThunk}
+            postData={postData}
+            postEditById={postEditById}
+          />
+        )}
+
+        {modalType === MODAL_DELETE_TYPE && (
+          <PostDeleteModal
+            loading={loading}
+            visible={visible}
+            closeModal={closeModal}
+            postData={postData}
+            postDeleteById={postDeleteById}
           />
         )}
       </div>
@@ -96,27 +104,40 @@ class PostList extends Component {
 }
 
 const mapStateToProps = (state) => {
+  const { postsReducer } = state;
   return {
-    listData: state.postsReducer,
-    visible: state.postsReducer.modalVisible,
-    loading: state.postsReducer.loading,
-    modalType: state.postsReducer.modalType,
+    listData: postsReducer,
+    postData: postsReducer.post,
+    visible: postsReducer.modalVisible,
+    loading: postsReducer.loading,
+    modalType: postsReducer.modalType,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchPostList: () => dispatch(getPostsThunk()),
-    postEditByIdThunk: (id, postData) =>
-      dispatch(postEditByIdThunk(id, postData)),
-    postEditGetByIdThunk: (id) => dispatch(postEditGetByIdThunk(id)),
-    openModal: (modalType) => {
-      dispatch(modalShowAction(modalType));
-    },
-    closeModal: () => {
-      dispatch(modalCloseAction());
-    },
-  };
+const mapDispatchToProps = {
+  fetchPostList: getPostsThunk,
+  postEditById: postEditByIdThunk,
+  postEditGetById: postEditGetByIdThunk,
+  postDeleteGetById: postDeleteGetByIdThunk,
+  postDeleteById: postDeleteByIdThunk,
+  openModal: modalShowAction,
+  closeModal: modalCloseAction,
 };
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     fetchPostList: () => dispatch(getPostsThunk()),
+//     postEditById: (id, postData) => dispatch(postEditByIdThunk(id, postData)),
+//     postEditGetById: (id) => dispatch(postEditGetByIdThunk(id)),
+//     postDeleteGetById: (id) => dispatch(postDeleteGetByIdThunk(id)),
+//     postDeleteById: (id) => dispatch(postDeleteByIdThunk(id)),
+//     openModal: (modalType) => {
+//       dispatch(modalShowAction(modalType));
+//     },
+//     closeModal: () => {
+//       dispatch(modalCloseAction());
+//     },
+//   };
+// };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostList);

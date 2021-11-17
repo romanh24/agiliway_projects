@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button } from "antd";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { StyledContainer, StyledImageFloated } from "./styled";
 
 class Home extends Component {
