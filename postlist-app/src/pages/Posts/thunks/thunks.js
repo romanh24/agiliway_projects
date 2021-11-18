@@ -6,12 +6,16 @@ import {
   deletePost,
 } from "../../../api/posts";
 import {
+  postsFetchInProgressAction,
   postsFetchSuccessAction,
   postsFetchFailureAction,
+  postAddInProgressAction,
   postAddSuccessAction,
   postAddFailureAction,
-  postEditGetDataFailureAction,
+  postEditGetDataInProgressAction,
   postEditGetDataSuccessAction,
+  postEditGetDataFailureAction,
+  postEditByIdInProgressAction,
   postEditByIdSuccessAction,
   postDeleteGetByIdSuccessAction,
   postDeleteGetByIdFailureAction,
@@ -26,6 +30,7 @@ import {
 
 export const getPostsThunk = () => {
   return (dispatch) => {
+    dispatch(postsFetchInProgressAction());
     getPosts()
       .then((response) => {
         const posts = response.data;
@@ -40,6 +45,7 @@ export const getPostsThunk = () => {
 
 export const addPostThunk = (postData) => {
   return (dispatch) => {
+    dispatch(postAddInProgressAction());
     addPost(postData)
       .then((response) => {
         dispatch(postAddSuccessAction());
@@ -69,6 +75,7 @@ export const postFetchByIdThunk = (id) => {
 
 export const postEditGetByIdThunk = (id) => {
   return (dispatch) => {
+    dispatch(postEditGetDataInProgressAction());
     getPostDetails(id)
       .then((response) => {
         dispatch(postEditGetDataSuccessAction(response));
@@ -82,6 +89,7 @@ export const postEditGetByIdThunk = (id) => {
 
 export const postEditByIdThunk = (id, postData) => {
   return (dispatch) => {
+    dispatch(postEditByIdInProgressAction());
     editPost(id, postData)
       .then((response) => {
         dispatch(postEditByIdSuccessAction());

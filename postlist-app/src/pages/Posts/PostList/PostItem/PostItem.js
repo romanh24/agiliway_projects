@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "antd";
-import { StyledPostItem, StyledDropDown, StyledRows } from "./styled";
+import { StyledPostItem, StyledDropDown, StyledRow } from "./styled";
 
 import { Menu, Dropdown } from "antd";
 
@@ -75,19 +75,19 @@ class PostItem extends Component {
               </a>
             </Dropdown>
           </StyledDropDown>
-          <StyledRows>
+          <StyledRow>
             <FontAwesomeIcon icon={faUser} />
             <span>{name}</span>
-          </StyledRows>
+          </StyledRow>
 
-          <StyledRows>
+          <StyledRow>
             <FontAwesomeIcon icon={faClock} />
             <span>{date}</span>
-          </StyledRows>
-          <StyledRows>
+          </StyledRow>
+          <StyledRow>
             <FontAwesomeIcon icon={faInfo} />
             <span>{description.substring(0, 400)}...</span>
-          </StyledRows>
+          </StyledRow>
 
           <Link to={`/posts/${id}`}>
             <Button color="primary">Read More</Button>

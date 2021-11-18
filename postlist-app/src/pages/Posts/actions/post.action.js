@@ -18,9 +18,8 @@ export const postFetchByFailureAction = (error) => {
   };
 };
 
-export const postResetAction = (error) => {
+export const postResetAction = () => {
   return {
     type: POST_RESET,
-    payload: error,
   };
 };

@@ -17,8 +17,12 @@ export const StyledDropDown = styled.div`
   margin-bottom: 10px;
 `;
 
-export const StyledRows = styled.div`
+export const StyledRow = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  span {
+    margin-left: 5px;
+  }
 `;

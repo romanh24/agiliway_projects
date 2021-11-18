@@ -3,7 +3,15 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { postFetchByIdThunk } from "../../../thunks/thunks";
 import { Spin, Button } from "antd";
-import { StyledPostDetails } from "./styled";
+import { StyledPostDetails, StyledRow } from "./styled";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faEllipsisV,
+  faComment,
+  faUser,
+  faClock,
+  faInfo,
+} from "@fortawesome/free-solid-svg-icons";
 
 class PostDetails extends Component {
   componentDidMount() {
@@ -26,14 +34,23 @@ class PostDetails extends Component {
     return (
       <div>
         <StyledPostDetails>
-          <h3>{postData.post.name}</h3>
-          <p>{date}</p>
-          <p>
-            <b>Description:</b> {postData.post.description}
-          </p>
-          <p>
-            <b>Author:</b> {postData.post.author}
-          </p>
+          <StyledRow>
+            <span>{postData.post.name}</span>
+          </StyledRow>
+          <StyledRow>
+            <FontAwesomeIcon icon={faClock} />
+            <span>{date}</span>
+          </StyledRow>
+          <StyledRow>
+            <FontAwesomeIcon icon={faInfo} />
+            <span> {postData.post.description}</span>
+          </StyledRow>
+          <StyledRow>
+            <FontAwesomeIcon icon={faUser} />
+            <span>
+              <b>Author:</b> {postData.post.author}
+            </span>
+          </StyledRow>
           <div>{postData.loading && <Spin size="medium" />}</div>
           <Link to="/posts">
             <Button color="secondary">Back</Button>
