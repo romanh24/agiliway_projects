@@ -6,7 +6,6 @@ import Home from "./pages/Home";
 import Posts from "./pages/Posts";
 import Statistic from "./pages/Statistic";
 import PostDetails from "./pages/Posts/PostList/PostItem/PostDetails";
-import { Result } from "antd";
 import { Layout } from "antd";
 import { StyledContentWrapper } from "./styled";
 

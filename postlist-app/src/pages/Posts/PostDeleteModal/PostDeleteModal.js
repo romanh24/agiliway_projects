@@ -1,23 +1,16 @@
 import React, { Component } from "react";
 import { Modal, Button } from "antd";
-import { Spin } from "antd";
 
 class PostDeleteModal extends Component {
-  componentDidMount() {
-    this.props.cancelLoadingModal();
-  }
+  handleDelete = () => {
+    const { postData, postDeleteById } = this.props;
+    const { uuid } = postData;
+
+    postDeleteById(uuid);
+  };
 
   render() {
-    const {
-      postData,
-      loading,
-      visible,
-      closeModal,
-      postDeleteById,
-      modalDataLoading,
-    } = this.props;
-
-    const { uuid } = postData;
+    const { visible, closeModal } = this.props;
 
     return (
       <>
@@ -26,16 +19,12 @@ class PostDeleteModal extends Component {
           visible={visible}
           onCancel={closeModal}
           footer={[
-            <Spin size="small" spinning={modalDataLoading}>
-              <Button onClick={closeModal} type="default">
-                Cancel
-              </Button>
-            </Spin>,
-            <Spin size="small" spinning={modalDataLoading}>
-              <Button onClick={() => postDeleteById(uuid)} type="primary">
-                Delete
-              </Button>
-            </Spin>,
+            <Button onClick={closeModal} type="default">
+              Cancel
+            </Button>,
+            <Button onClick={this.handleDelete} type="primary">
+              Delete
+            </Button>,
           ]}
         >
           <p>Would you like to delete this post?</p>

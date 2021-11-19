@@ -21,14 +21,13 @@ class PostEditForm extends Component {
   };
 
   render() {
-    const { postData, loading, modalDataLoading } = this.props;
+    const { postData, modalDataLoading } = this.props;
     console.log(postData);
     return (
       <Spin size="large" spinning={modalDataLoading}>
         <Form
           onSubmit={this.onSubmit}
           initialValues={postData}
-          // id="form"
           // validate={validate}
           render={({ handleSubmit, values, form }) => (
             <form onSubmit={handleSubmit} id="formEdit">

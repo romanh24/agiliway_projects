@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { Form, Field } from "react-final-form";
 import { Input, Button } from "antd";
-import { connect } from "react-redux";
-import { addPostThunk } from "../../thunks/thunks";
 import { StyledPostAddForm } from "./styled";
 import { Spin } from "antd";
 
@@ -106,18 +104,4 @@ class PostAddForm extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    createPostData: state.postsReducer,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    createPost: (postData) => {
-      dispatch(addPostThunk(postData));
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(PostAddForm);
+export default PostAddForm;

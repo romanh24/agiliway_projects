@@ -27,6 +27,7 @@ import {
   postFetchByFailureAction,
   postResetAction,
 } from "../actions/post.action";
+import { message } from "antd";
 
 export const getPostsThunk = () => {
   return (dispatch) => {
@@ -39,6 +40,7 @@ export const getPostsThunk = () => {
       .catch((error) => {
         const errorMsg = error.message;
         dispatch(postsFetchFailureAction(errorMsg));
+        message.error(errorMsg);
       });
   };
 };
@@ -49,11 +51,13 @@ export const addPostThunk = (postData) => {
     addPost(postData)
       .then((response) => {
         dispatch(postAddSuccessAction());
+        message.success("Post added!");
         dispatch(getPostsThunk());
       })
       .catch((error) => {
         const errorMsg = error.message;
         dispatch(postAddFailureAction(errorMsg));
+        message.error(errorMsg);
       });
   };
 };
@@ -69,6 +73,7 @@ export const postFetchByIdThunk = (id) => {
       .catch((error) => {
         const errorMsg = error.message;
         dispatch(postEditGetDataFailureAction(errorMsg));
+        message.error(errorMsg);
       });
   };
 };
@@ -83,6 +88,7 @@ export const postEditGetByIdThunk = (id) => {
       .catch((error) => {
         const errorMsg = error.message;
         dispatch(postFetchByFailureAction(errorMsg));
+        message.error(errorMsg);
       });
   };
 };
@@ -93,11 +99,13 @@ export const postEditByIdThunk = (id, postData) => {
     editPost(id, postData)
       .then((response) => {
         dispatch(postEditByIdSuccessAction());
+        message.success("Post edited!");
         dispatch(getPostsThunk());
       })
       .catch((error) => {
         const errorMsg = error.message;
         dispatch(postEditByIdFailureAction(errorMsg));
+        message.error(errorMsg);
       });
   };
 };
@@ -111,6 +119,7 @@ export const postDeleteGetByIdThunk = (id) => {
       .catch((error) => {
         const errorMsg = error.message;
         dispatch(postDeleteGetByIdFailureAction(errorMsg));
+        message.error(errorMsg);
       });
   };
 };
@@ -119,6 +128,7 @@ export const postDeleteByIdThunk = (id) => {
   return (dispatch) => {
     deletePost(id).then((response) => {
       dispatch(postDeleteByIdSuccessAction());
+      message.success("Post deleted!");
       dispatch(getPostsThunk());
     });
   };

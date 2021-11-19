@@ -5,13 +5,7 @@ import { postFetchByIdThunk } from "../../../thunks/thunks";
 import { Spin, Button } from "antd";
 import { StyledPostDetails, StyledRow } from "./styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEllipsisV,
-  faComment,
-  faUser,
-  faClock,
-  faInfo,
-} from "@fortawesome/free-solid-svg-icons";
+import { faUser, faClock, faInfo } from "@fortawesome/free-solid-svg-icons";
 
 class PostDetails extends Component {
   componentDidMount() {
@@ -21,41 +15,38 @@ class PostDetails extends Component {
   }
 
   render() {
-    const { postData } = this.props;
+    const { post, loading } = this.props;
+    console.log(this.props);
 
-    const date = new Date(postData.post.createDate).toLocaleDateString(
-      "en-US",
-      {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      }
-    );
+    const date = new Date(post.createDate).toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
     return (
       <div>
-        <StyledPostDetails>
-          <StyledRow>
-            <span>{postData.post.name}</span>
-          </StyledRow>
-          <StyledRow>
-            <FontAwesomeIcon icon={faClock} />
-            <span>{date}</span>
-          </StyledRow>
-          <StyledRow>
-            <FontAwesomeIcon icon={faInfo} />
-            <span> {postData.post.description}</span>
-          </StyledRow>
-          <StyledRow>
-            <FontAwesomeIcon icon={faUser} />
-            <span>
-              <b>Author:</b> {postData.post.author}
-            </span>
-          </StyledRow>
-          <div>{postData.loading && <Spin size="medium" />}</div>
-          <Link to="/posts">
-            <Button color="secondary">Back</Button>
-          </Link>
-        </StyledPostDetails>
+        <Spin size="large" spinning={loading}>
+          <StyledPostDetails>
+            <StyledRow>
+              <span>{post.name}</span>
+            </StyledRow>
+            <StyledRow>
+              <FontAwesomeIcon icon={faClock} />
+              <span>{date}</span>
+            </StyledRow>
+            <StyledRow>
+              <FontAwesomeIcon icon={faInfo} />
+              <span> {post.description}</span>
+            </StyledRow>
+            <StyledRow>
+              <FontAwesomeIcon icon={faUser} />
+              <span>{post.author}</span>
+            </StyledRow>
+            <Link to="/posts">
+              <Button color="secondary">Back</Button>
+            </Link>
+          </StyledPostDetails>
+        </Spin>
       </div>
     );
   }
@@ -63,7 +54,8 @@ class PostDetails extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    postData: state.postDetailsReducer,
+    post: state.postDetailsReducer.post,
+    loading: state.postDetailsReducer.loading,
   };
 };
 

@@ -1,17 +1,10 @@
 import React, { Component } from "react";
 import { Modal, Button } from "antd";
 import PostAddForm from "./PostAddForm/PostAddForm";
-import { Spin } from "antd";
 
 class PostAddModal extends Component {
   render() {
-    const {
-      visible,
-      closeModal,
-      loading,
-      modalDataLoading,
-      cancelLoadingModal,
-    } = this.props;
+    const { visible, closeModal, modalDataLoading, createPost } = this.props;
     return (
       <>
         <Modal
@@ -29,8 +22,8 @@ class PostAddModal extends Component {
           ]}
         >
           <PostAddForm
+            createPost={createPost}
             modalDataLoading={modalDataLoading}
-            cancelLoadingModal={cancelLoadingModal}
           />
         </Modal>
       </>

@@ -1,18 +1,11 @@
 import React, { Component } from "react";
 import { Modal, Button } from "antd";
 import PostEditForm from "./PostEditForm/PostEditForm";
-import { Spin } from "antd";
 
 class PostEditModal extends Component {
   render() {
-    const {
-      postData,
-      postEditById,
-      visible,
-      closeModal,
-      loading,
-      modalDataLoading,
-    } = this.props;
+    const { postData, postEditById, visible, closeModal, modalDataLoading } =
+      this.props;
     return (
       <>
         <Modal
@@ -38,7 +31,6 @@ class PostEditModal extends Component {
             modalDataLoading={modalDataLoading}
             postData={postData}
             postEditById={postEditById}
-            loading={loading}
           />
         </Modal>
       </>

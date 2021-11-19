@@ -16,11 +16,7 @@ import {
   POST_DELETE_GET_DATA_FAILURE,
 } from "../action-types/posts.action-types";
 
-import {
-  MODAL_OPEN,
-  MODAL_CLOSE,
-  MODAL_LOADING_CANCEL,
-} from "../action-types/modal.action-types";
+import { MODAL_OPEN, MODAL_CLOSE } from "../action-types/modal.action-types";
 
 const initialState = {
   loading: true,
@@ -53,12 +49,6 @@ export const postsReducer = (state = initialState, action) => {
         modalDataLoading: false,
       };
     }
-    // case MODAL_LOADING_CANCEL: {
-    //   return {
-    //     ...state,
-    //     modalDataLoading: false,
-    //   };
-    // }
     case POSTS_FETCH_IN_PROGRESS: {
       return {
         ...state,

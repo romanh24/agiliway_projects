@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
   getPostsThunk,
+  addPostThunk,
   postEditByIdThunk,
   postEditGetByIdThunk,
   postDeleteGetByIdThunk,
@@ -14,11 +15,7 @@ import PostAddModal from "../PostAddModal";
 import PostEditModal from "../PostEditModal";
 import PostDeleteModal from "../PostDeleteModal";
 import { Button, Spin } from "antd";
-import {
-  modalOpenAction,
-  modalCloseAction,
-  modalLoadingCancelAction,
-} from "../actions/modal.actions";
+import { modalOpenAction, modalCloseAction } from "../actions/modal.actions";
 import {
   MODAL_ADD_TYPE,
   MODAL_EDIT_TYPE,
@@ -40,19 +37,18 @@ class PostList extends Component {
     const {
       listData,
       postData,
-      loading,
-      modalDataLoading,
-      visible,
+      createPost,
+      postDeleteById,
       postEditGetById,
       postEditById,
       postDeleteGetById,
+      loading,
+      modalDataLoading,
+      visible,
       openModal,
       closeModal,
-      cancelLoadingModal,
       modalType,
-      postDeleteById,
     } = this.props;
-    console.log(modalDataLoading);
 
     return (
       <div>
@@ -71,11 +67,9 @@ class PostList extends Component {
                   name={post.name}
                   author={post.author}
                   description={post.description}
-                  // loading={post.loading}
-                  // visible={post.visible}
+                  loading={loading}
                   postEditGetById={postEditGetById}
                   postDeleteGetById={postDeleteGetById}
-                  // closeModal={closeModal}
                   openModal={openModal}
                 />
               );
@@ -90,7 +84,7 @@ class PostList extends Component {
             modalDataLoading={modalDataLoading}
             visible={visible}
             closeModal={closeModal}
-            cancelLoadingModal={cancelLoadingModal}
+            createPost={createPost}
           />
         )}
 
@@ -113,7 +107,6 @@ class PostList extends Component {
             closeModal={closeModal}
             postData={postData}
             postDeleteById={postDeleteById}
-            cancelLoadingModal={cancelLoadingModal}
           />
         )}
       </div>
@@ -135,13 +128,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchPostList: getPostsThunk,
+  createPost: addPostThunk,
   postEditById: postEditByIdThunk,
   postEditGetById: postEditGetByIdThunk,
   postDeleteGetById: postDeleteGetByIdThunk,
   postDeleteById: postDeleteByIdThunk,
   openModal: modalOpenAction,
   closeModal: modalCloseAction,
-  cancelLoadingModal: modalLoadingCancelAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostList);
