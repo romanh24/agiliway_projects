@@ -1,11 +1,18 @@
 import React, { Component } from "react";
 import { Modal, Button } from "antd";
-import PostEditForm from "./PostEditForm/PostEditForm";
+import PostForm from "./../Form";
 
 class PostEditModal extends Component {
   render() {
-    const { postData, postEditById, visible, closeModal, modalDataLoading } =
-      this.props;
+    const {
+      postData,
+      postEditById,
+      visible,
+      closeModal,
+      handleSubmit,
+      // modalDataLoading,
+      loading,
+    } = this.props;
     return (
       <>
         <Modal
@@ -18,7 +25,9 @@ class PostEditModal extends Component {
               Cancel
             </Button>,
             <Button
-              form="formEdit"
+              // disabled={modalDataLoading}
+              loading={loading}
+              form="form"
               htmlType="submit"
               key="submit"
               type="primary"
@@ -27,10 +36,11 @@ class PostEditModal extends Component {
             </Button>,
           ]}
         >
-          <PostEditForm
-            modalDataLoading={modalDataLoading}
+          <PostForm
+            loading={loading}
+            // modalDataLoading={modalDataLoading}
             postData={postData}
-            postEditById={postEditById}
+            handleSubmit={handleSubmit}
           />
         </Modal>
       </>

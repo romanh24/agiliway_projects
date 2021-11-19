@@ -4,10 +4,10 @@ import {
   MODAL_LOADING_CANCEL,
 } from "../action-types/modal.action-types";
 
-export const modalOpenAction = (modalType) => {
+export const modalOpenAction = (modalType, id) => {
   return {
     type: MODAL_OPEN,
-    payload: modalType,
+    payload: { modalType, id },
   };
 };
 

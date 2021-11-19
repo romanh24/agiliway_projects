@@ -13,14 +13,16 @@ class Statistic extends Component {
 
   render() {
     const { postList } = this.props;
+    console.log(postList);
     const columns = [
       {
         title: "Name",
         dataIndex: "name",
         key: "name",
         sorter: {
-          compare: (a, b) => a.name - b.name,
-          multiple: 1,
+          sorter: (a, b) => a.name - b.name,
+          // compare: (a, b) => a.name - b.name,
+          // multiple: 1,
         },
       },
       {

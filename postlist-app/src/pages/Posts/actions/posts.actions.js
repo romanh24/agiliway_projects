@@ -12,6 +12,7 @@ import {
   POST_EDIT_BY_ID_FAILURE,
   POST_DELETE_GET_DATA_SUCCESS,
   POST_DELETE_GET_DATA_FAILURE,
+  POST_DELETE_BY_ID_IN_PROGRESS,
   POST_DELETE_BY_ID_SUCCESS,
   POST_DELETE_BY_ID_FAILURE,
   POST_EDIT_GET_DATA_IN_PROGRESS,
@@ -106,6 +107,12 @@ export const postDeleteGetByIdFailureAction = (error) => {
   return {
     type: POST_DELETE_GET_DATA_FAILURE,
     payload: error,
+  };
+};
+
+export const postDeleteByIdInProgressAction = () => {
+  return {
+    type: POST_DELETE_BY_ID_IN_PROGRESS,
   };
 };
 

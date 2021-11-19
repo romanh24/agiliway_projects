@@ -10,8 +10,10 @@ import {
   POST_EDIT_GET_DATA_IN_PROGRESS,
   POST_EDIT_GET_DATA_SUCCESS,
   POST_EDIT_GET_DATA_FAILURE,
+  POST_DELETE_BY_ID_IN_PROGRESS,
   POST_DELETE_BY_ID_SUCCESS,
   POST_DELETE_BY_ID_FAILURE,
+  POST_FETCH_BY_ID_SUCCESS,
   POST_DELETE_GET_DATA_SUCCESS,
   POST_DELETE_GET_DATA_FAILURE,
 } from "../action-types/posts.action-types";
@@ -19,7 +21,7 @@ import {
 import { MODAL_OPEN, MODAL_CLOSE } from "../action-types/modal.action-types";
 
 const initialState = {
-  loading: true,
+  loading: false,
   modalDataLoading: false,
   modalVisible: false,
   posts: [],
@@ -37,7 +39,8 @@ export const postsReducer = (state = initialState, action) => {
         loading: false,
         modalDataLoading: false,
         modalVisible: true,
-        modalType: action.payload,
+        modalType: action.payload.modalType,
+        post: { id: action.payload.id },
       };
     }
     case MODAL_CLOSE: {
@@ -47,6 +50,7 @@ export const postsReducer = (state = initialState, action) => {
         modalVisible: false,
         modalType: "",
         modalDataLoading: false,
+        post: {},
       };
     }
     case POSTS_FETCH_IN_PROGRESS: {
@@ -89,14 +93,14 @@ export const postsReducer = (state = initialState, action) => {
       return {
         ...state,
         modalDataLoading: true,
-        loading: true,
+        // loading: true,
       };
     }
     case POST_EDIT_GET_DATA_SUCCESS: {
       return {
         ...state,
         modalDataLoading: false,
-        loading: false,
+        // loading: false,
         post: action.payload,
       };
     }
@@ -122,6 +126,7 @@ export const postsReducer = (state = initialState, action) => {
         modalVisible: false,
         modalDataLoading: false,
         modalType: "",
+        post: {},
       };
     }
     case POST_EDIT_BY_ID_FAILURE: {
@@ -146,12 +151,20 @@ export const postsReducer = (state = initialState, action) => {
         error: action.payload,
       };
     }
+    case POST_DELETE_BY_ID_IN_PROGRESS: {
+      return {
+        ...state,
+        modalDataLoading: true,
+        loading: true,
+      };
+    }
     case POST_DELETE_BY_ID_SUCCESS: {
       return {
         ...state,
         loading: false,
         post: {},
         modalVisible: false,
+        modalDataLoading: false,
         modalType: "",
       };
     }

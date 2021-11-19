@@ -22,12 +22,11 @@ class PostItem extends Component {
   render() {
     const {
       id,
+      post,
       createDate,
       name,
-      author,
       description,
       postEditGetById,
-      postDeleteGetById,
       openModal,
     } = this.props;
 
@@ -45,8 +44,7 @@ class PostItem extends Component {
         <Menu.Item
           key="1"
           onClick={() => {
-            openModal(MODAL_DELETE_TYPE);
-            postDeleteGetById(id);
+            openModal(MODAL_DELETE_TYPE, post.uuid);
           }}
         >
           Delete

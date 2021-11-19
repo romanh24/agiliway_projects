@@ -5,7 +5,7 @@ import { StyledPostEditForm } from "./styled";
 import { Spin } from "antd";
 
 class PostEditForm extends Component {
-  onSubmit = (formValue, form) => {
+  onSubmit = (formValue) => {
     const { postEditById } = this.props;
 
     const id = formValue.uuid;
@@ -17,20 +17,19 @@ class PostEditForm extends Component {
     };
 
     postEditById(id, postNewData);
-    // form.reset();
   };
 
   render() {
-    const { postData, modalDataLoading } = this.props;
+    const { postData, modalDataLoading, loading } = this.props;
     console.log(postData);
     return (
-      <Spin size="large" spinning={modalDataLoading}>
+      <Spin size="large" spinning={loading}>
         <Form
           onSubmit={this.onSubmit}
           initialValues={postData}
           // validate={validate}
           render={({ handleSubmit, values, form }) => (
-            <form onSubmit={handleSubmit} id="formEdit">
+            <form onSubmit={handleSubmit} id="form">
               <StyledPostEditForm>
                 <label for="name">Name</label>
                 <Field

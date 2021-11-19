@@ -19,6 +19,7 @@ import {
   postEditByIdSuccessAction,
   postDeleteGetByIdSuccessAction,
   postDeleteGetByIdFailureAction,
+  postDeleteByIdInProgressAction,
   postEditByIdFailureAction,
   postDeleteByIdSuccessAction,
 } from "../actions/posts.actions";
@@ -93,7 +94,7 @@ export const postEditGetByIdThunk = (id) => {
   };
 };
 
-export const postEditByIdThunk = (id, postData) => {
+export const postEditByIdThunk = (postData, id) => {
   return (dispatch) => {
     dispatch(postEditByIdInProgressAction());
     editPost(id, postData)
@@ -126,10 +127,16 @@ export const postDeleteGetByIdThunk = (id) => {
 
 export const postDeleteByIdThunk = (id) => {
   return (dispatch) => {
-    deletePost(id).then((response) => {
-      dispatch(postDeleteByIdSuccessAction());
-      message.success("Post deleted!");
-      dispatch(getPostsThunk());
-    });
+    dispatch(postDeleteByIdInProgressAction());
+    deletePost(id)
+      .then((response) => {
+        dispatch(postDeleteByIdSuccessAction());
+        message.success("Post deleted!");
+        dispatch(getPostsThunk());
+      })
+      .catch((error) => {
+        const errorMsg = error.message;
+        message.error(errorMsg);
+      });
   };
 };

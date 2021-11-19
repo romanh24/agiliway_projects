@@ -33,6 +33,17 @@ class PostList extends Component {
     openModal(MODAL_ADD_TYPE);
   };
 
+  handleSubmit = (postData) => {
+    const postNewData = {
+      name: postData.name,
+      author: postData.author,
+      description: postData.description,
+    };
+    const { postEditById } = this.props;
+
+    postEditById(postNewData, postData.uuid);
+  };
+
   render() {
     const {
       listData,
@@ -40,7 +51,6 @@ class PostList extends Component {
       createPost,
       postDeleteById,
       postEditGetById,
-      postEditById,
       postDeleteGetById,
       loading,
       modalDataLoading,
@@ -48,6 +58,7 @@ class PostList extends Component {
       openModal,
       closeModal,
       modalType,
+      id,
     } = this.props;
 
     return (
@@ -63,6 +74,7 @@ class PostList extends Component {
                 <PostItem
                   key={post.uuid}
                   id={post.uuid}
+                  post={post}
                   createDate={post.createDate}
                   name={post.name}
                   author={post.author}
@@ -90,17 +102,17 @@ class PostList extends Component {
 
         {modalType === MODAL_EDIT_TYPE && (
           <PostEditModal
-            loading={loading}
-            modalDataLoading={modalDataLoading}
+            loading={modalDataLoading}
             visible={visible}
             closeModal={closeModal}
             postData={postData}
-            postEditById={postEditById}
+            handleSubmit={this.handleSubmit}
           />
         )}
 
         {modalType === MODAL_DELETE_TYPE && (
           <PostDeleteModal
+            id={id}
             loading={loading}
             modalDataLoading={modalDataLoading}
             visible={visible}
@@ -123,6 +135,7 @@ const mapStateToProps = (state) => {
     loading: postsReducer.loading,
     modalDataLoading: postsReducer.modalDataLoading,
     modalType: postsReducer.modalType,
+    id: postsReducer.post.id,
   };
 };
 
