@@ -1,8 +1,8 @@
 import {
   POST_FETCH_BY_ID_SUCCESS,
-  POST_FETCH_BY_ID_FAILURE,
+  POST_FETCH_BY_ID_ERROR,
   POST_RESET,
-} from "../action-types/post.action-types";
+} from "../action-types/postDetails.action-types";
 
 export const postFetchByIdSuccessAction = (postData) => {
   return {
@@ -11,9 +11,9 @@ export const postFetchByIdSuccessAction = (postData) => {
   };
 };
 
-export const postFetchByFailureAction = (error) => {
+export const postFetchByErrorAction = (error) => {
   return {
-    type: POST_FETCH_BY_ID_FAILURE,
+    type: POST_FETCH_BY_ID_ERROR,
     payload: error,
   };
 };

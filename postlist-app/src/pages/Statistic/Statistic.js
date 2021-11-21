@@ -2,18 +2,17 @@ import React, { Component } from "react";
 import { Empty } from "antd";
 import { Table } from "antd";
 import { connect } from "react-redux";
-import { getPostsThunk } from "../../pages/Posts/thunks/thunks";
+import { postsFetchThunk } from "../../pages/Posts/thunks/thunks";
 
 class Statistic extends Component {
   componentDidMount() {
-    const { getPosts } = this.props;
+    const { postsFetch } = this.props;
 
-    getPosts();
+    postsFetch();
   }
 
   render() {
     const { postList } = this.props;
-    console.log(postList);
     const columns = [
       {
         title: "Name",
@@ -69,7 +68,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  getPosts: getPostsThunk,
+  postsFetch: postsFetchThunk,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Statistic);

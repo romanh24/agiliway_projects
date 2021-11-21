@@ -1,21 +1,19 @@
 import {
   POSTS_FETCH_IN_PROGRESS,
   POSTS_FETCH_SUCCESS,
-  POSTS_FETCH_FAILURE,
+  POSTS_FETCH_ERROR,
   POST_ADD_IN_PROGRESS,
   POST_ADD_SUCCESS,
-  POST_ADD_FAILURE,
-  POST_EDIT_GET_DATA_SUCCESS,
-  POST_EDIT_GET_DATA_FAILURE,
+  POST_ADD_ERROR,
+  POST_EDIT_FETCH_DATA_IN_PROGRESS,
+  POST_EDIT_FETCH_DATA_SUCCESS,
+  POST_EDIT_FETCH_DATA_ERROR,
   POST_EDIT_BY_ID_IN_PROGRESS,
   POST_EDIT_BY_ID_SUCCESS,
-  POST_EDIT_BY_ID_FAILURE,
-  POST_DELETE_GET_DATA_SUCCESS,
-  POST_DELETE_GET_DATA_FAILURE,
+  POST_EDIT_BY_ID_ERROR,
   POST_DELETE_BY_ID_IN_PROGRESS,
   POST_DELETE_BY_ID_SUCCESS,
-  POST_DELETE_BY_ID_FAILURE,
-  POST_EDIT_GET_DATA_IN_PROGRESS,
+  POST_DELETE_BY_ID_ERROR,
 } from "../action-types/posts.action-types";
 
 export const postsFetchInProgressAction = () => {
@@ -31,9 +29,9 @@ export const postsFetchSuccessAction = (posts) => {
   };
 };
 
-export const postsFetchFailureAction = (error) => {
+export const postsFetchErrorAction = (error) => {
   return {
-    type: POSTS_FETCH_FAILURE,
+    type: POSTS_FETCH_ERROR,
     payload: error,
   };
 };
@@ -50,29 +48,29 @@ export const postAddSuccessAction = () => {
   };
 };
 
-export const postAddFailureAction = (error) => {
+export const postAddErrorAction = (error) => {
   return {
-    type: POST_ADD_FAILURE,
+    type: POST_ADD_ERROR,
     payload: error,
   };
 };
 
-export const postEditGetDataInProgressAction = () => {
+export const postEditFetchDataInProgressAction = () => {
   return {
-    type: POST_EDIT_GET_DATA_IN_PROGRESS,
+    type: POST_EDIT_FETCH_DATA_IN_PROGRESS,
   };
 };
 
-export const postEditGetDataSuccessAction = (post) => {
+export const postEditFetchDataSuccessAction = (post) => {
   return {
-    type: POST_EDIT_GET_DATA_SUCCESS,
+    type: POST_EDIT_FETCH_DATA_SUCCESS,
     payload: post,
   };
 };
 
-export const postEditGetDataFailureAction = (error) => {
+export const postEditFetchDataErrorAction = (error) => {
   return {
-    type: POST_EDIT_GET_DATA_FAILURE,
+    type: POST_EDIT_FETCH_DATA_ERROR,
     payload: error,
   };
 };
@@ -89,23 +87,9 @@ export const postEditByIdSuccessAction = () => {
   };
 };
 
-export const postEditByIdFailureAction = (error) => {
+export const postEditByIdErrorAction = (error) => {
   return {
-    type: POST_EDIT_BY_ID_FAILURE,
-    payload: error,
-  };
-};
-
-export const postDeleteGetByIdSuccessAction = (postData) => {
-  return {
-    type: POST_DELETE_GET_DATA_SUCCESS,
-    payload: postData,
-  };
-};
-
-export const postDeleteGetByIdFailureAction = (error) => {
-  return {
-    type: POST_DELETE_GET_DATA_FAILURE,
+    type: POST_EDIT_BY_ID_ERROR,
     payload: error,
   };
 };
@@ -122,9 +106,9 @@ export const postDeleteByIdSuccessAction = () => {
   };
 };
 
-export const postDeleteByIdFailureAction = (error) => {
+export const postDeleteByIdErrorAction = (error) => {
   return {
-    type: POST_DELETE_BY_ID_FAILURE,
+    type: POST_DELETE_BY_ID_ERROR,
     payload: error,
   };
 };

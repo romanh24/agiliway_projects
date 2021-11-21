@@ -1,18 +1,11 @@
 import React, { Component } from "react";
 import { Modal, Button } from "antd";
-import PostForm from "./../Form";
+import PostForm from "../PostForm";
+import PropTypes from "prop-types";
 
 class PostEditModal extends Component {
   render() {
-    const {
-      postData,
-      postEditById,
-      visible,
-      closeModal,
-      handleSubmit,
-      // modalDataLoading,
-      loading,
-    } = this.props;
+    const { postData, visible, closeModal, handleSubmit, loading } = this.props;
     return (
       <>
         <Modal
@@ -25,7 +18,6 @@ class PostEditModal extends Component {
               Cancel
             </Button>,
             <Button
-              // disabled={modalDataLoading}
               loading={loading}
               form="form"
               htmlType="submit"
@@ -38,7 +30,6 @@ class PostEditModal extends Component {
         >
           <PostForm
             loading={loading}
-            // modalDataLoading={modalDataLoading}
             postData={postData}
             handleSubmit={handleSubmit}
           />
@@ -47,5 +38,13 @@ class PostEditModal extends Component {
     );
   }
 }
+
+PostEditModal.propTypes = {
+  loading: PropTypes.bool,
+  visible: PropTypes.bool,
+  postData: PropTypes.object,
+  closeModal: PropTypes.func,
+  handleSubmit: PropTypes.func,
+};
 
 export default PostEditModal;

@@ -9,14 +9,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEllipsisV,
   faComment,
-  faUser,
   faClock,
   faInfo,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   MODAL_EDIT_TYPE,
   MODAL_DELETE_TYPE,
 } from "../../action-types/modal.action-types";
+import PropTypes from "prop-types";
 
 class PostItem extends Component {
   render() {
@@ -26,25 +27,26 @@ class PostItem extends Component {
       createDate,
       name,
       description,
-      postEditGetById,
+      author,
+      postEditFetchById,
       openModal,
     } = this.props;
 
     const menu = (
-      <Menu>
+      <Menu key="postItem">
         <Menu.Item
-          key="0"
+          key="modalEdit"
           onClick={() => {
             openModal(MODAL_EDIT_TYPE);
-            postEditGetById(id);
+            postEditFetchById(id);
           }}
         >
           Edit
         </Menu.Item>
         <Menu.Item
-          key="1"
+          key="modalDelete"
           onClick={() => {
-            openModal(MODAL_DELETE_TYPE, post.uuid);
+            openModal(MODAL_DELETE_TYPE, post);
           }}
         >
           Delete
@@ -74,7 +76,6 @@ class PostItem extends Component {
             </Dropdown>
           </StyledDropDown>
           <StyledRow>
-            <FontAwesomeIcon icon={faUser} />
             <span>{name}</span>
           </StyledRow>
 
@@ -87,6 +88,11 @@ class PostItem extends Component {
             <span>{description.substring(0, 400)}...</span>
           </StyledRow>
 
+          <StyledRow>
+            <FontAwesomeIcon icon={faUser} />
+            <span>{author}</span>
+          </StyledRow>
+
           <Link to={`/posts/${id}`}>
             <Button color="primary">Read More</Button>
           </Link>
@@ -95,5 +101,15 @@ class PostItem extends Component {
     );
   }
 }
+
+PostItem.propTypes = {
+  id: PropTypes.string,
+  post: PropTypes.object,
+  createDate: PropTypes.string,
+  name: PropTypes.string,
+  description: PropTypes.string,
+  postEditFetchById: PropTypes.func,
+  openModal: PropTypes.func,
+};
 
 export default PostItem;

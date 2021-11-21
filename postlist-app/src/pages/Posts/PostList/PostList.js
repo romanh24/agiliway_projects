@@ -1,26 +1,25 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
-  getPostsThunk,
-  addPostThunk,
+  postsFetchThunk,
+  postAddThunk,
   postEditByIdThunk,
-  postEditGetByIdThunk,
-  postDeleteGetByIdThunk,
+  postEditFetchByIdThunk,
   postDeleteByIdThunk,
 } from "../thunks/thunks";
-import { Empty } from "antd";
-import PostItem from "./PostItem";
+import { Empty, Button, Spin, BackTop } from "antd";
 import { StyledPostList } from "./styled";
+import PostItem from "./PostItem";
 import PostAddModal from "../PostAddModal";
 import PostEditModal from "../PostEditModal";
 import PostDeleteModal from "../PostDeleteModal";
-import { Button, Spin } from "antd";
 import { modalOpenAction, modalCloseAction } from "../actions/modal.actions";
 import {
   MODAL_ADD_TYPE,
   MODAL_EDIT_TYPE,
   MODAL_DELETE_TYPE,
 } from "../action-types/modal.action-types";
+import PropTypes from "prop-types";
 
 class PostList extends Component {
   componentDidMount() {
@@ -34,12 +33,13 @@ class PostList extends Component {
   };
 
   handleSubmit = (postData) => {
+    const { postEditById } = this.props;
+
     const postNewData = {
       name: postData.name,
       author: postData.author,
       description: postData.description,
     };
-    const { postEditById } = this.props;
 
     postEditById(postNewData, postData.uuid);
   };
@@ -50,15 +50,13 @@ class PostList extends Component {
       postData,
       createPost,
       postDeleteById,
-      postEditGetById,
-      postDeleteGetById,
+      postEditFetchById,
       loading,
       modalDataLoading,
       visible,
       openModal,
       closeModal,
       modalType,
-      id,
     } = this.props;
 
     return (
@@ -74,26 +72,24 @@ class PostList extends Component {
                 <PostItem
                   key={post.uuid}
                   id={post.uuid}
-                  post={post}
                   createDate={post.createDate}
                   name={post.name}
-                  author={post.author}
                   description={post.description}
-                  loading={loading}
-                  postEditGetById={postEditGetById}
-                  postDeleteGetById={postDeleteGetById}
+                  author={post.author}
+                  post={post}
+                  postEditFetchById={postEditFetchById}
                   openModal={openModal}
                 />
               );
             })}
+            <BackTop />
           </StyledPostList>
         </Spin>
         {!listData.posts.length && <Empty />}
 
         {modalType === MODAL_ADD_TYPE && (
           <PostAddModal
-            loading={loading}
-            modalDataLoading={modalDataLoading}
+            loading={modalDataLoading}
             visible={visible}
             closeModal={closeModal}
             createPost={createPost}
@@ -112,9 +108,7 @@ class PostList extends Component {
 
         {modalType === MODAL_DELETE_TYPE && (
           <PostDeleteModal
-            id={id}
-            loading={loading}
-            modalDataLoading={modalDataLoading}
+            loading={modalDataLoading}
             visible={visible}
             closeModal={closeModal}
             postData={postData}
@@ -135,19 +129,33 @@ const mapStateToProps = (state) => {
     loading: postsReducer.loading,
     modalDataLoading: postsReducer.modalDataLoading,
     modalType: postsReducer.modalType,
-    id: postsReducer.post.id,
   };
 };
 
 const mapDispatchToProps = {
-  fetchPostList: getPostsThunk,
-  createPost: addPostThunk,
+  fetchPostList: postsFetchThunk,
+  createPost: postAddThunk,
   postEditById: postEditByIdThunk,
-  postEditGetById: postEditGetByIdThunk,
-  postDeleteGetById: postDeleteGetByIdThunk,
+  postEditFetchById: postEditFetchByIdThunk,
   postDeleteById: postDeleteByIdThunk,
   openModal: modalOpenAction,
   closeModal: modalCloseAction,
+};
+
+PostList.propTypes = {
+  fetchPostList: PropTypes.func,
+  postEditById: PropTypes.func,
+  postEditFetchById: PropTypes.func,
+  postDeleteById: PropTypes.func,
+  openModal: PropTypes.func,
+  closeModal: PropTypes.func,
+  listData: PropTypes.object,
+  postData: PropTypes.object,
+  createPost: PropTypes.func,
+  loading: PropTypes.bool,
+  modalDataLoading: PropTypes.bool,
+  visible: PropTypes.bool,
+  modalType: PropTypes.string,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostList);

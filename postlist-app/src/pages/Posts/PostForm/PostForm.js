@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { StyledPostEditForm } from "./styled";
 import { Form, Field } from "react-final-form";
-import { Input, Button } from "antd";
+import { Input } from "antd";
 import { Spin } from "antd";
+import PropTypes from "prop-types";
 
 class PostForm extends Component {
   render() {
@@ -17,7 +18,7 @@ class PostForm extends Component {
             render={({ handleSubmit, values, form }) => (
               <form onSubmit={handleSubmit} id="form">
                 <StyledPostEditForm>
-                  <label for="name">Name</label>
+                  <label htmlFor="name">Name</label>
                   <Field
                     name="name"
                     size="middle"
@@ -39,7 +40,7 @@ class PostForm extends Component {
                 </StyledPostEditForm>
 
                 <StyledPostEditForm>
-                  <label for="author">Author</label>
+                  <label htmlFor="author">Author</label>
                   <Field
                     name="author"
                     size="middle"
@@ -61,7 +62,7 @@ class PostForm extends Component {
                 </StyledPostEditForm>
 
                 <StyledPostEditForm>
-                  <label for="description">Description</label>
+                  <label htmlFor="description">Description</label>
                   <Field
                     name="description"
                     size="middle"
@@ -81,15 +82,6 @@ class PostForm extends Component {
                     }}
                   </Field>
                 </StyledPostEditForm>
-
-                {/* <Button
-                  type="button"
-                  value="Reset"
-                  onClick={form.reset}
-                  className="button"
-                >
-                  Reset
-                </Button> */}
               </form>
             )}
           />
@@ -98,5 +90,11 @@ class PostForm extends Component {
     );
   }
 }
+
+PostForm.propTypes = {
+  handleSubmit: PropTypes.func,
+  loading: PropTypes.bool,
+  postData: PropTypes.object,
+};
 
 export default PostForm;

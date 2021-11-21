@@ -1,24 +1,14 @@
-import {
-  MODAL_OPEN,
-  MODAL_CLOSE,
-  MODAL_LOADING_CANCEL,
-} from "../action-types/modal.action-types";
+import { MODAL_OPEN, MODAL_CLOSE } from "../action-types/modal.action-types";
 
-export const modalOpenAction = (modalType, id) => {
+export const modalOpenAction = (modalType, post) => {
   return {
     type: MODAL_OPEN,
-    payload: { modalType, id },
+    payload: { modalType, post },
   };
 };
 
 export const modalCloseAction = () => {
   return {
     type: MODAL_CLOSE,
-  };
-};
-
-export const modalLoadingCancelAction = () => {
-  return {
-    type: MODAL_LOADING_CANCEL,
   };
 };

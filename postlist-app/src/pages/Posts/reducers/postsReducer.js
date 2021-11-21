@@ -1,28 +1,26 @@
 import {
   POSTS_FETCH_IN_PROGRESS,
   POSTS_FETCH_SUCCESS,
-  POSTS_FETCH_FAILURE,
+  POSTS_FETCH_ERROR,
   POST_ADD_IN_PROGRESS,
   POST_ADD_SUCCESS,
+  POST_ADD_ERROR,
   POST_EDIT_BY_ID_IN_PROGRESS,
   POST_EDIT_BY_ID_SUCCESS,
-  POST_EDIT_BY_ID_FAILURE,
-  POST_EDIT_GET_DATA_IN_PROGRESS,
-  POST_EDIT_GET_DATA_SUCCESS,
-  POST_EDIT_GET_DATA_FAILURE,
+  POST_EDIT_BY_ID_ERROR,
+  POST_EDIT_FETCH_DATA_IN_PROGRESS,
+  POST_EDIT_FETCH_DATA_SUCCESS,
+  POST_EDIT_FETCH_DATA_ERROR,
   POST_DELETE_BY_ID_IN_PROGRESS,
   POST_DELETE_BY_ID_SUCCESS,
-  POST_DELETE_BY_ID_FAILURE,
-  POST_FETCH_BY_ID_SUCCESS,
-  POST_DELETE_GET_DATA_SUCCESS,
-  POST_DELETE_GET_DATA_FAILURE,
+  POST_DELETE_BY_ID_ERROR,
 } from "../action-types/posts.action-types";
 
 import { MODAL_OPEN, MODAL_CLOSE } from "../action-types/modal.action-types";
 
 const initialState = {
-  loading: false,
-  modalDataLoading: false,
+  loading: true,
+  modalDataLoading: true,
   modalVisible: false,
   posts: [],
   modalType: null,
@@ -31,7 +29,6 @@ const initialState = {
 };
 
 export const postsReducer = (state = initialState, action) => {
-  console.log("postsReducer:", action);
   switch (action.type) {
     case MODAL_OPEN: {
       return {
@@ -40,7 +37,7 @@ export const postsReducer = (state = initialState, action) => {
         modalDataLoading: false,
         modalVisible: true,
         modalType: action.payload.modalType,
-        post: { id: action.payload.id },
+        post: action.payload.post,
       };
     }
     case MODAL_CLOSE: {
@@ -55,8 +52,7 @@ export const postsReducer = (state = initialState, action) => {
     }
     case POSTS_FETCH_IN_PROGRESS: {
       return {
-        ...state,
-        loading: true,
+        ...initialState,
       };
     }
     case POSTS_FETCH_SUCCESS: {
@@ -67,7 +63,7 @@ export const postsReducer = (state = initialState, action) => {
         error: "",
       };
     }
-    case POSTS_FETCH_FAILURE: {
+    case POSTS_FETCH_ERROR: {
       return {
         ...state,
         loading: false,
@@ -77,7 +73,6 @@ export const postsReducer = (state = initialState, action) => {
     case POST_ADD_IN_PROGRESS: {
       return {
         ...state,
-        loading: true,
         modalDataLoading: true,
       };
     }
@@ -87,24 +82,31 @@ export const postsReducer = (state = initialState, action) => {
         loading: true,
         modalVisible: false,
         modalDataLoading: false,
+        posts: [],
       };
     }
-    case POST_EDIT_GET_DATA_IN_PROGRESS: {
+    case POST_ADD_ERROR: {
+      return {
+        ...state,
+        loading: false,
+        modalDataLoading: false,
+        error: action.payload,
+      };
+    }
+    case POST_EDIT_FETCH_DATA_IN_PROGRESS: {
       return {
         ...state,
         modalDataLoading: true,
-        // loading: true,
       };
     }
-    case POST_EDIT_GET_DATA_SUCCESS: {
+    case POST_EDIT_FETCH_DATA_SUCCESS: {
       return {
         ...state,
         modalDataLoading: false,
-        // loading: false,
         post: action.payload,
       };
     }
-    case POST_EDIT_GET_DATA_FAILURE: {
+    case POST_EDIT_FETCH_DATA_ERROR: {
       return {
         ...state,
         loading: false,
@@ -116,38 +118,21 @@ export const postsReducer = (state = initialState, action) => {
       return {
         ...state,
         modalDataLoading: true,
-        loading: true,
       };
     }
     case POST_EDIT_BY_ID_SUCCESS: {
       return {
         ...state,
-        loading: true,
         modalVisible: false,
-        modalDataLoading: false,
+        modalDataLoading: true,
         modalType: "",
         post: {},
       };
     }
-    case POST_EDIT_BY_ID_FAILURE: {
+    case POST_EDIT_BY_ID_ERROR: {
       return {
         ...state,
         loading: false,
-        error: action.payload,
-      };
-    }
-    case POST_DELETE_GET_DATA_SUCCESS: {
-      return {
-        ...state,
-        loading: false,
-        post: action.payload,
-      };
-    }
-    case POST_DELETE_GET_DATA_FAILURE: {
-      return {
-        ...state,
-        loading: false,
-        post: {},
         error: action.payload,
       };
     }
@@ -155,20 +140,19 @@ export const postsReducer = (state = initialState, action) => {
       return {
         ...state,
         modalDataLoading: true,
-        loading: true,
       };
     }
     case POST_DELETE_BY_ID_SUCCESS: {
       return {
         ...state,
-        loading: false,
+        loading: true,
         post: {},
         modalVisible: false,
         modalDataLoading: false,
         modalType: "",
       };
     }
-    case POST_DELETE_BY_ID_FAILURE: {
+    case POST_DELETE_BY_ID_ERROR: {
       return {
         ...state,
         loading: false,

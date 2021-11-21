@@ -8,29 +8,28 @@ import {
 import {
   postsFetchInProgressAction,
   postsFetchSuccessAction,
-  postsFetchFailureAction,
+  postsFetchErrorAction,
   postAddInProgressAction,
   postAddSuccessAction,
-  postAddFailureAction,
-  postEditGetDataInProgressAction,
-  postEditGetDataSuccessAction,
-  postEditGetDataFailureAction,
+  postAddErrorAction,
+  postEditFetchDataInProgressAction,
+  postEditFetchDataSuccessAction,
+  postEditFetchDataErrorAction,
   postEditByIdInProgressAction,
   postEditByIdSuccessAction,
-  postDeleteGetByIdSuccessAction,
-  postDeleteGetByIdFailureAction,
+  postEditByIdErrorAction,
   postDeleteByIdInProgressAction,
-  postEditByIdFailureAction,
   postDeleteByIdSuccessAction,
+  postDeleteByIdErrorAction,
 } from "../actions/posts.actions";
 import {
   postFetchByIdSuccessAction,
-  postFetchByFailureAction,
+  postFetchByErrorAction,
   postResetAction,
-} from "../actions/post.action";
+} from "../actions/postDetails.action";
 import { message } from "antd";
 
-export const getPostsThunk = () => {
+export const postsFetchThunk = () => {
   return (dispatch) => {
     dispatch(postsFetchInProgressAction());
     getPosts()
@@ -40,24 +39,24 @@ export const getPostsThunk = () => {
       })
       .catch((error) => {
         const errorMsg = error.message;
-        dispatch(postsFetchFailureAction(errorMsg));
+        dispatch(postsFetchErrorAction(errorMsg));
         message.error(errorMsg);
       });
   };
 };
 
-export const addPostThunk = (postData) => {
+export const postAddThunk = (postData) => {
   return (dispatch) => {
     dispatch(postAddInProgressAction());
     addPost(postData)
       .then((response) => {
         dispatch(postAddSuccessAction());
         message.success("Post added!");
-        dispatch(getPostsThunk());
+        dispatch(postsFetchThunk());
       })
       .catch((error) => {
         const errorMsg = error.message;
-        dispatch(postAddFailureAction(errorMsg));
+        dispatch(postAddErrorAction(errorMsg));
         message.error(errorMsg);
       });
   };
@@ -73,22 +72,22 @@ export const postFetchByIdThunk = (id) => {
       })
       .catch((error) => {
         const errorMsg = error.message;
-        dispatch(postEditGetDataFailureAction(errorMsg));
+        dispatch(postFetchByErrorAction(errorMsg));
         message.error(errorMsg);
       });
   };
 };
 
-export const postEditGetByIdThunk = (id) => {
+export const postEditFetchByIdThunk = (id) => {
   return (dispatch) => {
-    dispatch(postEditGetDataInProgressAction());
+    dispatch(postEditFetchDataInProgressAction());
     getPostDetails(id)
       .then((response) => {
-        dispatch(postEditGetDataSuccessAction(response));
+        dispatch(postEditFetchDataSuccessAction(response));
       })
       .catch((error) => {
         const errorMsg = error.message;
-        dispatch(postFetchByFailureAction(errorMsg));
+        dispatch(postEditFetchDataErrorAction(errorMsg));
         message.error(errorMsg);
       });
   };
@@ -101,25 +100,11 @@ export const postEditByIdThunk = (postData, id) => {
       .then((response) => {
         dispatch(postEditByIdSuccessAction());
         message.success("Post edited!");
-        dispatch(getPostsThunk());
+        dispatch(postsFetchThunk());
       })
       .catch((error) => {
         const errorMsg = error.message;
-        dispatch(postEditByIdFailureAction(errorMsg));
-        message.error(errorMsg);
-      });
-  };
-};
-
-export const postDeleteGetByIdThunk = (id) => {
-  return (dispatch) => {
-    getPostDetails(id)
-      .then((response) => {
-        dispatch(postDeleteGetByIdSuccessAction(response));
-      })
-      .catch((error) => {
-        const errorMsg = error.message;
-        dispatch(postDeleteGetByIdFailureAction(errorMsg));
+        dispatch(postEditByIdErrorAction(errorMsg));
         message.error(errorMsg);
       });
   };
@@ -132,10 +117,11 @@ export const postDeleteByIdThunk = (id) => {
       .then((response) => {
         dispatch(postDeleteByIdSuccessAction());
         message.success("Post deleted!");
-        dispatch(getPostsThunk());
+        dispatch(postsFetchThunk());
       })
       .catch((error) => {
         const errorMsg = error.message;
+        dispatch(postDeleteByIdErrorAction(errorMsg));
         message.error(errorMsg);
       });
   };

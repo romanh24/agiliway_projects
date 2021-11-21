@@ -6,17 +6,18 @@ import { Spin, Button } from "antd";
 import { StyledPostDetails, StyledRow } from "./styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faClock, faInfo } from "@fortawesome/free-solid-svg-icons";
+import PropTypes from "prop-types";
 
 class PostDetails extends Component {
   componentDidMount() {
     const { id } = this.props.match.params;
+    const { postFetchById } = this.props;
 
-    this.props.postFetchById(id);
+    postFetchById(id);
   }
 
   render() {
     const { post, loading } = this.props;
-    console.log(this.props);
 
     const date = new Date(post.createDate).toLocaleDateString("en-US", {
       day: "numeric",
@@ -64,4 +65,11 @@ const mapDispatchToProps = (dispatch) => {
     postFetchById: (id) => dispatch(postFetchByIdThunk(id)),
   };
 };
+
+PostDetails.propTypes = {
+  post: PropTypes.object,
+  loading: PropTypes.bool,
+  postFetchById: PropTypes.func,
+};
+
 export default connect(mapStateToProps, mapDispatchToProps)(PostDetails);

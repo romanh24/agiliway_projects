@@ -27,17 +27,18 @@ class NavBar extends Component {
           theme="dark"
           mode="horizontal"
           selectable={false}
+          key="navbar"
         >
           <NavLink exact to="/" activeClassName="activeLink">
-            <Menu.Item>Home</Menu.Item>
+            <Menu.Item key="home">Home</Menu.Item>
           </NavLink>
 
           <NavLink to="/posts" activeClassName="activeLink">
-            <Menu.Item>Posts</Menu.Item>
+            <Menu.Item key="posts ">Posts</Menu.Item>
           </NavLink>
 
           <NavLink to="/statistic" activeClassName="activeLink">
-            <Menu.Item>Statistic</Menu.Item>
+            <Menu.Item key="statistic">Statistic</Menu.Item>
           </NavLink>
         </Menu>
       </Header>

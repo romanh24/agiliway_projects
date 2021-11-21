@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { Modal, Button, Spin } from "antd";
+import PropTypes from "prop-types";
 
 class PostDeleteModal extends Component {
   render() {
-    const { visible, closeModal, postDeleteById, loading, id } = this.props;
+    const { visible, closeModal, postDeleteById, loading, postData } =
+      this.props;
 
     return (
       <>
@@ -16,7 +18,7 @@ class PostDeleteModal extends Component {
               Cancel
             </Button>,
             <Button
-              onClick={() => postDeleteById(id)}
+              onClick={() => postDeleteById(postData.uuid)}
               loading={loading}
               type="primary"
             >
@@ -32,5 +34,13 @@ class PostDeleteModal extends Component {
     );
   }
 }
+
+PostDeleteModal.propTypes = {
+  loading: PropTypes.bool,
+  visible: PropTypes.bool,
+  closeModal: PropTypes.func,
+  postData: PropTypes.object,
+  postDeleteById: PropTypes.func,
+};
 
 export default PostDeleteModal;

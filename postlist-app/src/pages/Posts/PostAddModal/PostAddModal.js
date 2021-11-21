@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { Modal, Button } from "antd";
-import PostForm from "./../Form";
+import PostForm from "./../PostForm";
+import PropTypes from "prop-types";
 
 class PostAddModal extends Component {
   render() {
-    const { visible, closeModal, modalDataLoading, createPost, loading } =
-      this.props;
+    const { visible, closeModal, createPost, loading } = this.props;
     return (
       <>
         <Modal
@@ -34,5 +34,12 @@ class PostAddModal extends Component {
     );
   }
 }
+
+PostAddModal.propTypes = {
+  loading: PropTypes.bool,
+  visible: PropTypes.bool,
+  closeModal: PropTypes.func,
+  createPost: PropTypes.func,
+};
 
 export default PostAddModal;
