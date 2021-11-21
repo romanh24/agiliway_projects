@@ -6,7 +6,12 @@ import { Spin, Button } from "antd";
 import { StyledPostDetails, StyledRow } from "./styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faClock, faInfo } from "@fortawesome/free-solid-svg-icons";
+import moment from "moment";
 import PropTypes from "prop-types";
+import {
+  selectorPost,
+  selecLoading,
+} from "./../../../selectors/postDetails.selectors";
 
 class PostDetails extends Component {
   componentDidMount() {
@@ -19,11 +24,6 @@ class PostDetails extends Component {
   render() {
     const { post, loading } = this.props;
 
-    const date = new Date(post.createDate).toLocaleDateString("en-US", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
     return (
       <div>
         <Spin size="large" spinning={loading}>
@@ -33,7 +33,7 @@ class PostDetails extends Component {
             </StyledRow>
             <StyledRow>
               <FontAwesomeIcon icon={faClock} />
-              <span>{date}</span>
+              <span>{moment(post.createDate).format("LL")}</span>
             </StyledRow>
             <StyledRow>
               <FontAwesomeIcon icon={faInfo} />
@@ -54,16 +54,15 @@ class PostDetails extends Component {
 }
 
 const mapStateToProps = (state) => {
+  const { postDetailsReducer } = state;
   return {
-    post: state.postDetailsReducer.post,
-    loading: state.postDetailsReducer.loading,
+    post: selectorPost(postDetailsReducer),
+    loading: selecLoading(postDetailsReducer),
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    postFetchById: (id) => dispatch(postFetchByIdThunk(id)),
-  };
+const mapDispatchToProps = {
+  postFetchById: postFetchByIdThunk,
 };
 
 PostDetails.propTypes = {

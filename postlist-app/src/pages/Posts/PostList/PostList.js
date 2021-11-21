@@ -20,6 +20,14 @@ import {
   MODAL_DELETE_TYPE,
 } from "../action-types/modal.action-types";
 import PropTypes from "prop-types";
+import {
+  selectorListData,
+  selectorPostData,
+  selectormodalVisible,
+  selectorLoading,
+  selectorModalDataLoading,
+  selectorModalType,
+} from "../selectors/posts.selectors";
 
 class PostList extends Component {
   componentDidMount() {
@@ -67,7 +75,7 @@ class PostList extends Component {
         </Button>
         <Spin size="large" spinning={loading}>
           <StyledPostList>
-            {listData.posts.map((post) => {
+            {listData.map((post) => {
               return (
                 <PostItem
                   key={post.uuid}
@@ -85,7 +93,7 @@ class PostList extends Component {
             <BackTop />
           </StyledPostList>
         </Spin>
-        {!listData.posts.length && <Empty />}
+        {!listData.length && <Empty />}
 
         {modalType === MODAL_ADD_TYPE && (
           <PostAddModal
@@ -123,12 +131,12 @@ class PostList extends Component {
 const mapStateToProps = (state) => {
   const { postsReducer } = state;
   return {
-    listData: postsReducer,
-    postData: postsReducer.post,
-    visible: postsReducer.modalVisible,
-    loading: postsReducer.loading,
-    modalDataLoading: postsReducer.modalDataLoading,
-    modalType: postsReducer.modalType,
+    listData: selectorListData(postsReducer),
+    postData: selectorPostData(postsReducer),
+    visible: selectormodalVisible(postsReducer),
+    loading: selectorLoading(postsReducer),
+    modalDataLoading: selectorModalDataLoading(postsReducer),
+    modalType: selectorModalType(postsReducer),
   };
 };
 
@@ -149,7 +157,7 @@ PostList.propTypes = {
   postDeleteById: PropTypes.func,
   openModal: PropTypes.func,
   closeModal: PropTypes.func,
-  listData: PropTypes.object,
+  listData: PropTypes.array,
   postData: PropTypes.object,
   createPost: PropTypes.func,
   loading: PropTypes.bool,

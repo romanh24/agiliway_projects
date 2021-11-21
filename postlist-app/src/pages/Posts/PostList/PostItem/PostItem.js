@@ -17,6 +17,7 @@ import {
   MODAL_EDIT_TYPE,
   MODAL_DELETE_TYPE,
 } from "../../action-types/modal.action-types";
+import moment from "moment";
 import PropTypes from "prop-types";
 
 class PostItem extends Component {
@@ -54,12 +55,6 @@ class PostItem extends Component {
       </Menu>
     );
 
-    const date = new Date(createDate).toLocaleDateString("en-US", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
-
     return (
       <div>
         <StyledPostItem>
@@ -81,7 +76,7 @@ class PostItem extends Component {
 
           <StyledRow>
             <FontAwesomeIcon icon={faClock} />
-            <span>{date}</span>
+            <span>{moment(createDate).format("LL")}</span>
           </StyledRow>
           <StyledRow>
             <FontAwesomeIcon icon={faInfo} />
