@@ -19,25 +19,21 @@ class Statistic extends Component {
         title: "Name",
         dataIndex: "name",
         key: "name",
-        sorter: (a, b) => a.name - b.name,
       },
       {
         title: "Author",
         key: "author",
         dataIndex: "author",
-        sorter: (a, b) => a.author - b.author,
       },
       {
         title: "Description",
         dataIndex: "description",
         key: "description",
-        sorter: (a, b) => a.description - b.description,
       },
       {
         title: "Date of create",
         key: "createDate",
         dataIndex: "createDate",
-        sorter: (a, b) => a.createDate - b.createDate,
       },
     ];
 
