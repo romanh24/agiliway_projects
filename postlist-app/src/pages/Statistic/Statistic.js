@@ -1,9 +1,10 @@
-import React, { Component } from "react";
-import { Empty } from "antd";
-import { Table } from "antd";
-import { connect } from "react-redux";
-import { postsFetchThunk } from "../../pages/Posts/thunks/thunks";
-import { createSelector } from "reselect";
+import React, { Component } from 'react';
+import { Empty, Table } from 'antd';
+import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
+import { postsFetchThunk } from '../Posts/thunks/thunks';
 
 class Statistic extends Component {
   componentDidMount() {
@@ -16,24 +17,24 @@ class Statistic extends Component {
     const { listData, loading } = this.props;
     const columns = [
       {
-        title: "Name",
-        dataIndex: "name",
-        key: "name",
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
       },
       {
-        title: "Author",
-        key: "author",
-        dataIndex: "author",
+        title: 'Author',
+        key: 'author',
+        dataIndex: 'author',
       },
       {
-        title: "Description",
-        dataIndex: "description",
-        key: "description",
+        title: 'Description',
+        dataIndex: 'description',
+        key: 'description',
       },
       {
-        title: "Date of create",
-        key: "createDate",
-        dataIndex: "createDate",
+        title: 'Date of create',
+        key: 'createDate',
+        dataIndex: 'createDate',
       },
     ];
 
@@ -62,6 +63,16 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   postsFetch: postsFetchThunk,
+};
+
+Statistic.propTypes = {
+  postsFetch: PropTypes.func.isRequired,
+  listData: PropTypes.arrayOf(PropTypes.object),
+  loading: PropTypes.bool.isRequired,
+};
+
+Statistic.defaultProps = {
+  listData: '',
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Statistic);

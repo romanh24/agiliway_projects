@@ -14,9 +14,9 @@ import {
   POST_DELETE_BY_ID_IN_PROGRESS,
   POST_DELETE_BY_ID_SUCCESS,
   POST_DELETE_BY_ID_ERROR,
-} from "../action-types/posts.action-types";
+} from '../action-types/posts.action-types';
 
-import { MODAL_OPEN, MODAL_CLOSE } from "../action-types/modal.action-types";
+import { MODAL_OPEN, MODAL_CLOSE } from '../action-types/modal.action-types';
 
 const initialState = {
   loading: true,
@@ -25,7 +25,7 @@ const initialState = {
   posts: [],
   modalType: null,
   post: {},
-  error: "",
+  error: '',
 };
 
 export const postsReducer = (state = initialState, action) => {
@@ -45,7 +45,7 @@ export const postsReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         modalVisible: false,
-        modalType: "",
+        modalType: '',
         modalDataLoading: false,
         post: {},
       };
@@ -60,7 +60,7 @@ export const postsReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         posts: action.payload,
-        error: "",
+        error: '',
       };
     }
     case POSTS_FETCH_ERROR: {
@@ -125,7 +125,7 @@ export const postsReducer = (state = initialState, action) => {
         ...state,
         modalVisible: false,
         modalDataLoading: true,
-        modalType: "",
+        modalType: '',
         post: {},
       };
     }
@@ -149,7 +149,7 @@ export const postsReducer = (state = initialState, action) => {
         post: {},
         modalVisible: false,
         modalDataLoading: false,
-        modalType: "",
+        modalType: '',
       };
     }
     case POST_DELETE_BY_ID_ERROR: {

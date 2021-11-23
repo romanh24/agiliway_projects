@@ -1,21 +1,24 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { postFetchByIdThunk } from "../../../thunks/thunks";
-import { Spin, Button } from "antd";
-import { StyledPostDetails, StyledRow } from "./styled";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faClock, faInfo } from "@fortawesome/free-solid-svg-icons";
-import moment from "moment";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Spin, Button } from 'antd';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faClock, faInfo } from '@fortawesome/free-solid-svg-icons';
+import moment from 'moment';
+import PropTypes from 'prop-types';
+import { postFetchByIdThunk } from '../../../thunks/thunks';
+import { StyledPostDetails, StyledRow } from './styled';
 import {
   selectorPost,
   selecLoading,
-} from "./../../../selectors/postDetails.selectors";
+} from '../../../selectors/postDetails.selectors';
 
 class PostDetails extends Component {
   componentDidMount() {
-    const { id } = this.props.match.params;
+    const { match } = this.props;
+    const { params } = match;
+    const { id } = params;
+
     const { postFetchById } = this.props;
 
     postFetchById(id);
@@ -26,14 +29,14 @@ class PostDetails extends Component {
 
     return (
       <div>
-        <Spin size="large" spinning={loading}>
+        <Spin size='large' spinning={loading}>
           <StyledPostDetails>
             <StyledRow>
               <span>{post.name}</span>
             </StyledRow>
             <StyledRow>
               <FontAwesomeIcon icon={faClock} />
-              <span>{moment(post.createDate).format("LL")}</span>
+              <span>{moment(post.createDate).format('LL')}</span>
             </StyledRow>
             <StyledRow>
               <FontAwesomeIcon icon={faInfo} />
@@ -43,8 +46,8 @@ class PostDetails extends Component {
               <FontAwesomeIcon icon={faUser} />
               <span>{post.author}</span>
             </StyledRow>
-            <Link to="/posts">
-              <Button color="secondary">Back</Button>
+            <Link to='/posts'>
+              <Button color='secondary'>Back</Button>
             </Link>
           </StyledPostDetails>
         </Spin>
@@ -66,9 +69,20 @@ const mapDispatchToProps = {
 };
 
 PostDetails.propTypes = {
-  post: PropTypes.object,
-  loading: PropTypes.bool,
-  postFetchById: PropTypes.func,
+  post: PropTypes.shape({
+    uuid: PropTypes.string,
+    name: PropTypes.string,
+    author: PropTypes.string,
+    description: PropTypes.string,
+    createDate: PropTypes.string,
+  }).isRequired,
+  loading: PropTypes.bool.isRequired,
+  postFetchById: PropTypes.func.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostDetails);

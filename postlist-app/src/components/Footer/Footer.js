@@ -1,16 +1,17 @@
-import React, { Component } from "react";
-import { Layout } from "antd";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+/* eslint-disable  */
+import React, { Component } from 'react';
+import { Layout } from 'antd';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFacebook,
   faInstagram,
   faTwitter,
-} from "@fortawesome/free-brands-svg-icons";
+} from '@fortawesome/free-brands-svg-icons';
 import {
   StyledFooterContainer,
   StyledSocialIcons,
   StyledSocialIcon,
-} from "./styled.js";
+} from './styled';
 
 const { Footer: AntFooter } = Layout;
 
@@ -18,9 +19,9 @@ class Footer extends Component {
   render() {
     const year = new Date().getFullYear();
     return (
-      <AntFooter style={{ textAlign: "center", padding: "14px 50px" }}>
+      <AntFooter style={{ textAlign: 'center', padding: '14px 50px' }}>
         <StyledFooterContainer>
-          <span> Copyright © {year} </span>
+          <span> Copyright ©{year}</span>
           <StyledSocialIcons>
             <StyledSocialIcon>
               <FontAwesomeIcon icon={faFacebook} />

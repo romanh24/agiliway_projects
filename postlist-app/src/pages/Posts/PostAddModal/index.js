@@ -1,1 +1,1 @@
-export { default } from "./PostAddModal.js";
+export { default } from './PostAddModal';

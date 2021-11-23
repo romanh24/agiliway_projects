@@ -1,24 +1,22 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { Button } from "antd";
-import { StyledPostItem, StyledDropDown, StyledRow } from "./styled";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { Button, Menu, Dropdown } from 'antd';
 
-import { Menu, Dropdown } from "antd";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEllipsisV,
   faComment,
   faClock,
   faInfo,
   faUser,
-} from "@fortawesome/free-solid-svg-icons";
+} from '@fortawesome/free-solid-svg-icons';
+import moment from 'moment';
+import PropTypes from 'prop-types';
+import { StyledPostItem, StyledDropDown, StyledRow } from './styled';
 import {
   MODAL_EDIT_TYPE,
   MODAL_DELETE_TYPE,
-} from "../../action-types/modal.action-types";
-import moment from "moment";
-import PropTypes from "prop-types";
+} from '../../action-types/modal.action-types';
 
 class PostItem extends Component {
   render() {
@@ -34,9 +32,9 @@ class PostItem extends Component {
     } = this.props;
 
     const menu = (
-      <Menu key="postItem">
+      <Menu key='postItem'>
         <Menu.Item
-          key="modalEdit"
+          key='modalEdit'
           onClick={() => {
             openModal(MODAL_EDIT_TYPE);
             postEditFetchById(id);
@@ -45,7 +43,7 @@ class PostItem extends Component {
           Edit
         </Menu.Item>
         <Menu.Item
-          key="modalDelete"
+          key='modalDelete'
           onClick={() => {
             openModal(MODAL_DELETE_TYPE, post);
           }}
@@ -59,14 +57,14 @@ class PostItem extends Component {
       <div>
         <StyledPostItem>
           <StyledDropDown>
-            <FontAwesomeIcon icon={faComment} size="2x" />
+            <FontAwesomeIcon icon={faComment} size='2x' />
             <Dropdown
-              placement="bottomRight"
+              placement='bottomRight'
               overlay={menu}
-              trigger={["click"]}
+              trigger={['click']}
             >
-              <a href="/#" onClick={(e) => e.preventDefault()}>
-                <FontAwesomeIcon icon={faEllipsisV} size="lg" color="black" />
+              <a href='/#' onClick={(e) => e.preventDefault()}>
+                <FontAwesomeIcon icon={faEllipsisV} size='lg' color='black' />
               </a>
             </Dropdown>
           </StyledDropDown>
@@ -76,11 +74,14 @@ class PostItem extends Component {
 
           <StyledRow>
             <FontAwesomeIcon icon={faClock} />
-            <span>{moment(createDate).format("LL")}</span>
+            <span>{moment(createDate).format('LL')}</span>
           </StyledRow>
           <StyledRow>
             <FontAwesomeIcon icon={faInfo} />
-            <span>{description.substring(0, 400)}...</span>
+            <span>
+              {description.substring(0, 400)}
+              ...
+            </span>
           </StyledRow>
 
           <StyledRow>
@@ -89,7 +90,7 @@ class PostItem extends Component {
           </StyledRow>
 
           <Link to={`/posts/${id}`}>
-            <Button color="primary">Read More</Button>
+            <Button color='primary'>Read More</Button>
           </Link>
         </StyledPostItem>
       </div>
@@ -98,13 +99,19 @@ class PostItem extends Component {
 }
 
 PostItem.propTypes = {
-  id: PropTypes.string,
-  post: PropTypes.object,
-  createDate: PropTypes.string,
-  name: PropTypes.string,
-  description: PropTypes.string,
-  postEditFetchById: PropTypes.func,
-  openModal: PropTypes.func,
+  id: PropTypes.string.isRequired,
+  post: PropTypes.shape({
+    uuid: PropTypes.string,
+    name: PropTypes.string,
+    author: PropTypes.string,
+    description: PropTypes.string,
+    createDate: PropTypes.string,
+  }).isRequired,
+  createDate: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  postEditFetchById: PropTypes.func.isRequired,
+  openModal: PropTypes.func.isRequired,
 };
 
 export default PostItem;

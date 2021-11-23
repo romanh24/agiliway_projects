@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import logo from "../../assets/images/logo.png";
+import styled from 'styled-components';
+import logo from '../../assets/images/logo.png';
 
 export const StyledLogoImg = styled.div`
   background-image: url(${logo});

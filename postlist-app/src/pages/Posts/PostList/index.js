@@ -1,1 +1,1 @@
-export { default } from "./PostList.js";
+export { default } from './PostList';

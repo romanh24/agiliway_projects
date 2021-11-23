@@ -1,4 +1,4 @@
-import { createSelector } from "reselect";
+import { createSelector } from 'reselect';
 
 const selectList = (postsReducer) => postsReducer.posts;
 const selectPost = (postsReducer) => postsReducer.post;
@@ -10,21 +10,21 @@ const selectModalType = (postsReducer) => postsReducer.modalType;
 export const selectorListData = createSelector(selectList, (posts) => posts);
 export const selectorPostData = createSelector(
   selectPost,
-  (postData) => postData
+  (postData) => postData,
 );
 export const selectormodalVisible = createSelector(
   selectModalVisible,
-  (visible) => visible
+  (visible) => visible,
 );
 export const selectorLoading = createSelector(
   selectLoading,
-  (loading) => loading
+  (loading) => loading,
 );
 export const selectorModalDataLoading = createSelector(
   selectModalDataLoading,
-  (modalDataLoading) => modalDataLoading
+  (modalDataLoading) => modalDataLoading,
 );
 export const selectorModalType = createSelector(
   selectModalType,
-  (modalType) => modalType
+  (modalType) => modalType,
 );
