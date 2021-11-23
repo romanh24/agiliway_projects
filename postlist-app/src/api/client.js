@@ -1,3 +1,4 @@
+/* eslint-disable */
 import axios from 'axios';
 
 const client = axios.create({
@@ -6,7 +7,7 @@ const client = axios.create({
 
 client.interceptors.response.use(
   (response) => response.data,
-  (error) => Promise.reject(error),
+  (error) => Promise.reject(error)
 );
 
 export default client;
