@@ -3,7 +3,7 @@ import { Button } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { StyledContainer, StyledImageFloated } from './styled';
 
-class Home extends Component {
+export class Home extends Component {
   render() {
     return (
       <div>
@@ -39,7 +39,11 @@ class Home extends Component {
           </StyledContainer>
         </div>
         <NavLink to='/posts'>
-          <Button style={{ marginTop: '25px' }} size='large'>
+          <Button
+            data-testid='checkout-button'
+            style={{ marginTop: '25px' }}
+            size='large'
+          >
             Check out the latest posts!
           </Button>
         </NavLink>

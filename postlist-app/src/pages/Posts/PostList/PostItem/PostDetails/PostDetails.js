@@ -11,7 +11,7 @@ import { postFetchStartAction } from '../../../actions/post.action';
 import { StyledPostDetails, StyledRow } from './styled';
 import { selectorPost, selecLoading } from '../../../selectors/post.selectors';
 
-class PostDetails extends Component {
+export class PostDetails extends Component {
   componentDidMount() {
     const { match } = this.props;
     const { params } = match;
@@ -45,7 +45,9 @@ class PostDetails extends Component {
               <span>{post.author}</span>
             </StyledRow>
             <Link to='/posts'>
-              <Button color='secondary'>Back</Button>
+              <Button data-testid='back-button' color='secondary'>
+                Back
+              </Button>
             </Link>
           </StyledPostDetails>
         </Spin>

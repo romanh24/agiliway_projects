@@ -29,13 +29,14 @@ import {
   postFetchErrorAction,
   postResetAction,
 } from '../actions/post.action';
-
-const POSTS_FETCH_START = 'POSTS_FETCH_START';
-const POST_ADD_START = 'POST_ADD_START';
-const POST_FETCH_START = 'POST_FETCH_START';
-const POST_EDIT_FETCH_DATA_START = 'POST_EDIT_FETCH_DATA_START';
-const POST_EDIT_BY_ID_START = 'POST_EDIT_BY_ID_START';
-const POST_DELETE_BY_ID_START = 'POST_DELETE_BY_ID_START';
+import {
+  POSTS_FETCH_START,
+  POST_ADD_START,
+  POST_EDIT_FETCH_START,
+  POST_EDIT_START,
+  POST_DELETE_START,
+} from '../action-types/posts.action-types';
+import { POST_FETCH_START } from '../action-types/post.action-types';
 
 function* postsFetchSaga() {
   try {
@@ -56,11 +57,11 @@ function* postAddSaga(action) {
     yield put(postAddInProgressAction());
     yield call(addPost, action.payload);
     yield put(postAddSuccessAction());
-    yield call(message.success('Post added!'));
     yield put({ type: POSTS_FETCH_START });
+    yield call(message.success, 'Post added!');
   } catch (error) {
     yield put(postAddErrorAction(error));
-    yield call(message.error(error));
+    yield call(message.error, error);
   }
 }
 
@@ -76,7 +77,7 @@ function* postFetchSaga(action) {
     yield put(postFetchSuccessAction(data));
   } catch (error) {
     yield put(postFetchErrorAction(error));
-    yield call(message.error(error));
+    yield call(message.error, error);
   }
 }
 
@@ -91,12 +92,12 @@ function* postEditFetchByIdSaga(action) {
     yield put(postEditFetchDataSuccessAction(data));
   } catch (error) {
     yield put(postEditFetchDataErrorAction(error));
-    yield call(message.error(error));
+    yield call(message.error, error);
   }
 }
 
 export function* postEditFetchByIdWatcher() {
-  yield takeLatest(POST_EDIT_FETCH_DATA_START, postEditFetchByIdSaga);
+  yield takeLatest(POST_EDIT_FETCH_START, postEditFetchByIdSaga);
 }
 
 function* postEditByIdSaga(action) {
@@ -104,30 +105,31 @@ function* postEditByIdSaga(action) {
     yield put(postEditByIdInProgressAction());
     yield call(editPost, action.payload.id, action.payload.data);
     yield put(postEditByIdSuccessAction());
-    yield call(message.success('Post edited!'));
     yield put({ type: POSTS_FETCH_START });
+    yield call(message.success, 'Post edited!');
   } catch (error) {
     yield put(postEditByIdErrorAction(error));
-    yield call(message.error(error));
+    yield call(message.error, error);
   }
 }
 
 export function* postEditByIdWatcher() {
-  yield takeLatest(POST_EDIT_BY_ID_START, postEditByIdSaga);
+  yield takeLatest(POST_EDIT_START, postEditByIdSaga);
 }
 
 function* postDeleteByIdSaga(action) {
   try {
     yield put(postDeleteByIdInProgressAction());
     yield call(deletePost, action.payload);
-    yield call(message.success('Post deleted!'));
+
     yield put({ type: POSTS_FETCH_START });
+    yield call(message.success, 'Post deleted!');
   } catch (error) {
     yield put(postDeleteByIdErrorAction(error));
-    yield call(message.error(error));
+    yield call(message.error, error);
   }
 }
 
 export function* postDeleteByIdWatcher() {
-  yield takeLatest(POST_DELETE_BY_ID_START, postDeleteByIdSaga);
+  yield takeLatest(POST_DELETE_START, postDeleteByIdSaga);
 }

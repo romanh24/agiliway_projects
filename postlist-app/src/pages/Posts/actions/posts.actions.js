@@ -7,15 +7,15 @@ import {
   POST_ADD_IN_PROGRESS,
   POST_ADD_SUCCESS,
   POST_ADD_ERROR,
-  POST_EDIT_FETCH_DATA_START,
+  POST_EDIT_FETCH_START,
   POST_EDIT_FETCH_DATA_IN_PROGRESS,
   POST_EDIT_FETCH_DATA_SUCCESS,
   POST_EDIT_FETCH_DATA_ERROR,
   POST_EDIT_BY_ID_IN_PROGRESS,
-  POST_EDIT_BY_ID_START,
+  POST_EDIT_START,
   POST_EDIT_BY_ID_SUCCESS,
   POST_EDIT_BY_ID_ERROR,
-  POST_DELETE_BY_ID_START,
+  POST_DELETE_START,
   POST_DELETE_BY_ID_IN_PROGRESS,
   POST_DELETE_BY_ID_SUCCESS,
   POST_DELETE_BY_ID_ERROR,
@@ -57,7 +57,7 @@ export const postAddErrorAction = (error) => ({
 });
 
 export const postEditFetchDataStartAction = (id) => ({
-  type: POST_EDIT_FETCH_DATA_START,
+  type: POST_EDIT_FETCH_START,
   payload: id,
 });
 
@@ -76,7 +76,7 @@ export const postEditFetchDataErrorAction = (error) => ({
 });
 
 export const postEditByIdStartAction = (id, data) => ({
-  type: POST_EDIT_BY_ID_START,
+  type: POST_EDIT_START,
   payload: { id, data },
 });
 
@@ -94,7 +94,7 @@ export const postEditByIdErrorAction = (error) => ({
 });
 
 export const postDeleteByIdStartAction = (id) => ({
-  type: POST_DELETE_BY_ID_START,
+  type: POST_DELETE_START,
   payload: id,
 });
 

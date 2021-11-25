@@ -3,7 +3,7 @@ import { Modal, Button } from 'antd';
 import PropTypes from 'prop-types';
 import PostForm from '../PostForm';
 
-class PostAddModal extends Component {
+export class PostAddModal extends Component {
   render() {
     const { visible, closeModal, createPost, loading } = this.props;
     return (
@@ -17,6 +17,7 @@ class PostAddModal extends Component {
             Cancel
           </Button>,
           <Button
+            data-testid='save-button'
             loading={loading}
             form='form'
             htmlType='submit'

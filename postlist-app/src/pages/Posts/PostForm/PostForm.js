@@ -6,7 +6,7 @@ import { Input, Spin } from 'antd';
 import PropTypes from 'prop-types';
 import { StyledPostEditForm } from './styled';
 
-const PostForm = ({ postData, loading, handleSubmit }) => (
+export const PostForm = ({ postData, loading, handleSubmit }) => (
   <div>
     <Spin size='large' spinning={loading}>
       <Form
