@@ -14,9 +14,8 @@ class NavBar extends Component {
           display: 'flex',
         }}
       >
-        <NavLink exact to='/'>
-          <StyledLogoImg />
-        </NavLink>
+        <StyledLogoImg />
+
         <StyledLogoText>DAILY POST</StyledLogoText>
 
         <Menu
@@ -26,20 +25,22 @@ class NavBar extends Component {
           }}
           theme='dark'
           mode='horizontal'
-          selectable={false}
+          selectable
           key='navbar'
         >
-          <NavLink exact to='/' activeClassName='activeLink'>
-            <Menu.Item key='home'>Home</Menu.Item>
-          </NavLink>
+          <Menu.Item key='home'>
+            <NavLink exact to='/'>
+              Home
+            </NavLink>
+          </Menu.Item>
 
-          <NavLink to='/posts' activeClassName='activeLink'>
-            <Menu.Item key='posts '>Posts</Menu.Item>
-          </NavLink>
+          <Menu.Item key='posts '>
+            <NavLink to='/posts'>Posts</NavLink>
+          </Menu.Item>
 
-          <NavLink to='/statistic' activeClassName='activeLink'>
-            <Menu.Item key='statistic'>Statistic</Menu.Item>
-          </NavLink>
+          <Menu.Item key='statistic'>
+            <NavLink to='/statistic'>Statistic</NavLink>
+          </Menu.Item>
         </Menu>
       </Header>
     );

@@ -24,10 +24,10 @@ import {
   postDeleteByIdErrorAction,
 } from '../actions/posts.actions';
 import {
-  postFetchByIdSuccessAction,
-  postFetchByErrorAction,
+  postFetchSuccessAction,
+  postFetchErrorAction,
   postResetAction,
-} from '../actions/postDetails.action';
+} from '../actions/post.action';
 
 export const postsFetchThunk = () => (dispatch) => {
   dispatch(postsFetchInProgressAction());
@@ -58,16 +58,16 @@ export const postAddThunk = (postData) => (dispatch) => {
     });
 };
 
-export const postFetchByIdThunk = (id) => (dispatch) => {
+export const postFetchIdThunk = (id) => (dispatch) => {
   dispatch(postResetAction());
   getPostDetails(id)
     .then((response) => {
       const post = response;
-      dispatch(postFetchByIdSuccessAction(post));
+      dispatch(postFetchSuccessAction(post));
     })
     .catch((error) => {
       const errorMsg = error.message;
-      dispatch(postFetchByErrorAction(errorMsg));
+      dispatch(postFetchErrorAction(errorMsg));
       message.error(errorMsg);
     });
 };
@@ -85,7 +85,7 @@ export const postEditFetchByIdThunk = (id) => (dispatch) => {
     });
 };
 
-export const postEditByIdThunk = (postData, id) => (dispatch) => {
+export const postEditByIdThunk = (id, postData) => (dispatch) => {
   dispatch(postEditByIdInProgressAction());
   editPost(id, postData)
     .then(() => {

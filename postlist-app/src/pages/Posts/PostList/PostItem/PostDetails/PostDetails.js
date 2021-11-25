@@ -6,12 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faClock, faInfo } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { postFetchByIdThunk } from '../../../thunks/thunks';
+// import { postFetchThunk } from '../../../thunks/thunks';
+import { postFetchStartAction } from '../../../actions/post.action';
 import { StyledPostDetails, StyledRow } from './styled';
-import {
-  selectorPost,
-  selecLoading,
-} from '../../../selectors/postDetails.selectors';
+import { selectorPost, selecLoading } from '../../../selectors/post.selectors';
 
 class PostDetails extends Component {
   componentDidMount() {
@@ -19,9 +17,9 @@ class PostDetails extends Component {
     const { params } = match;
     const { id } = params;
 
-    const { postFetchById } = this.props;
+    const { postFetch } = this.props;
 
-    postFetchById(id);
+    postFetch(id);
   }
 
   render() {
@@ -57,15 +55,15 @@ class PostDetails extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { postDetailsReducer } = state;
+  const { postReducer } = state;
   return {
-    post: selectorPost(postDetailsReducer),
-    loading: selecLoading(postDetailsReducer),
+    post: selectorPost(postReducer),
+    loading: selecLoading(postReducer),
   };
 };
 
 const mapDispatchToProps = {
-  postFetchById: postFetchByIdThunk,
+  postFetch: postFetchStartAction,
 };
 
 PostDetails.propTypes = {
@@ -77,7 +75,7 @@ PostDetails.propTypes = {
     createDate: PropTypes.string,
   }).isRequired,
   loading: PropTypes.bool.isRequired,
-  postFetchById: PropTypes.func.isRequired,
+  postFetch: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string,

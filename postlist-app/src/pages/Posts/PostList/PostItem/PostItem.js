@@ -34,7 +34,7 @@ class PostItem extends Component {
     const menu = (
       <Menu key='postItem'>
         <Menu.Item
-          key='modalEdit'
+          key='dropDownEdit'
           onClick={() => {
             openModal(MODAL_EDIT_TYPE);
             postEditFetchById(id);
@@ -43,7 +43,7 @@ class PostItem extends Component {
           Edit
         </Menu.Item>
         <Menu.Item
-          key='modalDelete'
+          key='dropDownDelete'
           onClick={() => {
             openModal(MODAL_DELETE_TYPE, post);
           }}

@@ -16,6 +16,13 @@ import PostEditModal from '../PostEditModal';
 import PostDeleteModal from '../PostDeleteModal';
 import { modalOpenAction, modalCloseAction } from '../actions/modal.actions';
 import {
+  postAddStartAction,
+  postsFetchStartAction,
+  postEditFetchDataStartAction,
+  postEditByIdStartAction,
+  postDeleteByIdStartAction,
+} from '../actions/posts.actions';
+import {
   MODAL_ADD_TYPE,
   MODAL_EDIT_TYPE,
   MODAL_DELETE_TYPE,
@@ -50,7 +57,7 @@ class PostList extends Component {
       description: postData.description,
     };
 
-    postEditById(postNewData, postData.uuid);
+    postEditById(postData.uuid, postNewData);
   };
 
   render() {
@@ -140,11 +147,14 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  fetchPostList: postsFetchThunk,
-  createPost: postAddThunk,
-  postEditById: postEditByIdThunk,
-  postEditFetchById: postEditFetchByIdThunk,
-  postDeleteById: postDeleteByIdThunk,
+  fetchPostList: postsFetchStartAction,
+  // createPost: postAddThunk,
+  // postEditByIdThunk,
+  // postEditFetchByIdThunk,
+  createPost: postAddStartAction,
+  postEditById: postEditByIdStartAction,
+  postEditFetchById: postEditFetchDataStartAction,
+  postDeleteById: postDeleteByIdStartAction,
   openModal: modalOpenAction,
   closeModal: modalCloseAction,
 };
@@ -162,7 +172,6 @@ PostList.propTypes = {
     name: PropTypes.string,
     author: PropTypes.string,
     description: PropTypes.string,
-    createDate: PropTypes.string,
   }),
   createPost: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
@@ -174,13 +183,7 @@ PostList.propTypes = {
 PostList.defaultProps = {
   modalType: '',
   listData: [],
-  postData: PropTypes.shape({
-    uuid: '',
-    name: '',
-    author: '',
-    description: '',
-    createDate: '',
-  }),
+  postData: {},
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostList);

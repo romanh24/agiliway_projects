@@ -1,15 +1,17 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { Empty, Table } from 'antd';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { postsFetchThunk } from '../Posts/thunks/thunks';
+import { postsFetchStartAction } from '../Posts/actions/posts.actions';
+// import { postsFetchThunk } from '../Posts/thunks/thunks';
 
-class Statistic extends Component {
+class PostsStatistic extends Component {
   componentDidMount() {
     const { postsFetch } = this.props;
-
     postsFetch();
   }
 
@@ -35,13 +37,19 @@ class Statistic extends Component {
         title: 'Date of create',
         key: 'createDate',
         dataIndex: 'createDate',
+        render: (text) => moment(text).format('LL'),
       },
     ];
 
     return (
       <div>
         <h1>Statistic</h1>
-        <Table loading={loading} columns={columns} dataSource={listData} />
+        <Table
+          rowKey={(listData) => listData.uuid}
+          loading={loading}
+          columns={columns}
+          dataSource={listData}
+        />
         {!listData && <Empty />}
       </div>
     );
@@ -62,17 +70,18 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  postsFetch: postsFetchThunk,
+  // postsFetch: postsFetchThunk,
+  postsFetch: postsFetchStartAction,
 };
 
-Statistic.propTypes = {
+PostsStatistic.propTypes = {
   postsFetch: PropTypes.func.isRequired,
   listData: PropTypes.arrayOf(PropTypes.object),
   loading: PropTypes.bool.isRequired,
 };
 
-Statistic.defaultProps = {
+PostsStatistic.defaultProps = {
   listData: '',
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Statistic);
+export default connect(mapStateToProps, mapDispatchToProps)(PostsStatistic);

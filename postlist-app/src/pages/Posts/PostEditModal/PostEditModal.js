@@ -45,10 +45,8 @@ PostEditModal.propTypes = {
     name: PropTypes.string,
     author: PropTypes.string,
     description: PropTypes.string,
-    createDate: PropTypes.string,
   }).isRequired,
   closeModal: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };
-
 export default PostEditModal;

@@ -53,6 +53,7 @@ export const postsReducer = (state = initialState, action) => {
     case POSTS_FETCH_IN_PROGRESS: {
       return {
         ...initialState,
+        loading: true,
       };
     }
     case POSTS_FETCH_SUCCESS: {

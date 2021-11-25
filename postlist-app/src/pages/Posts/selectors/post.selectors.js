@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
-const selectPost = (postDetailsReducer) => postDetailsReducer.post;
-const selectLoading = (postDetailsReducer) => postDetailsReducer.loading;
+const selectPost = (postReducer) => postReducer.post;
+const selectLoading = (postReducer) => postReducer.loading;
 
 export const selectorPost = createSelector(selectPost, (post) => post);
 export const selecLoading = createSelector(selectLoading, (loading) => loading);

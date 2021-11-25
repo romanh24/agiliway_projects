@@ -15,10 +15,11 @@ class PostDeleteModal extends Component {
         visible={visible}
         onCancel={closeModal}
         footer={[
-          <Button onClick={closeModal} type='default'>
+          <Button key='back' onClick={closeModal} type='default'>
             Cancel
           </Button>,
           <Button
+            key='submit'
             onClick={() => postDeleteById(uuid)}
             loading={loading}
             type='primary'
