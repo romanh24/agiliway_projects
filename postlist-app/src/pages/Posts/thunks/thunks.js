@@ -13,28 +13,27 @@ import {
   postAddInProgressAction,
   postAddSuccessAction,
   postAddErrorAction,
-  postEditFetchDataInProgressAction,
-  postEditFetchDataSuccessAction,
-  postEditFetchDataErrorAction,
-  postEditByIdInProgressAction,
-  postEditByIdSuccessAction,
-  postEditByIdErrorAction,
-  postDeleteByIdInProgressAction,
-  postDeleteByIdSuccessAction,
-  postDeleteByIdErrorAction,
+  postEditFetchInProgressAction,
+  postEditFetchSuccessAction,
+  postEditFetchErrorAction,
+  postEditInProgressAction,
+  postEditSuccessAction,
+  postEditErrorAction,
+  postDeleteInProgressAction,
+  postDeleteSuccessAction,
+  postDeleteErrorAction,
 } from '../actions/posts.actions';
 import {
+  postResetAction,
   postFetchSuccessAction,
   postFetchErrorAction,
-  postResetAction,
 } from '../actions/post.action';
 
 export const postsFetchThunk = () => (dispatch) => {
   dispatch(postsFetchInProgressAction());
-  getPosts()
+  return getPosts()
     .then((response) => {
-      const posts = response.data;
-      dispatch(postsFetchSuccessAction(posts));
+      dispatch(postsFetchSuccessAction(response));
     })
     .catch((error) => {
       const errorMsg = error.message;
@@ -58,12 +57,11 @@ export const postAddThunk = (postData) => (dispatch) => {
     });
 };
 
-export const postFetchIdThunk = (id) => (dispatch) => {
+export const postFetchThunk = (id) => (dispatch) => {
   dispatch(postResetAction());
   getPostDetails(id)
     .then((response) => {
-      const post = response;
-      dispatch(postFetchSuccessAction(post));
+      dispatch(postFetchSuccessAction(response));
     })
     .catch((error) => {
       const errorMsg = error.message;
@@ -72,45 +70,45 @@ export const postFetchIdThunk = (id) => (dispatch) => {
     });
 };
 
-export const postEditFetchByIdThunk = (id) => (dispatch) => {
-  dispatch(postEditFetchDataInProgressAction());
+export const postEditFetchThunk = (id) => (dispatch) => {
+  dispatch(postEditFetchInProgressAction());
   getPostDetails(id)
     .then((response) => {
-      dispatch(postEditFetchDataSuccessAction(response));
+      dispatch(postEditFetchSuccessAction(response));
     })
     .catch((error) => {
       const errorMsg = error.message;
-      dispatch(postEditFetchDataErrorAction(errorMsg));
+      dispatch(postEditFetchErrorAction(errorMsg));
       message.error(errorMsg);
     });
 };
 
-export const postEditByIdThunk = (id, postData) => (dispatch) => {
-  dispatch(postEditByIdInProgressAction());
+export const postEditThunk = (id, postData) => (dispatch) => {
+  dispatch(postEditInProgressAction());
   editPost(id, postData)
     .then(() => {
-      dispatch(postEditByIdSuccessAction());
+      dispatch(postEditSuccessAction());
       message.success('Post edited!');
       dispatch(postsFetchThunk());
     })
     .catch((error) => {
       const errorMsg = error.message;
-      dispatch(postEditByIdErrorAction(errorMsg));
+      dispatch(postEditErrorAction(errorMsg));
       message.error(errorMsg);
     });
 };
 
-export const postDeleteByIdThunk = (id) => (dispatch) => {
-  dispatch(postDeleteByIdInProgressAction());
+export const postDeleteThunk = (id) => (dispatch) => {
+  dispatch(postDeleteInProgressAction());
   deletePost(id)
     .then(() => {
-      dispatch(postDeleteByIdSuccessAction());
+      dispatch(postDeleteSuccessAction());
       message.success('Post deleted!');
       dispatch(postsFetchThunk());
     })
     .catch((error) => {
       const errorMsg = error.message;
-      dispatch(postDeleteByIdErrorAction(errorMsg));
+      dispatch(postDeleteErrorAction(errorMsg));
       message.error(errorMsg);
     });
 };

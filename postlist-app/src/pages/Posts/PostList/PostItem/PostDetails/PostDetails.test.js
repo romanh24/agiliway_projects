@@ -1,8 +1,9 @@
+/* eslint-disable no-undef */
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
-import { PostDetails } from './PostDetails';
+import { render } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { jest } from '@jest/globals';
+import { PostDetails } from './PostDetails';
 
 const postFetch = jest.fn();
 
@@ -22,7 +23,7 @@ const match = {
 const loading = false;
 
 it('renders correctly', () => {
-  const { queryByTestId, queryByPlaceholderName } = render(
+  const { queryByTestId } = render(
     <Router>
       <PostDetails
         post={post}

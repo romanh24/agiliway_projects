@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faClock, faInfo } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-// import { postFetchThunk } from '../../../thunks/thunks';
+import { postFetchThunk } from '../../../thunks/thunks';
 import { postFetchStartAction } from '../../../actions/post.action';
 import { StyledPostDetails, StyledRow } from './styled';
 import { selectorPost, selecLoading } from '../../../selectors/post.selectors';
@@ -65,6 +65,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
+  // postFetch: postFetchThunk,
   postFetch: postFetchStartAction,
 };
 

@@ -27,7 +27,7 @@ class PostItem extends Component {
       name,
       description,
       author,
-      postEditFetchById,
+      postEditFetch,
       openModal,
     } = this.props;
 
@@ -37,7 +37,7 @@ class PostItem extends Component {
           key='dropDownEdit'
           onClick={() => {
             openModal(MODAL_EDIT_TYPE);
-            postEditFetchById(id);
+            postEditFetch(id);
           }}
         >
           Edit
@@ -110,7 +110,7 @@ PostItem.propTypes = {
   createDate: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  postEditFetchById: PropTypes.func.isRequired,
+  postEditFetch: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,
 };
 

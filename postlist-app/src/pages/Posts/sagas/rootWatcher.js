@@ -3,9 +3,9 @@ import {
   postsFetchWatcher,
   postAddSagaWatcher,
   postFetchWatcher,
-  postEditFetchByIdWatcher,
-  postEditByIdWatcher,
-  postDeleteByIdWatcher,
+  postEditFetchWatcher,
+  postEditWatcher,
+  postDeleteWatcher,
 } from './postsSaga';
 
 export function* rootWatcher() {
@@ -13,8 +13,8 @@ export function* rootWatcher() {
     postsFetchWatcher(),
     postAddSagaWatcher(),
     postFetchWatcher(),
-    postEditFetchByIdWatcher(),
-    postEditByIdWatcher(),
-    postDeleteByIdWatcher(),
+    postEditFetchWatcher(),
+    postEditWatcher(),
+    postDeleteWatcher(),
   ]);
 }

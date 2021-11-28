@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import {
   postsFetchThunk,
   postAddThunk,
-  postEditByIdThunk,
-  postEditFetchByIdThunk,
-  postDeleteByIdThunk,
+  postEditThunk,
+  postEditFetchThunk,
+  postDeleteThunk,
 } from '../thunks/thunks';
 import { StyledPostList } from './styled';
 import PostItem from './PostItem';
@@ -18,9 +18,9 @@ import { modalOpenAction, modalCloseAction } from '../actions/modal.actions';
 import {
   postAddStartAction,
   postsFetchStartAction,
-  postEditFetchDataStartAction,
-  postEditByIdStartAction,
-  postDeleteByIdStartAction,
+  postEditFetchStartAction,
+  postEditStartAction,
+  postDeleteStartAction,
 } from '../actions/posts.actions';
 import {
   MODAL_ADD_TYPE,
@@ -49,7 +49,7 @@ class PostList extends Component {
   };
 
   handleSubmit = (postData) => {
-    const { postEditById } = this.props;
+    const { postEdit } = this.props;
 
     const postNewData = {
       name: postData.name,
@@ -57,7 +57,7 @@ class PostList extends Component {
       description: postData.description,
     };
 
-    postEditById(postData.uuid, postNewData);
+    postEdit(postData.uuid, postNewData);
   };
 
   render() {
@@ -65,8 +65,8 @@ class PostList extends Component {
       listData,
       postData,
       createPost,
-      postDeleteById,
-      postEditFetchById,
+      postDelete,
+      postEditFetch,
       loading,
       modalDataLoading,
       visible,
@@ -92,7 +92,7 @@ class PostList extends Component {
                 description={post.description}
                 author={post.author}
                 post={post}
-                postEditFetchById={postEditFetchById}
+                postEditFetch={postEditFetch}
                 openModal={openModal}
               />
             ))}
@@ -126,7 +126,7 @@ class PostList extends Component {
             visible={visible}
             closeModal={closeModal}
             postData={postData}
-            postDeleteById={postDeleteById}
+            postDelete={postDelete}
           />
         )}
       </div>
@@ -147,23 +147,25 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  fetchPostList: postsFetchStartAction,
+  // fetchPostList: postsFetchThunk,
   // createPost: postAddThunk,
-  // postEditByIdThunk,
-  // postEditFetchByIdThunk,
+  // postEdit: postEditThunk,
+  // postEditFetch: postEditFetchThunk,
+  // postDelete: postDeleteThunk,
+  fetchPostList: postsFetchStartAction,
   createPost: postAddStartAction,
-  postEditById: postEditByIdStartAction,
-  postEditFetchById: postEditFetchDataStartAction,
-  postDeleteById: postDeleteByIdStartAction,
+  postEdit: postEditStartAction,
+  postEditFetch: postEditFetchStartAction,
+  postDelete: postDeleteStartAction,
   openModal: modalOpenAction,
   closeModal: modalCloseAction,
 };
 
 PostList.propTypes = {
   fetchPostList: PropTypes.func.isRequired,
-  postEditById: PropTypes.func.isRequired,
-  postEditFetchById: PropTypes.func.isRequired,
-  postDeleteById: PropTypes.func.isRequired,
+  postEdit: PropTypes.func.isRequired,
+  postEditFetch: PropTypes.func.isRequired,
+  postDelete: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   listData: PropTypes.arrayOf(PropTypes.object),

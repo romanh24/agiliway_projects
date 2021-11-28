@@ -7,7 +7,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { postsFetchStartAction } from '../Posts/actions/posts.actions';
-// import { postsFetchThunk } from '../Posts/thunks/thunks';
+import { postsFetchThunk } from '../Posts/thunks/thunks';
 
 class PostsStatistic extends Component {
   componentDidMount() {

@@ -5,8 +5,7 @@ import PropTypes from 'prop-types';
 
 class PostDeleteModal extends Component {
   render() {
-    const { visible, closeModal, postDeleteById, loading, postData } =
-      this.props;
+    const { visible, closeModal, postDelete, loading, postData } = this.props;
     const { uuid } = postData;
 
     return (
@@ -20,7 +19,7 @@ class PostDeleteModal extends Component {
           </Button>,
           <Button
             key='submit'
-            onClick={() => postDeleteById(uuid)}
+            onClick={() => postDelete(uuid)}
             loading={loading}
             type='primary'
           >
@@ -43,7 +42,7 @@ PostDeleteModal.propTypes = {
   postData: PropTypes.shape({
     uuid: PropTypes.string,
   }).isRequired,
-  postDeleteById: PropTypes.func.isRequired,
+  postDelete: PropTypes.func.isRequired,
 };
 
 export default PostDeleteModal;
