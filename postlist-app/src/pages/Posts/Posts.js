@@ -1,10 +1,6 @@
-import React, { Component } from "react";
-import PostList from "./PostList";
+import React from 'react';
+import PostList from './PostList';
 
-class Posts extends Component {
-  render() {
-    return <PostList />;
-  }
-}
+const Posts = () => <PostList />;
 
 export default Posts;

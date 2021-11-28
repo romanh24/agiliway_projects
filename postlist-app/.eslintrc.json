@@ -5,6 +5,7 @@
     "node": true
   },
   "extends": ["plugin:react/recommended", "airbnb"],
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -13,5 +14,48 @@
     "sourceType": "module"
   },
   "plugins": ["react", "only-warn"],
-  "rules": {}
+  // "plugins": ["react"],
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx"] }],
+    "jsx-quotes": [2, "prefer-single"],
+    "react/prefer-stateless-function": "off",
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
+      }
+    ],
+    "jsx-a11y/label-has-associated-control": [
+      "error",
+      {
+        "required": {
+          "some": ["nesting", "id"]
+        }
+      }
+    ],
+    "jsx-a11y/label-has-for": [
+      "error",
+      {
+        "required": {
+          "some": ["nesting", "id"]
+        }
+      }
+    ],
+    "react/require-default-props": [
+      2,
+      { "forbidDefaultForRequired": true, "ignoreFunctionalComponents": true }
+    ],
+    "object-curly-newline": "off",
+    "import/prefer-default-export": "off",
+    "import/extensions": [2, { "js": "never", "json": "never" }],
+    "no-restricted-exports": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "default-param-last": "off",
+    "react/prop-types": "off",
+    "comma-dangle": "off",
+    "linebreak-style": "off",
+    "implicit-arrow-linebreak": "off"
+  }
 }

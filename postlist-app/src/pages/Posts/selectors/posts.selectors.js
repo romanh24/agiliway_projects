@@ -1,4 +1,4 @@
-import { createSelector } from "reselect";
+import { createSelector } from 'reselect';
 
 const selectList = (postsReducer) => postsReducer.posts;
 const selectPost = (postsReducer) => postsReducer.post;

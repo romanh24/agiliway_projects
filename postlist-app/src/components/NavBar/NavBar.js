@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { Layout, Menu } from "antd";
-import { NavLink } from "react-router-dom";
-import { StyledLogoImg, StyledLogoText } from "./styled.js";
+import React, { Component } from 'react';
+import { Layout, Menu } from 'antd';
+import { NavLink } from 'react-router-dom';
+import { StyledLogoImg, StyledLogoText } from './styled';
 
 const { Header } = Layout;
 
@@ -10,36 +10,37 @@ class NavBar extends Component {
     return (
       <Header
         style={{
-          width: "100%",
-          display: "flex",
+          width: '100%',
+          display: 'flex',
         }}
       >
-        <NavLink exact to="/">
-          <StyledLogoImg />
-        </NavLink>
+        <StyledLogoImg />
+
         <StyledLogoText>DAILY POST</StyledLogoText>
 
         <Menu
           style={{
-            justifyContent: "flex-end",
-            marginLeft: "auto",
+            justifyContent: 'flex-end',
+            marginLeft: 'auto',
           }}
-          theme="dark"
-          mode="horizontal"
-          selectable={false}
-          key="navbar"
+          theme='dark'
+          mode='horizontal'
+          selectable
+          key='navbar'
         >
-          <NavLink exact to="/" activeClassName="activeLink">
-            <Menu.Item key="home">Home</Menu.Item>
-          </NavLink>
+          <Menu.Item key='home'>
+            <NavLink exact to='/'>
+              Home
+            </NavLink>
+          </Menu.Item>
 
-          <NavLink to="/posts" activeClassName="activeLink">
-            <Menu.Item key="posts ">Posts</Menu.Item>
-          </NavLink>
+          <Menu.Item key='posts '>
+            <NavLink to='/posts'>Posts</NavLink>
+          </Menu.Item>
 
-          <NavLink to="/statistic" activeClassName="activeLink">
-            <Menu.Item key="statistic">Statistic</Menu.Item>
-          </NavLink>
+          <Menu.Item key='statistic'>
+            <NavLink to='/statistic'>Statistic</NavLink>
+          </Menu.Item>
         </Menu>
       </Header>
     );

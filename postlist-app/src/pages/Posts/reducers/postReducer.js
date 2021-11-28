@@ -1,25 +1,25 @@
 import {
-  POST_FETCH_BY_ID_SUCCESS,
-  POST_FETCH_BY_ID_ERROR,
+  POST_FETCH_SUCCESS,
+  POST_FETCH_ERROR,
   POST_RESET,
-} from "../action-types/postDetails.action-types";
+} from '../action-types/post.action-types';
 
 const initialState = {
   loading: true,
   post: {},
-  error: "",
+  error: '',
 };
 
-export const postDetailsReducer = (state = initialState, action) => {
+export const postReducer = (state = initialState, action) => {
   switch (action.type) {
-    case POST_FETCH_BY_ID_SUCCESS: {
+    case POST_FETCH_SUCCESS: {
       return {
         loading: false,
         post: action.payload,
-        error: "",
+        error: '',
       };
     }
-    case POST_FETCH_BY_ID_ERROR: {
+    case POST_FETCH_ERROR: {
       return {
         loading: false,
         error: action.payload,

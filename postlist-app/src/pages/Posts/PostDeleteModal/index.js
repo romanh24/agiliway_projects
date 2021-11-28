@@ -1,1 +1,1 @@
-export { default } from "./PostDeleteModal.js";
+export { default } from './PostDeleteModal';

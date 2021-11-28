@@ -1,114 +1,117 @@
 import {
+  POSTS_RESET,
+  POSTS_FETCH_START,
   POSTS_FETCH_IN_PROGRESS,
   POSTS_FETCH_SUCCESS,
   POSTS_FETCH_ERROR,
+  POST_ADD_START,
   POST_ADD_IN_PROGRESS,
   POST_ADD_SUCCESS,
   POST_ADD_ERROR,
-  POST_EDIT_FETCH_DATA_IN_PROGRESS,
-  POST_EDIT_FETCH_DATA_SUCCESS,
-  POST_EDIT_FETCH_DATA_ERROR,
-  POST_EDIT_BY_ID_IN_PROGRESS,
-  POST_EDIT_BY_ID_SUCCESS,
-  POST_EDIT_BY_ID_ERROR,
-  POST_DELETE_BY_ID_IN_PROGRESS,
-  POST_DELETE_BY_ID_SUCCESS,
-  POST_DELETE_BY_ID_ERROR,
-} from "../action-types/posts.action-types";
+  POST_EDIT_FETCH_START,
+  POST_EDIT_FETCH_IN_PROGRESS,
+  POST_EDIT_FETCH_SUCCESS,
+  POST_EDIT_FETCH_ERROR,
+  POST_EDIT_IN_PROGRESS,
+  POST_EDIT_START,
+  POST_EDIT_SUCCESS,
+  POST_EDIT_ERROR,
+  POST_DELETE_START,
+  POST_DELETE_IN_PROGRESS,
+  POST_DELETE_SUCCESS,
+  POST_DELETE_ERROR,
+} from '../action-types/posts.action-types';
 
-export const postsFetchInProgressAction = () => {
-  return {
-    type: POSTS_FETCH_IN_PROGRESS,
-  };
-};
+export const postsResetAction = () => ({
+  type: POSTS_RESET,
+});
 
-export const postsFetchSuccessAction = (posts) => {
-  return {
-    type: POSTS_FETCH_SUCCESS,
-    payload: posts,
-  };
-};
+export const postsFetchStartAction = () => ({
+  type: POSTS_FETCH_START,
+});
 
-export const postsFetchErrorAction = (error) => {
-  return {
-    type: POSTS_FETCH_ERROR,
-    payload: error,
-  };
-};
+export const postsFetchInProgressAction = () => ({
+  type: POSTS_FETCH_IN_PROGRESS,
+});
 
-export const postAddInProgressAction = () => {
-  return {
-    type: POST_ADD_IN_PROGRESS,
-  };
-};
+export const postsFetchSuccessAction = (posts) => ({
+  type: POSTS_FETCH_SUCCESS,
+  payload: posts,
+});
 
-export const postAddSuccessAction = () => {
-  return {
-    type: POST_ADD_SUCCESS,
-  };
-};
+export const postsFetchErrorAction = (error) => ({
+  type: POSTS_FETCH_ERROR,
+  payload: error,
+});
 
-export const postAddErrorAction = (error) => {
-  return {
-    type: POST_ADD_ERROR,
-    payload: error,
-  };
-};
+export const postAddStartAction = (post) => ({
+  type: POST_ADD_START,
+  payload: post,
+});
+export const postAddInProgressAction = () => ({
+  type: POST_ADD_IN_PROGRESS,
+});
 
-export const postEditFetchDataInProgressAction = () => {
-  return {
-    type: POST_EDIT_FETCH_DATA_IN_PROGRESS,
-  };
-};
+export const postAddSuccessAction = () => ({
+  type: POST_ADD_SUCCESS,
+});
 
-export const postEditFetchDataSuccessAction = (post) => {
-  return {
-    type: POST_EDIT_FETCH_DATA_SUCCESS,
-    payload: post,
-  };
-};
+export const postAddErrorAction = (error) => ({
+  type: POST_ADD_ERROR,
+  payload: error,
+});
 
-export const postEditFetchDataErrorAction = (error) => {
-  return {
-    type: POST_EDIT_FETCH_DATA_ERROR,
-    payload: error,
-  };
-};
+export const postEditFetchStartAction = (id) => ({
+  type: POST_EDIT_FETCH_START,
+  payload: id,
+});
 
-export const postEditByIdInProgressAction = () => {
-  return {
-    type: POST_EDIT_BY_ID_IN_PROGRESS,
-  };
-};
+export const postEditFetchInProgressAction = () => ({
+  type: POST_EDIT_FETCH_IN_PROGRESS,
+});
 
-export const postEditByIdSuccessAction = () => {
-  return {
-    type: POST_EDIT_BY_ID_SUCCESS,
-  };
-};
+export const postEditFetchSuccessAction = (post) => ({
+  type: POST_EDIT_FETCH_SUCCESS,
+  payload: post,
+});
 
-export const postEditByIdErrorAction = (error) => {
-  return {
-    type: POST_EDIT_BY_ID_ERROR,
-    payload: error,
-  };
-};
+export const postEditFetchErrorAction = (error) => ({
+  type: POST_EDIT_FETCH_ERROR,
+  payload: error,
+});
 
-export const postDeleteByIdInProgressAction = () => {
-  return {
-    type: POST_DELETE_BY_ID_IN_PROGRESS,
-  };
-};
+export const postEditStartAction = (id, data) => ({
+  type: POST_EDIT_START,
+  payload: { id, data },
+});
 
-export const postDeleteByIdSuccessAction = () => {
-  return {
-    type: POST_DELETE_BY_ID_SUCCESS,
-  };
-};
+export const postEditInProgressAction = () => ({
+  type: POST_EDIT_IN_PROGRESS,
+});
 
-export const postDeleteByIdErrorAction = (error) => {
-  return {
-    type: POST_DELETE_BY_ID_ERROR,
-    payload: error,
-  };
-};
+export const postEditSuccessAction = () => ({
+  type: POST_EDIT_SUCCESS,
+});
+
+export const postEditErrorAction = (error) => ({
+  type: POST_EDIT_ERROR,
+  payload: error,
+});
+
+export const postDeleteStartAction = (id) => ({
+  type: POST_DELETE_START,
+  payload: id,
+});
+
+export const postDeleteInProgressAction = () => ({
+  type: POST_DELETE_IN_PROGRESS,
+});
+
+export const postDeleteSuccessAction = () => ({
+  type: POST_DELETE_SUCCESS,
+});
+
+export const postDeleteErrorAction = (error) => ({
+  type: POST_DELETE_ERROR,
+  payload: error,
+});

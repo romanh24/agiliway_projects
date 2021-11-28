@@ -1,1 +1,1 @@
-export { default } from "./Posts.js";
+export { default } from './Posts';

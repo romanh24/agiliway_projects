@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import { Button } from "antd";
-import { NavLink } from "react-router-dom";
-import { StyledContainer, StyledImageFloated } from "./styled";
+import React, { Component } from 'react';
+import { Button } from 'antd';
+import { NavLink } from 'react-router-dom';
+import { StyledContainer, StyledImageFloated } from './styled';
 
-class Home extends Component {
+export class Home extends Component {
   render() {
     return (
       <div>
-        {" "}
-        <div style={{ display: "flex", justifyContent: "center" }}>
+        {' '}
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
           <StyledContainer>
             <h1>👋 Welcome!</h1>
             <StyledImageFloated />
@@ -38,8 +38,12 @@ class Home extends Component {
             </p>
           </StyledContainer>
         </div>
-        <NavLink to="/posts">
-          <Button style={{ marginTop: "25px" }} size="large">
+        <NavLink to='/posts'>
+          <Button
+            data-testid='checkout-button'
+            style={{ marginTop: '25px' }}
+            size='large'
+          >
             Check out the latest posts!
           </Button>
         </NavLink>
