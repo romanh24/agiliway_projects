@@ -1,7 +1,7 @@
 import { Input } from 'antd';
-import { StyledError } from './styled';
+import { StyledError } from '../styled';
 
-export const MyDateOfBirth = ({ input, meta, id }) => {
+const DateOfBirth = ({ input, meta, id }) => {
   return (
     <div>
       <Input id={id} {...input} allowClear={true} />
@@ -11,3 +11,5 @@ export const MyDateOfBirth = ({ input, meta, id }) => {
     </div>
   );
 };
+
+export default DateOfBirth;

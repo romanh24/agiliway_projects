@@ -3,9 +3,10 @@ import { Progress, Button, Input } from 'antd';
 import { Form, Field } from 'react-final-form';
 import { CheckCircleTwoTone } from '@ant-design/icons';
 import Link from 'next/link';
-import { MyInput } from './MyInput';
-import { MySelect } from './MySelect';
-import { MyRadio } from './MyRadio';
+import MyInput from './MyInput';
+import HearFrom from './HearFrom';
+import Gender from './Gender';
+import DateOfBirth from './DateOfBirth';
 
 import {
   StyledContainer,
@@ -18,14 +19,27 @@ import {
   StyledFinish,
   StyledHeader,
 } from './styled';
-import { MyDateOfBirth } from './MyDateOfBirth';
 
 const SIGN_UP_1 = 'SIGN_UP_1';
 const SIGN_UP_2 = 'SIGN_UP_2';
 const FINISH = 'FINISH';
 
-export const LoginForm = () => {
+export default function LoginForm() {
   const [status, setStatus] = useState({
+    fields: {
+      email: {
+        name: 'email',
+        label: 'EMAIL',
+      },
+      password: {
+        name: 'password',
+        label: 'PASSWORD',
+      },
+      confirmPass: {
+        name: 'confirmPass',
+        label: 'CONFIRM PASSWORD',
+      },
+    },
     pageType: SIGN_UP_1,
     pageName: 'Sign up',
     progressBar: 33,
@@ -97,6 +111,24 @@ export const LoginForm = () => {
               {status.pageType === SIGN_UP_1 && (
                 <div>
                   <StyledInputFormWrapper>
+                    {/* {Object.entries(status.fields).forEach(
+                      ([_, fieldState]) => {
+                        const { name, label } = fieldState;
+                        console.log(name, label);
+                        return (
+                          <StyledInputForm>
+                            <label htmlFor={name}>{label}</label>
+                            <Field
+                              name={name}
+                              size='middle'
+                              // type='password'
+                              component={MyInput}
+                            />
+                          </StyledInputForm>
+                        );
+                        {
+                          /* return <MyInput name={name} label={label} />; 
+                    } )} */}
                     <StyledInputForm>
                       <label htmlFor='email'>EMAIL</label>
                       <Field
@@ -164,7 +196,7 @@ export const LoginForm = () => {
                         name='dateOfBirth'
                         type='date'
                         placeholder='DD.MM.YYYY'
-                        component={MyDateOfBirth}
+                        component={DateOfBirth}
                       />
                     </StyledInputForm2>
                     <StyledInputForm2>
@@ -173,7 +205,7 @@ export const LoginForm = () => {
                         id='gender'
                         name='gender'
                         type='radio'
-                        component={MyRadio}
+                        component={Gender}
                       />
                     </StyledInputForm2>
                     <StyledInputForm2>
@@ -183,7 +215,7 @@ export const LoginForm = () => {
                       <Field
                         id='hearFrom'
                         name='hearFrom'
-                        component={MySelect}
+                        component={HearFrom}
                       />
                     </StyledInputForm2>
                   </StyledInputFormWrapper>
@@ -247,4 +279,4 @@ export const LoginForm = () => {
       />
     </StyledContainer>
   );
-};
+}

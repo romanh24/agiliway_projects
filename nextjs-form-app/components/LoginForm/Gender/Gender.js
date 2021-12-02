@@ -1,7 +1,7 @@
 import { Radio } from 'antd';
-import { StyledError } from './styled';
+import { StyledError } from '../styled';
 
-export const MyRadio = ({ input, meta, id }) => {
+const Gender = ({ input, meta, id }) => {
   return (
     <div>
       <Radio.Group buttonStyle='solid'>
@@ -34,3 +34,5 @@ export const MyRadio = ({ input, meta, id }) => {
     </div>
   );
 };
+
+export default Gender;
