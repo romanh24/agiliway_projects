@@ -3,10 +3,11 @@ import { StyledError } from './styled';
 
 const { Option } = Select;
 
-export const MySelect = ({ input, meta }) => {
+export const MySelect = ({ input, meta, id }) => {
   return (
     <div>
       <Select
+        id={id}
         {...input}
         style={{ width: '100%' }}
         placeholder='Select a person'

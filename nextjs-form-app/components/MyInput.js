@@ -1,10 +1,11 @@
 import { Input } from 'antd';
 import { StyledError } from './styled';
 
-export const MyInput = ({ input, meta }) => {
+export const MyInput = ({ input, meta, id }) => {
   return (
     <div>
       <Input
+        id={id}
         {...input}
         allowClear={true}
         bordered={false}

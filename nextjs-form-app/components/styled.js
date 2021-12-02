@@ -6,16 +6,20 @@ export const StyledContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   width: 400px;
-  height: 500px;
+  ${'' /* height: 500px; */}
   margin: 7% auto;
   border: solid 2px #d3d3d3;
   border-radius: 2%;
 `;
 
 export const StyledHeader = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  .ant-progress-inner{
+  border-radius:0;
+  border-top: 1px solid #d3d3d3;
+  border-bottom: 1px solid #d3d3d3;
+      .ant-progress-bg{
+          border-radius:0;
+}
 `;
 
 export const StyledInputFormWrapper = styled.div`
@@ -37,10 +41,22 @@ export const StyledInputForm = styled.div`
   margin: 10px 20px;
 `;
 
+export const StyledInputForm2 = styled.div`
+  text-align: center;
+  font-size: 16px;
+  margin: 10px 20px;
+  ${
+    '' /* label {
+    margin-bottom: 20px;
+  } */
+  }
+`;
+
 export const StyledTitle = styled.h1`
   display: flex;
   justify-content: center;
   margin: 0;
+  color: #52cdf8;
 `;
 
 export const StyledButtonContainer = styled.div`
@@ -53,7 +69,7 @@ export const StyledButtonContainer = styled.div`
 `;
 
 export const StyledFinish = styled.div`
-  height: 403px;
+  height: 411px;
   display: flex;
   flex-wrap: wrap;
   flex-flow: wrap column;
