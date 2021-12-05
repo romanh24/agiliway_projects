@@ -7,21 +7,25 @@ import MyInput from './MyInput';
 import HearFrom from './HearFrom';
 import Gender from './Gender';
 import DateOfBirth from './DateOfBirth';
+import moment from 'moment';
 
 import {
   StyledContainer,
   StyledInputFormWrapper,
   StyledInputForm,
   StyledInputForm2,
+  StyledError,
   StyledTitle,
   StyledButtonContainer,
   StyledFinishWrapper,
   StyledFinish,
   StyledHeader,
+  StyledDateInput,
+  StyledDateContainer,
 } from './styled';
 
-const SIGN_UP_1 = 'SIGN_UP_1';
-const SIGN_UP_2 = 'SIGN_UP_2';
+const PAGE_1 = 'PAGE_1';
+const PAGE_2 = 'PAGE_2';
 const FINISH = 'FINISH';
 
 export default function LoginForm() {
@@ -29,19 +33,42 @@ export default function LoginForm() {
     fields: {
       email: {
         name: 'email',
+        id: 'email',
         label: 'EMAIL',
       },
       password: {
         name: 'password',
+        id: 'password',
         label: 'PASSWORD',
       },
       confirmPass: {
         name: 'confirmPass',
+        id: 'confirmPass',
         label: 'CONFIRM PASSWORD',
       },
+      dateOfBirth: {
+        day: {
+          name: 'dateOfBirth.day',
+          id: 'dateOfBirth.day',
+          label: 'DAY',
+          placeholder: 'DD',
+        },
+        month: {
+          name: 'dateOfBirth.month',
+          id: 'dateOfBirth.month',
+          label: 'MONTH',
+          placeholder: 'MM',
+        },
+        year: {
+          name: 'dateOfBirth.year',
+          id: 'dateOfBirth.year',
+          label: 'YEAR',
+          placeholder: 'YYYY',
+        },
+      },
     },
-    pageType: SIGN_UP_1,
-    pageName: 'Sign up',
+    pageType: PAGE_1,
+    pageTitle: 'Sign up',
     progressBar: 33,
   });
 
@@ -50,9 +77,42 @@ export default function LoginForm() {
   };
 
   const validate = (values = {}) => {
-    const errors = {};
+    const errors = {
+      dateOfBirth: {},
+    };
 
-    const datePattern = '(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}';
+    const day = values.dateOfBirth?.day ? values.dateOfBirth?.day : '';
+    const month = values.dateOfBirth?.month ? values.dateOfBirth?.month : '';
+    const year = values.dateOfBirth?.year ? values.dateOfBirth?.year : '';
+    const date = moment(`${year}-${month}-${day}`, 'YYYY-MM-DD');
+    const result = date.isValid() ? undefined : 'Invalid Date';
+
+    // if (!(values.dateOfBirth && values.dateOfBirth.day)) {
+    //   errors.dateOfBirth = { day: 'Required' };
+    // }
+
+    if (result !== undefined) {
+      errors.dateOfBirth.month = 'Wrong date!';
+    }
+
+    if (!values.dateOfBirth?.day) {
+      errors.dateOfBirth.day = 'Required';
+    } else if (values.dateOfBirth.day.match(/^[a-zA-Z]+$/)) {
+      errors.dateOfBirth.day = 'Only numbers';
+    }
+
+    if (!values.dateOfBirth?.month) {
+      errors.dateOfBirth.month = 'Required';
+    } else if (values.dateOfBirth.month.match(/^[a-zA-Z]+$/)) {
+      errors.dateOfBirth.month = 'Only numbers';
+    }
+
+    if (!values.dateOfBirth?.year) {
+      errors.dateOfBirth.year = 'Required';
+    } else if (values.dateOfBirth.year.match(/^[a-zA-Z]+$/)) {
+      errors.dateOfBirth.year = 'Only numbers';
+    }
+
     if (!values.email) {
       errors.email = 'Required';
     } else if (!values.email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
@@ -73,12 +133,6 @@ export default function LoginForm() {
       errors.confirmPass = 'Must match';
     }
 
-    if (!values.dateOfBirth) {
-      errors.dateOfBirth = 'Required';
-      // } else if (!values.dateOfBirth.match(datePattern)) {
-      //   errors.dateOfBirth = 'Wrong format!';
-    }
-
     if (!values.gender) {
       errors.gender = 'Required';
     }
@@ -95,11 +149,13 @@ export default function LoginForm() {
       <Form
         onSubmit={onSubmit}
         validate={validate}
-        render={({ handleSubmit, errors }) => {
+        render={({ handleSubmit, values, errors }) => {
+          console.log(values);
+          // console.log(errors);
           return (
             <form style={{ height: '100%' }} onSubmit={handleSubmit} id='form'>
               <StyledHeader>
-                <StyledTitle>{status.pageName}</StyledTitle>
+                <StyledTitle>{status.pageTitle}</StyledTitle>
                 <Progress
                   percent={status.progressBar}
                   showInfo={false}
@@ -108,7 +164,7 @@ export default function LoginForm() {
                 />
               </StyledHeader>
 
-              {status.pageType === SIGN_UP_1 && (
+              {status.pageType === PAGE_1 && (
                 <div>
                   <StyledInputFormWrapper>
                     {/* {Object.entries(status.fields).forEach(
@@ -175,7 +231,7 @@ export default function LoginForm() {
                       onClick={() =>
                         setStatus({
                           ...status,
-                          pageType: SIGN_UP_2,
+                          pageType: PAGE_2,
                           progressBar: 66,
                         })
                       }
@@ -186,10 +242,87 @@ export default function LoginForm() {
                 </div>
               )}
 
-              {status.pageType === SIGN_UP_2 && (
+              {status.pageType === PAGE_2 && (
                 <div>
                   <StyledInputFormWrapper>
-                    <StyledInputForm2>
+                    <StyledDateContainer>
+                      <StyledDateInput>
+                        <label htmlFor='dateOfBirth.day'>DAY</label>
+                        <Field
+                          id='dateOfBirth.day'
+                          name='dateOfBirth.day'
+                          placeholder='DD'
+                        >
+                          {(props) => (
+                            <div>
+                              <Input
+                                {...props.input}
+                                id={props.id}
+                                name={props.name}
+                                placeholder={props.placeholder}
+                                style={{ width: '120px', textAlign: 'center' }}
+                              />
+                              <StyledError>
+                                {props.meta.error && props.meta.touched && (
+                                  <span>{props.meta.error}</span>
+                                )}
+                              </StyledError>
+                            </div>
+                          )}
+                        </Field>
+                      </StyledDateInput>
+                      <StyledDateInput>
+                        <label htmlFor='dateOfBirth.month'>MONTH</label>
+                        <Field
+                          id='dateOfBirth.month'
+                          name='dateOfBirth.month'
+                          placeholder='MM'
+                        >
+                          {(props) => (
+                            <div>
+                              <Input
+                                {...props.input}
+                                id={props.id}
+                                name={props.name}
+                                placeholder={props.placeholder}
+                                style={{ width: '120px', textAlign: 'center' }}
+                              />
+                              <StyledError>
+                                {props.meta.error && props.meta.touched && (
+                                  <span>{props.meta.error}</span>
+                                )}
+                              </StyledError>
+                            </div>
+                          )}
+                        </Field>
+                      </StyledDateInput>
+                      <StyledDateInput>
+                        <label htmlFor='dateOfBirth.year'>YEAR</label>
+                        <Field
+                          id='dateOfBirth.year'
+                          name='dateOfBirth.year'
+                          placeholder='YYYY'
+                        >
+                          {(props) => (
+                            <div>
+                              <Input
+                                {...props.input}
+                                id={props.id}
+                                name={props.name}
+                                placeholder={props.placeholder}
+                                style={{ width: '120px', textAlign: 'center' }}
+                              />
+                              <StyledError>
+                                {props.meta.error && props.meta.touched && (
+                                  <span>{props.meta.error}</span>
+                                )}
+                              </StyledError>
+                            </div>
+                          )}
+                        </Field>
+                      </StyledDateInput>
+                    </StyledDateContainer>
+                    {/* <StyledInputForm2>
                       <label htmlFor='dateOfBirth'>DATE OF BIRTH</label>
                       <Field
                         id='dateOfBirth'
@@ -198,7 +331,7 @@ export default function LoginForm() {
                         placeholder='DD.MM.YYYY'
                         component={DateOfBirth}
                       />
-                    </StyledInputForm2>
+                    </StyledInputForm2> */}
                     <StyledInputForm2>
                       <label htmlFor='gender'>GENDER</label>
                       <Field
@@ -226,7 +359,7 @@ export default function LoginForm() {
                       onClick={() =>
                         setStatus({
                           ...status,
-                          pageType: SIGN_UP_1,
+                          pageType: PAGE_1,
                           progressBar: 33,
                         })
                       }
@@ -237,12 +370,16 @@ export default function LoginForm() {
                       type='link'
                       size='large'
                       disabled={
-                        errors.dateOfBirth || errors.gender || errors.hearFrom
+                        errors.dateOfBirth?.day ||
+                        errors.dateOfBirth?.month ||
+                        errors.dateOfBirth?.year ||
+                        errors.gender ||
+                        errors.hearFrom
                       }
                       onClick={() =>
                         setStatus({
                           pageType: FINISH,
-                          pageName: 'Thank you!',
+                          pageTitle: 'Thank you!',
                           progressBar: 100,
                         })
                       }
@@ -255,7 +392,6 @@ export default function LoginForm() {
 
               {status.pageType === FINISH && (
                 <div>
-                  {/* <StyledFinishWrapper> */}
                   <StyledFinish>
                     <CheckCircleTwoTone
                       twoToneColor='#52c41a'
@@ -270,7 +406,6 @@ export default function LoginForm() {
                       Go to Dashboard
                     </Button>
                   </StyledFinish>
-                  {/* </StyledFinishWrapper> */}
                 </div>
               )}
             </form>

@@ -52,6 +52,15 @@ export const StyledInputForm2 = styled.div`
   }
 `;
 
+export const StyledDateInput = styled.div`
+  text-align: center;
+`;
+
+export const StyledDateContainer = styled.div`
+  display: flex;
+  margin: 10px 20px;
+`;
+
 export const StyledTitle = styled.h1`
   display: flex;
   justify-content: center;

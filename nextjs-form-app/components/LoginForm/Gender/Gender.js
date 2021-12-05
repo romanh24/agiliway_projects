@@ -4,7 +4,7 @@ import { StyledError } from '../styled';
 const Gender = ({ input, meta, id }) => {
   return (
     <div>
-      <Radio.Group buttonStyle='solid'>
+      <Radio.Group defaultValue='male' buttonStyle='solid'>
         <Radio.Button
           id={id}
           style={{ width: '120px', textAlign: 'center' }}
