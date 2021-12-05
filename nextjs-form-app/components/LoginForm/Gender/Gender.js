@@ -1,5 +1,5 @@
 import { Radio } from 'antd';
-import { StyledError } from '../styled';
+import { StyledError } from './styled';
 
 const Gender = ({ input, meta, id }) => {
   return (

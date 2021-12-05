@@ -37,11 +37,6 @@ export const StyledFinishWrapper = styled.div`
 `;
 
 export const StyledInputForm = styled.div`
-  font-size: 16px;
-  margin: 10px 20px;
-`;
-
-export const StyledInputForm2 = styled.div`
   text-align: center;
   font-size: 16px;
   margin: 10px 20px;
@@ -50,10 +45,6 @@ export const StyledInputForm2 = styled.div`
     margin-bottom: 20px;
   } */
   }
-`;
-
-export const StyledDateInput = styled.div`
-  text-align: center;
 `;
 
 export const StyledDateContainer = styled.div`
@@ -66,6 +57,12 @@ export const StyledTitle = styled.h1`
   justify-content: center;
   margin: 0;
   color: #52cdf8;
+`;
+
+export const StyledLabel = styled.label`
+  display: flex;
+  justify-content: center;
+  font-size: 16px;
 `;
 
 export const StyledButtonContainer = styled.div`
@@ -84,16 +81,4 @@ export const StyledFinish = styled.div`
   flex-flow: wrap column;
   align-items: center;
   justify-content: center;
-`;
-
-export const StyledError = styled.div`
-  position: relative;
-  top: 4px;
-  height: 20px;
-
-  span {
-    background-color: #ff7a7ace;
-    box-shadow: 0px 0px 10px 0.3px #ff0000ce;
-    border-radius: 7px;
-  }
 `;

@@ -1,5 +1,5 @@
 import { Select } from 'antd';
-import { StyledError } from '../styled';
+import { StyledError } from './styled';
 
 const { Option } = Select;
 

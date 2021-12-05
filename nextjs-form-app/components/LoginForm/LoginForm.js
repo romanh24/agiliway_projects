@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Progress, Button, Input } from 'antd';
+import { Progress, Button } from 'antd';
 import { Form, Field } from 'react-final-form';
 import { CheckCircleTwoTone } from '@ant-design/icons';
 import Link from 'next/link';
@@ -13,14 +13,11 @@ import {
   StyledContainer,
   StyledInputFormWrapper,
   StyledInputForm,
-  StyledInputForm2,
-  StyledError,
   StyledTitle,
   StyledButtonContainer,
-  StyledFinishWrapper,
   StyledFinish,
   StyledHeader,
-  StyledDateInput,
+  StyledLabel,
   StyledDateContainer,
 } from './styled';
 
@@ -31,20 +28,25 @@ const FINISH = 'FINISH';
 export default function LoginForm() {
   const [status, setStatus] = useState({
     fields: {
-      email: {
-        name: 'email',
-        id: 'email',
-        label: 'EMAIL',
-      },
-      password: {
-        name: 'password',
-        id: 'password',
-        label: 'PASSWORD',
-      },
-      confirmPass: {
-        name: 'confirmPass',
-        id: 'confirmPass',
-        label: 'CONFIRM PASSWORD',
+      main: {
+        email: {
+          name: 'email',
+          id: 'email',
+          label: 'EMAIL',
+          type: 'text',
+        },
+        password: {
+          name: 'password',
+          id: 'password',
+          label: 'PASSWORD',
+          type: 'password',
+        },
+        confirmPass: {
+          name: 'confirmPass',
+          id: 'confirmPass',
+          label: 'CONFIRM PASSWORD',
+          type: 'password',
+        },
       },
       dateOfBirth: {
         day: {
@@ -85,13 +87,13 @@ export default function LoginForm() {
     const month = values.dateOfBirth?.month ? values.dateOfBirth?.month : '';
     const year = values.dateOfBirth?.year ? values.dateOfBirth?.year : '';
     const date = moment(`${year}-${month}-${day}`, 'YYYY-MM-DD');
-    const result = date.isValid() ? undefined : 'Invalid Date';
+    const isValidDate = date.isValid() ? undefined : 'Invalid Date';
 
     // if (!(values.dateOfBirth && values.dateOfBirth.day)) {
     //   errors.dateOfBirth = { day: 'Required' };
     // }
 
-    if (result !== undefined) {
+    if (isValidDate !== undefined) {
       errors.dateOfBirth.month = 'Wrong date!';
     }
 
@@ -149,9 +151,7 @@ export default function LoginForm() {
       <Form
         onSubmit={onSubmit}
         validate={validate}
-        render={({ handleSubmit, values, errors }) => {
-          console.log(values);
-          // console.log(errors);
+        render={({ handleSubmit, errors }) => {
           return (
             <form style={{ height: '100%' }} onSubmit={handleSubmit} id='form'>
               <StyledHeader>
@@ -167,53 +167,21 @@ export default function LoginForm() {
               {status.pageType === PAGE_1 && (
                 <div>
                   <StyledInputFormWrapper>
-                    {/* {Object.entries(status.fields).forEach(
-                      ([_, fieldState]) => {
-                        const { name, label } = fieldState;
-                        console.log(name, label);
+                    {Object.entries(status.fields.main).map(
+                      ([_, fieldsValues]) => {
+                        const { name, id, label, type } = fieldsValues;
+                        console.log(fieldsValues);
                         return (
-                          <StyledInputForm>
-                            <label htmlFor={name}>{label}</label>
-                            <Field
-                              name={name}
-                              size='middle'
-                              // type='password'
-                              component={MyInput}
-                            />
-                          </StyledInputForm>
+                          <MyInput
+                            key={id}
+                            id={id}
+                            name={name}
+                            label={label}
+                            type={type}
+                          />
                         );
-                        {
-                          /* return <MyInput name={name} label={label} />; 
-                    } )} */}
-                    <StyledInputForm>
-                      <label htmlFor='email'>EMAIL</label>
-                      <Field
-                        id='email'
-                        name='email'
-                        size='middle'
-                        component={MyInput}
-                      />
-                    </StyledInputForm>
-                    <StyledInputForm>
-                      <label htmlFor='password'>PASSWORD</label>
-                      <Field
-                        id='password'
-                        name='password'
-                        size='middle'
-                        type='password'
-                        component={MyInput}
-                      />
-                    </StyledInputForm>
-                    <StyledInputForm>
-                      <label htmlFor='confirmPass'>CONFIRM PASSWORD</label>
-                      <Field
-                        id='confirmPass'
-                        name='confirmPass'
-                        size='middle'
-                        type='password'
-                        component={MyInput}
-                      />
-                    </StyledInputForm>
+                      }
+                    )}
                   </StyledInputFormWrapper>
 
                   <StyledButtonContainer>
@@ -245,84 +213,25 @@ export default function LoginForm() {
               {status.pageType === PAGE_2 && (
                 <div>
                   <StyledInputFormWrapper>
+                    <StyledLabel htmlFor='dateOfBirth.day'>
+                      DATE OF BIRTH
+                    </StyledLabel>
                     <StyledDateContainer>
-                      <StyledDateInput>
-                        <label htmlFor='dateOfBirth.day'>DAY</label>
-                        <Field
-                          id='dateOfBirth.day'
-                          name='dateOfBirth.day'
-                          placeholder='DD'
-                        >
-                          {(props) => (
-                            <div>
-                              <Input
-                                {...props.input}
-                                id={props.id}
-                                name={props.name}
-                                placeholder={props.placeholder}
-                                style={{ width: '120px', textAlign: 'center' }}
-                              />
-                              <StyledError>
-                                {props.meta.error && props.meta.touched && (
-                                  <span>{props.meta.error}</span>
-                                )}
-                              </StyledError>
-                            </div>
-                          )}
-                        </Field>
-                      </StyledDateInput>
-                      <StyledDateInput>
-                        <label htmlFor='dateOfBirth.month'>MONTH</label>
-                        <Field
-                          id='dateOfBirth.month'
-                          name='dateOfBirth.month'
-                          placeholder='MM'
-                        >
-                          {(props) => (
-                            <div>
-                              <Input
-                                {...props.input}
-                                id={props.id}
-                                name={props.name}
-                                placeholder={props.placeholder}
-                                style={{ width: '120px', textAlign: 'center' }}
-                              />
-                              <StyledError>
-                                {props.meta.error && props.meta.touched && (
-                                  <span>{props.meta.error}</span>
-                                )}
-                              </StyledError>
-                            </div>
-                          )}
-                        </Field>
-                      </StyledDateInput>
-                      <StyledDateInput>
-                        <label htmlFor='dateOfBirth.year'>YEAR</label>
-                        <Field
-                          id='dateOfBirth.year'
-                          name='dateOfBirth.year'
-                          placeholder='YYYY'
-                        >
-                          {(props) => (
-                            <div>
-                              <Input
-                                {...props.input}
-                                id={props.id}
-                                name={props.name}
-                                placeholder={props.placeholder}
-                                style={{ width: '120px', textAlign: 'center' }}
-                              />
-                              <StyledError>
-                                {props.meta.error && props.meta.touched && (
-                                  <span>{props.meta.error}</span>
-                                )}
-                              </StyledError>
-                            </div>
-                          )}
-                        </Field>
-                      </StyledDateInput>
+                      {Object.entries(status.fields.dateOfBirth).map(
+                        ([_, fieldsValues]) => {
+                          const { id, name, label, placeholder } = fieldsValues;
+                          return (
+                            <DateOfBirth
+                              key={id}
+                              name={name}
+                              label={label}
+                              placeholder={placeholder}
+                            />
+                          );
+                        }
+                      )}
                     </StyledDateContainer>
-                    {/* <StyledInputForm2>
+                    {/* <StyledInputForm>
                       <label htmlFor='dateOfBirth'>DATE OF BIRTH</label>
                       <Field
                         id='dateOfBirth'
@@ -331,26 +240,26 @@ export default function LoginForm() {
                         placeholder='DD.MM.YYYY'
                         component={DateOfBirth}
                       />
-                    </StyledInputForm2> */}
-                    <StyledInputForm2>
-                      <label htmlFor='gender'>GENDER</label>
+                    </StyledInputForm> */}
+                    <StyledLabel htmlFor='gender'>GENDER</StyledLabel>
+                    <StyledInputForm>
                       <Field
                         id='gender'
                         name='gender'
                         type='radio'
                         component={Gender}
                       />
-                    </StyledInputForm2>
-                    <StyledInputForm2>
-                      <label htmlFor='hearFrom'>
-                        WHERE DID YOU HEAR ABOUT US ?
-                      </label>
+                    </StyledInputForm>
+                    <StyledLabel htmlFor='hearFrom'>
+                      WHERE DID YOU HEAR ABOUT US ?
+                    </StyledLabel>
+                    <StyledInputForm>
                       <Field
                         id='hearFrom'
                         name='hearFrom'
                         component={HearFrom}
                       />
-                    </StyledInputForm2>
+                    </StyledInputForm>
                   </StyledInputFormWrapper>
                   <StyledButtonContainer>
                     <Button
