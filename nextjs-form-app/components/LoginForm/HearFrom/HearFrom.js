@@ -3,14 +3,10 @@ import { StyledError } from './styled';
 
 const { Option } = Select;
 
-export const MySelect = ({ input, meta }) => {
+const HearFrom = ({ input, meta, id }) => {
   return (
     <div>
-      <Select
-        {...input}
-        style={{ width: '100%' }}
-        placeholder='Select a person'
-      >
+      <Select id={id} {...input} style={{ width: '100%' }}>
         <Option value='none'></Option>
         <Option value='social network'>Social network</Option>
         <Option value='television'>Television</Option>
@@ -23,3 +19,5 @@ export const MySelect = ({ input, meta }) => {
     </div>
   );
 };
+
+export default HearFrom;
