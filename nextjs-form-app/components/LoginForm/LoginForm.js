@@ -7,7 +7,9 @@ import MyInput from './MyInput';
 import HearFrom from './HearFrom';
 import Gender from './Gender';
 import DateOfBirth from './DateOfBirth';
-import moment from 'moment';
+import { validate } from './utils/validate';
+import { STEP_1, STEP_2, STEP_3 } from './constants/steps';
+import { fieldsConfig } from './utils/fieldsConfig';
 
 import {
   StyledContainer,
@@ -21,129 +23,15 @@ import {
   StyledDateContainer,
 } from './styled';
 
-const PAGE_1 = 'PAGE_1';
-const PAGE_2 = 'PAGE_2';
-const FINISH = 'FINISH';
-
 export default function LoginForm() {
   const [status, setStatus] = useState({
-    fields: {
-      main: {
-        email: {
-          name: 'email',
-          id: 'email',
-          label: 'EMAIL',
-          type: 'text',
-        },
-        password: {
-          name: 'password',
-          id: 'password',
-          label: 'PASSWORD',
-          type: 'password',
-        },
-        confirmPass: {
-          name: 'confirmPass',
-          id: 'confirmPass',
-          label: 'CONFIRM PASSWORD',
-          type: 'password',
-        },
-      },
-      dateOfBirth: {
-        day: {
-          name: 'dateOfBirth.day',
-          id: 'dateOfBirth.day',
-          label: 'DAY',
-          placeholder: 'DD',
-        },
-        month: {
-          name: 'dateOfBirth.month',
-          id: 'dateOfBirth.month',
-          label: 'MONTH',
-          placeholder: 'MM',
-        },
-        year: {
-          name: 'dateOfBirth.year',
-          id: 'dateOfBirth.year',
-          label: 'YEAR',
-          placeholder: 'YYYY',
-        },
-      },
-    },
-    pageType: PAGE_1,
-    pageTitle: 'Sign up',
+    stepType: STEP_1,
+    stepTitle: 'Sign up',
     progressBar: 33,
   });
 
   const onSubmit = (values) => {
     console.log(values);
-  };
-
-  const validate = (values = {}) => {
-    const errors = {
-      dateOfBirth: {},
-    };
-
-    const day = values.dateOfBirth?.day ? values.dateOfBirth?.day : '';
-    const month = values.dateOfBirth?.month ? values.dateOfBirth?.month : '';
-    const year = values.dateOfBirth?.year ? values.dateOfBirth?.year : '';
-    const date = moment(`${year}-${month}-${day}`, 'YYYY-MM-DD');
-    const isValidDate = date.isValid() ? undefined : 'Invalid Date';
-
-    // if (!(values.dateOfBirth && values.dateOfBirth.day)) {
-    //   errors.dateOfBirth = { day: 'Required' };
-    // }
-
-    if (isValidDate !== undefined) {
-      errors.dateOfBirth.month = 'Wrong date!';
-    }
-
-    if (!values.dateOfBirth?.day) {
-      errors.dateOfBirth.day = 'Required';
-    } else if (values.dateOfBirth.day.match(/^[a-zA-Z]+$/)) {
-      errors.dateOfBirth.day = 'Only numbers';
-    }
-
-    if (!values.dateOfBirth?.month) {
-      errors.dateOfBirth.month = 'Required';
-    } else if (values.dateOfBirth.month.match(/^[a-zA-Z]+$/)) {
-      errors.dateOfBirth.month = 'Only numbers';
-    }
-
-    if (!values.dateOfBirth?.year) {
-      errors.dateOfBirth.year = 'Required';
-    } else if (values.dateOfBirth.year.match(/^[a-zA-Z]+$/)) {
-      errors.dateOfBirth.year = 'Only numbers';
-    }
-
-    if (!values.email) {
-      errors.email = 'Required';
-    } else if (!values.email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
-      errors.email = 'Wrong format!';
-    }
-
-    if (!values.password) {
-      errors.password = 'Required';
-    } else if (values.password.length < 4) {
-      errors.password = 'Must be more than 4 digits';
-    }
-
-    if (!values.confirmPass) {
-      errors.confirmPass = 'Required';
-    } else if (values.confirmPass.length < 4) {
-      errors.confirmPass = 'Must be more than 4 digits';
-    } else if (values.confirmPass !== values.password) {
-      errors.confirmPass = 'Must match';
-    }
-
-    if (!values.gender) {
-      errors.gender = 'Required';
-    }
-
-    if (!values.hearFrom) {
-      errors.hearFrom = 'Required';
-    }
-
-    return errors;
   };
 
   return (
@@ -155,7 +43,7 @@ export default function LoginForm() {
           return (
             <form style={{ height: '100%' }} onSubmit={handleSubmit} id='form'>
               <StyledHeader>
-                <StyledTitle>{status.pageTitle}</StyledTitle>
+                <StyledTitle>{status.stepTitle}</StyledTitle>
                 <Progress
                   percent={status.progressBar}
                   showInfo={false}
@@ -164,13 +52,12 @@ export default function LoginForm() {
                 />
               </StyledHeader>
 
-              {status.pageType === PAGE_1 && (
+              {status.stepType === STEP_1 && (
                 <div>
                   <StyledInputFormWrapper>
-                    {Object.entries(status.fields.main).map(
-                      ([_, fieldsValues]) => {
-                        const { name, id, label, type } = fieldsValues;
-                        console.log(fieldsValues);
+                    {Object.entries(fieldsConfig.main).map(
+                      ([_, fieldValues]) => {
+                        const { name, id, label, type } = fieldValues;
                         return (
                           <MyInput
                             key={id}
@@ -199,7 +86,7 @@ export default function LoginForm() {
                       onClick={() =>
                         setStatus({
                           ...status,
-                          pageType: PAGE_2,
+                          stepType: STEP_2,
                           progressBar: 66,
                         })
                       }
@@ -210,16 +97,16 @@ export default function LoginForm() {
                 </div>
               )}
 
-              {status.pageType === PAGE_2 && (
+              {status.stepType === STEP_2 && (
                 <div>
                   <StyledInputFormWrapper>
                     <StyledLabel htmlFor='dateOfBirth.day'>
                       DATE OF BIRTH
                     </StyledLabel>
                     <StyledDateContainer>
-                      {Object.entries(status.fields.dateOfBirth).map(
-                        ([_, fieldsValues]) => {
-                          const { id, name, label, placeholder } = fieldsValues;
+                      {Object.entries(fieldsConfig.dateOfBirth).map(
+                        ([_, fieldValues]) => {
+                          const { id, name, label, placeholder } = fieldValues;
                           return (
                             <DateOfBirth
                               key={id}
@@ -268,7 +155,7 @@ export default function LoginForm() {
                       onClick={() =>
                         setStatus({
                           ...status,
-                          pageType: PAGE_1,
+                          stepType: STEP_1,
                           progressBar: 33,
                         })
                       }
@@ -287,8 +174,8 @@ export default function LoginForm() {
                       }
                       onClick={() =>
                         setStatus({
-                          pageType: FINISH,
-                          pageTitle: 'Thank you!',
+                          stepType: STEP_3,
+                          stepTitle: 'Thank you!',
                           progressBar: 100,
                         })
                       }
@@ -299,7 +186,7 @@ export default function LoginForm() {
                 </div>
               )}
 
-              {status.pageType === FINISH && (
+              {status.stepType === STEP_3 && (
                 <div>
                   <StyledFinish>
                     <CheckCircleTwoTone

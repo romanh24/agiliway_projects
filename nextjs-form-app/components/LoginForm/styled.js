@@ -6,7 +6,6 @@ export const StyledContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   width: 400px;
-  ${'' /* height: 500px; */}
   margin: 7% auto;
   border: solid 2px #d3d3d3;
   border-radius: 2%;
@@ -14,6 +13,7 @@ export const StyledContainer = styled.div`
 
 export const StyledHeader = styled.div`
   .ant-progress-inner{
+  width: 398px;
   border-radius:0;
   border-top: 1px solid #d3d3d3;
   border-bottom: 1px solid #d3d3d3;
@@ -70,7 +70,6 @@ export const StyledButtonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  ${'' /* margin-top: 70px; */}
   padding: 10px;
 `;
 
